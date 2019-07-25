@@ -2,6 +2,13 @@ package com.green.learning_algs4.util;
 
 public class ArrayUtils
 {
+    /**
+     * Knuth Shuffle
+     * @see edu.princeton.cs.algs4.StdRandom
+     * Rearranges the elements of the specified array in uniformly random order.
+     * @param  A the array to shuffle
+     * @throws IllegalArgumentException if {@code A} is {@code null}
+     */
     public static void shuffle(Object[] A)
     {
         final int N = A.length;
@@ -108,7 +115,7 @@ public class ArrayUtils
         return true;
     }
     
-    public static boolean isSorted(Comparable[] A)
+    public static <E extends Comparable<E>> boolean isSorted(E[] A)
     {
         return isSorted(A, 0, A.length - 1);
     }
