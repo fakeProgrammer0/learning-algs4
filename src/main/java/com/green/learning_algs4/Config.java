@@ -3,6 +3,7 @@ package com.green.learning_algs4;
 import java.io.File;
 import java.io.IOException;
 
+@Deprecated
 public class Config
 {
     private static String dataDir;
