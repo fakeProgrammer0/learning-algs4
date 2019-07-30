@@ -31,7 +31,7 @@ public class SortTest
 //        ShellSort.sort2(A);
 //        ShellSort.sort(A);
 //        ShellSort2.sort2(A);
-//        InsertionSortX.sort(A);
+//        InsertionSortOpt.sort(A);
 //        MergeSortBU.sort(A);
 //        QuickX.sort(A);
         QuickSortOpt.sort(A);

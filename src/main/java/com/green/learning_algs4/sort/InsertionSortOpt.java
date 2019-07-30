@@ -4,10 +4,9 @@ import com.green.learning_algs4.util.ArrayUtils;
 
 /**
  * Insertion Sort with a little optimization
- *
  * @see edu.princeton.cs.algs4.InsertionX
  */
-public class InsertionSortX
+public class InsertionSortOpt
 {
     public static <E extends Comparable<E>> void sort(E[] A)
     {

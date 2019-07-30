@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
  * {@link edu.princeton.cs.algs4.Heap}
  * @param <E>
  */
+@Deprecated
 public class Heap<E extends Comparable<E>>
 {
     private int size = 0;

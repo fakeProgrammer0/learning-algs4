@@ -2,6 +2,7 @@ package com.green.learning_algs4.sort;
 
 public class ComparisonCountingSort
 {
+    @SuppressWarnings("unchecked")
     public static <E extends Comparable<E>> void sort(E[] A)
     {
         // counts[i] calculates the number of elements
@@ -13,7 +14,7 @@ public class ComparisonCountingSort
                     counts[j]++;
                 else counts[i]++;
         
-        Comparable[] S = new Comparable[A.length];
+        E[] S = (E[]) new Comparable[A.length];
         
         for (int i = 0; i < A.length; i++)
             S[counts[i]] = A[i];

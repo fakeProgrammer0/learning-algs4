@@ -1,7 +1,7 @@
 # list
 This package contains several implementations of list-based data structures such as **list, stack && queue**.
-The design puts emphasis on providing specific APIs of the corresponding data structure 
-rather than creating a perfect collection framework in a whole like *Java Collection Framework* ：）提供了线性表、队列和栈的实现，设计关注提供特定的API，而不是构建一个像Java集合框架那样“完美”的框架。
+The design puts emphasis on providing specific APIs of the corresponding data structures 
+rather than creating a perfect collection framework in a whole such as  *Java Collection Framework* ：）提供了线性表、队列和栈的实现，设计关注于提供特定的API，而不是构建一个像Java集合框架那样“完美”的框架。
 
 ## 1.Hierarchy
 
@@ -15,7 +15,7 @@ rather than creating a perfect collection framework in a whole like *Java Collec
 ├── XStack -- 栈接口
 |   ├── XArrayStack
 |   └── XLinkedStack
-|       └── XSuperStack -- 支持delete操作
+|       └── XSuperStack -- 支持delete操作，删除特定元素，用于实现DFS非递归版本
 |
 ├── XQueue -- 队列接口
 |   ├── XArrayQueue
@@ -47,7 +47,7 @@ rather than creating a perfect collection framework in a whole like *Java Collec
 * 扩容：当空间存满时，数组长度扩大为2倍
 * 收缩：当空间存储利用率小于25%时，数组长度缩小为1 / 2
 
-线性表会维持 25% ~ 100% 的存储利用率。用 `minLoadFactor` 表示线性表允许的最小空间利用率，当空间利用率小于该阈值时，线性表会自动收缩。但是由于线性表多出来的空间就是浪费，为了让设计简单，没有必要让用户（client）设置 `minLoadFactor` ，取固定值为 25% 即可。
+线性表会维持 25% ~ 100% 的存储利用率。如果需要灵活配置，可考虑用 `minLoadFactor` 表示线性表允许的最小空间利用率，当空间利用率小于该阈值时，线性表会自动收缩。但是由于线性表多出来的空间就是浪费，为了让设计简单，没有必要让用户（client）设置 `minLoadFactor` ，取固定值为 25% 即可。
 
 如果用户需要节省空间，那么：
 
@@ -112,9 +112,9 @@ public class XArrayStack<E>
             		"No more element can be pushed into the stack.");
             if (elements.length < MAXIMUM_CAPACITY)
             {
-                int newSize = size >= (MAXIMUM_CAPACITY >> 1) ? 
+                int newCapacity = size >= (MAXIMUM_CAPACITY >> 1) ? 
                 	MAXIMUM_CAPACITY : 2 * size;
-                resize(newSize);
+                resize(newCapacity);
             }
         }
     }

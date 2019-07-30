@@ -3,6 +3,7 @@ package com.green.learning_algs4.sort;
 import com.green.learning_algs4.util.ArrayUtils;
 
 /**
+ * standard quick sort
  * @see edu.princeton.cs.algs4.Quick
  * @see edu.princeton.cs.algs4.QuickX
  */
@@ -24,7 +25,6 @@ public class QuickSort
         }
     }
     
-    //    @SuppressWarnings("unchecked")
     private static <E extends Comparable<E>> int partition(E[] A, int low, int high)
     {
         int i = low, j = high + 1;

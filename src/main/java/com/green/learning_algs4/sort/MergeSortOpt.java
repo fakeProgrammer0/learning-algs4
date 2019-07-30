@@ -10,8 +10,9 @@ package com.green.learning_algs4.sort;
  */
 public class MergeSortOpt
 {
-    private static final int CUTOFF = 7;
+    private static final int INSERTION_CUTOFF = 7;
     
+    @SuppressWarnings("unchecked")
     public static <E extends Comparable<E>> void sort(E[] A)
     {
         E[] aux = (E[]) new Comparable[A.length];
@@ -22,7 +23,7 @@ public class MergeSortOpt
     private static <E extends Comparable<E>> void sort(E[] A, E[] aux, int low, int high)
     {
         // tip1：小数组采用插排
-        if (high - low + 1 <= CUTOFF)
+        if (high - low + 1 <= INSERTION_CUTOFF)
         {
             InsertionSort.sort(A, low, high);
             return;

@@ -28,7 +28,7 @@ class InsertionSortTest
         
         B = Arrays.copyOf(A, N);
         timer.start("optimized insertion sort");
-        InsertionSortX.sort(B);
+        InsertionSortOpt.sort(B);
         timer.stop();
         assertTrue(ArrayUtils.isSorted(B));
         

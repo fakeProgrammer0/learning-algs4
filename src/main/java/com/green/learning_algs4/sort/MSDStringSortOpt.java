@@ -9,7 +9,8 @@ public class MSDStringSortOpt
 {
     private final static int R = Character.MAX_VALUE + 1;
     
-    private static final int INSERTION_CUTOFF = 7;
+//    private static final int INSERTION_CUTOFF = 7;
+    private static final int INSERTION_CUTOFF = 15;
     
     public static void sort(String[] A)
     {
@@ -20,7 +21,7 @@ public class MSDStringSortOpt
     private static void sort(String[] A, String[] aux, int d, int low, int high)
     {
         // cut off to insertion sort
-        if (high - low + 1 <= INSERTION_CUTOFF)
+        if (high - low < INSERTION_CUTOFF)
         {
             InsertionSort.sortStrings(A, low, high, d);
             return;
@@ -35,12 +36,13 @@ public class MSDStringSortOpt
             counts[chatAt(A[i], d) + 2]++;
     
         // 2.transform counts to indicies
+        counts[0] = low;
         for (int i = 1; i < counts.length; i++)
             counts[i] += counts[i - 1];
     
         // 3.distribute
         for (int i = low; i <= high; i++)
-            aux[low + counts[chatAt(A[i], d) + 1]++] = A[i];
+            aux[counts[chatAt(A[i], d) + 1]++] = A[i];
     
         // 4.copy back
         for (int i = low; i <= high; i++)
@@ -49,7 +51,7 @@ public class MSDStringSortOpt
         // exclude -1 sentinel strings
         for (int i = 1; i < counts.length; i++)
             if (counts[i] > counts[i - 1]) // optimized: low_new > high_new
-                sort(A, aux, d + 1, low + counts[i - 1], low + counts[i] - 1);
+                sort(A, aux, d + 1, counts[i - 1], counts[i] - 1);
     }
     
     private static int chatAt(String str, int d)

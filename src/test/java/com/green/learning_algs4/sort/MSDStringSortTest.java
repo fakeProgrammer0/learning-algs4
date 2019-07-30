@@ -2,6 +2,7 @@ package com.green.learning_algs4.sort;
 
 import com.green.learning_algs4.util.ArrayUtils;
 import com.green.learning_algs4.util.XTimer;
+import edu.princeton.cs.algs4.InplaceMSD;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -54,6 +55,7 @@ class MSDStringSortTest
                 "nnawe",
                 "cfgf",
                 "sxvoy",
+                "",
                 "pb",
                 "ysvldqvmt",
                 "qevmgofise",
@@ -71,7 +73,8 @@ class MSDStringSortTest
         
 //        MSDStringSort.sort(A);
 //        MSDStringSortOpt.sort(A);
-        QuickSort3WayString.sort(A);
+//        QuickSort3WayString.sort(A);
+        InplaceMSD.sort(A);
         assertTrue(ArrayUtils.isSorted(A));
         ArrayUtils.print(A, false);
     }

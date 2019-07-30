@@ -3,7 +3,7 @@ package com.green.learning_algs4.sort;
 import com.green.learning_algs4.util.ArrayUtils;
 
 /**
- * a optimized version of 3-way quicksort
+ * a optimized version of 3-way quick sort
  *
  * @see edu.princeton.cs.algs4.QuickBentleyMcIlroy
  */

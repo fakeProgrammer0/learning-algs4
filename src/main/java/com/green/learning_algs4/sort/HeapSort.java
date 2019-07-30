@@ -15,7 +15,7 @@ public class HeapSort
         for (int i = A.length / 2 - 1; i >= 0; i--)
             sink(A, A.length, i);
         
-        // 2.In loop {@code i - 1}, constantly exchange
+        // 2.In loop {@code i}, constantly exchange
         // * the current root with the last {@code i} element,
         // * and then sink the new root.
         // * Repeat {@code N - 1} loop

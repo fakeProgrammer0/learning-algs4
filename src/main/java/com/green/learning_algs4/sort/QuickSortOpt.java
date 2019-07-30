@@ -3,7 +3,7 @@ package com.green.learning_algs4.sort;
 import com.green.learning_algs4.util.ArrayUtils;
 
 /**
- * a optimized version of quicksort
+ * a optimized version of quick sort
  * tip1: cutoff to insertion sort
  * tip2: using median-of-3 to choose the partitioning element
  *

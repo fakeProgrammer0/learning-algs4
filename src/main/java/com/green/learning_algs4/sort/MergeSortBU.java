@@ -1,11 +1,12 @@
 package com.green.learning_algs4.sort;
 
 /**
- * Bottom up mergesort
+ * Bottom up merge sort ((non-recursive)
  * @see edu.princeton.cs.algs4.MergeBU
  */
 public class MergeSortBU
 {
+    @SuppressWarnings("unchecked")
     public static <E extends Comparable<E>> void sort(E[] A)
     {
         final int N = A.length;

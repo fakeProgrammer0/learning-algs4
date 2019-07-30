@@ -1,6 +1,7 @@
 package com.green.learning_algs4.sort;
 
 /**
+ * merge sort with array creations overhead
  * @see edu.princeton.cs.algs4.Merge
  */
 public class MergeSortX
@@ -21,6 +22,7 @@ public class MergeSortX
         merge(A, low, mid, high);
     }
     
+    @SuppressWarnings("unchecked")
     private static <E extends Comparable<E>> void merge(E[] A, int low, int mid, int high)
     {
         E[] aux = (E[]) new Comparable[high - low + 1];

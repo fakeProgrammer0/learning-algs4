@@ -1,6 +1,6 @@
 package com.green.learning_algs4.util;
 
-import com.green.learning_algs4.sort.InsertionSortX;
+import com.green.learning_algs4.sort.InsertionSortOpt;
 import edu.princeton.cs.algs4.StdRandom;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -22,8 +22,8 @@ public class ArrayUtilsTest
         ArrayUtils.shuffle(B);
         ArrayUtils.UnBufferedPrint(A);
         ArrayUtils.UnBufferedPrint(B);
-        InsertionSortX.sort(B);
-        InsertionSortX.sort(A);
+        InsertionSortOpt.sort(B);
+        InsertionSortOpt.sort(A);
         assertArrayEquals(A,B);
     }
     

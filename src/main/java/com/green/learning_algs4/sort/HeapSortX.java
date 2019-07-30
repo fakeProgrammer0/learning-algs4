@@ -2,6 +2,10 @@ package com.green.learning_algs4.sort;
 
 import com.green.learning_algs4.tree.XPriorityQueue;
 
+/**
+ * heap sort using a priority queue
+ * just a toy example
+ */
 public class HeapSortX
 {
     public static <E extends Comparable<E>> void sort(E[] A)

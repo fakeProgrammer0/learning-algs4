@@ -1,10 +1,12 @@
 package com.green.learning_algs4.sort;
 
 /**
+ * standard merge sort reusing the auxiliary array
  * @see edu.princeton.cs.algs4.Merge
  */
 public class MergeSort
 {
+    @SuppressWarnings("unchecked")
     public static <E extends Comparable<E>> void sort(E[] A)
     {
         E[] aux = (E[]) new Comparable[A.length];
