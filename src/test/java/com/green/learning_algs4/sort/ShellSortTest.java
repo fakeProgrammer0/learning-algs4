@@ -31,14 +31,14 @@ class ShellSortTest
         assertTrue(ArrayUtils.isSorted(B));
     
         B = Arrays.copyOf(A, N);
-        timer.start("ShellSort2.sort");
-        ShellSort2.sort(B);
+        timer.start("ShellSortX.sort");
+        ShellSortX.sort(B);
         timer.stop();
         assertTrue(ArrayUtils.isSorted(B));
     
         B = Arrays.copyOf(A, N);
-        timer.start("ShellSort2.sort2");
-        ShellSort2.sort2(B);
+        timer.start("ShellSortX.sort2");
+        ShellSortX.sort2(B);
         timer.stop();
         assertTrue(ArrayUtils.isSorted(B));
         

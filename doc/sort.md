@@ -10,7 +10,7 @@
 
 ### Sorting Methods
 
-Given an array consisting of $n$ elements, sort them.
+Given an array consisting of $n$ elements, sort them.
 
 |      sorting method      | description  | worst case time efficiency | average case time efficiency | space efficiency | stable |
 | :----------------------: | :----------: | :------------------------: | :--------------------------: | :--------------: | :----: |
@@ -19,35 +19,39 @@ Given an array consisting of $n$ elements, sort them.
 |      Insertion Sort      |   插入排序   |          $O(n^2)$          |           $O(n^2)$           |      $O(1)$      |   ✓    |
 |  Binary Insertion Sort   | 二分插入排序 |          $O(n^2)$          |         $O(n\log n)$         |      $O(1)$      |   ✓    |
 | Comparison Counting Sort | 比较计数排序 |          $O(n^2)$          |           $O(n^2)$           |      $O(n)$      |   ✓    |
-|        Shell Sort        |   希尔排序   |        $O(n^{3/2})$        |         $O(n\log n)$         |      $O(1)$      |        |
+|        Shell Sort        |   希尔排序   |        $O(n^{3/2})$        |           unknown            |      $O(1)$      |        |
 |        Heap Sort         |    堆排序    |        $O(n\log n)$        |         $O(n\log n)$         |      $O(1)$      |   ✓    |
 |        Merge Sort        |   归并排序   |        $O(n\log n)$        |         $O(n\log n)$         |      $O(n)$      |   ✓    |
 |        Quick Sort        |   快速排序   |       * $O(n\log n)$       |         $O(n\log n)$         |      $O(1)$      |        |
 
-> 快排有 $1/n!$ 的概率使得worst case开销为 $O(n^2)$
+> 1. 快排有 $1/n!$ 的概率使得worst case开销为 $O(n^2)$
+>
+> 2. 希尔排序的最差时间效率与所选间隔序列密切相关，当**希尔排序**使用 `3x+1` 的数列为间隔序列（1, 4, 13, 40, ...）时，最差时间开销为 $O(n^{3/2})$，see [wikipedia / Shellsort](https://en.wikipedia.org/wiki/Shellsort) 
+>
+> 3. 更具体的算法开销分析：https://algs4.cs.princeton.edu/cheatsheet/
 
 ### Java Implementations
 
-|                          java class                          |              description              |
-| :----------------------------------------------------------: | :-----------------------------------: |
-| [BubbleSort.java](../src/main/java/com/green/learning_algs4/sort/BubbleSort.java) |              bubble sort              |
-| [SelectionSort.java](../src/main/java/com/green/learning_algs4/sort/SelectionSort.java) |            selection sort             |
-| [InsertionSort.java](../src/main/java/com/green/learning_algs4/sort/InsertionSort.java) |            insertion sort             |
-| [InsertionSortOpt.java](../src/main/java/com/green/learning_algs4/sort/InsertionSortOpt.java) |       optimized insertion sort        |
-| [BinaryInsertionSort.java](../src/main/java/com/green/learning_algs4/sort/BinaryInsertionSort.java) |         binary insertion sort         |
-| [ComparisonCountingSort.java](../src/main/java/com/green/learning_algs4/sort/ComparisonCountingSort.java) |       comparison counting sort        |
-| [.java](../src/main/java/com/green/learning_algs4/sort/.java) |              shell sort               |
-|                                                              |              shell sort               |
-| [HeapSort.java](../src/main/java/com/green/learning_algs4/sort/HeapSort.java) |          heap sort (inplace)          |
-| [HeapSortX.java](../src/main/java/com/green/learning_algs4/sort/HeapSortX.java) |   heap sort (using priority queue)    |
-| [MergeSort.java](../src/main/java/com/green/learning_algs4/sort/MergeSort.java) |          standard merge sort          |
-| [MergeSortX.java](../src/main/java/com/green/learning_algs4/sort/MergeSortX.java) | merge sort (array creations overhead) |
-| [MergeSortOpt.java](../src/main/java/com/green/learning_algs4/sort/MergeSortOpt.java) |         optimized merge sort          |
-| [MergeSortBU.java](../src/main/java/com/green/learning_algs4/sort/MergeSortBU.java) | bottom up merge sort (non-recursive)  |
-| [QuickSort.java](../src/main/java/com/green/learning_algs4/sort/QuickSort.java) |          standard quick sort          |
-| [QuickSortOpt.java](../src/main/java/com/green/learning_algs4/sort/QuickSortOpt.java) |         optimized quick sort          |
-| [QuickSort3Way.java](../src/main/java/com/green/learning_algs4/sort/QuickSort.java) |           3 way quick sort            |
-| [QuickSort3WayOpt.java](../src/main/java/com/green/learning_algs4/sort/QuickSort.java) |      optimized 3 way quick sort       |
+|                          java class                          |                 description                  |
+| :----------------------------------------------------------: | :------------------------------------------: |
+| [BubbleSort.java](../src/main/java/com/green/learning_algs4/sort/BubbleSort.java) |                 bubble sort                  |
+| [SelectionSort.java](../src/main/java/com/green/learning_algs4/sort/SelectionSort.java) |                selection sort                |
+| [InsertionSort.java](../src/main/java/com/green/learning_algs4/sort/InsertionSort.java) |                insertion sort                |
+| [InsertionSortOpt.java](../src/main/java/com/green/learning_algs4/sort/InsertionSortOpt.java) |           optimized insertion sort           |
+| [BinaryInsertionSort.java](../src/main/java/com/green/learning_algs4/sort/BinaryInsertionSort.java) |            binary insertion sort             |
+| [ComparisonCountingSort.java](../src/main/java/com/green/learning_algs4/sort/ComparisonCountingSort.java) |           comparison counting sort           |
+| [ShellSort.java](../src/main/java/com/green/learning_algs4/sort/ShellSort.java) | shell sort (gap sequence: 1, 4, 13, 40, ...) |
+| [ShellSortX.java](../src/main/java/com/green/learning_algs4/sort/ShellSortX.java) |  shell sort (gap sequence: 1, 2, 4, 8, ...)  |
+| [HeapSort.java](../src/main/java/com/green/learning_algs4/sort/HeapSort.java) |             heap sort (inplace)              |
+| [HeapSortX.java](../src/main/java/com/green/learning_algs4/sort/HeapSortX.java) |       heap sort (using priority queue)       |
+| [MergeSort.java](../src/main/java/com/green/learning_algs4/sort/MergeSort.java) |             standard merge sort              |
+| [MergeSortX.java](../src/main/java/com/green/learning_algs4/sort/MergeSortX.java) |    merge sort (array creations overhead)     |
+| [MergeSortOpt.java](../src/main/java/com/green/learning_algs4/sort/MergeSortOpt.java) |             optimized merge sort             |
+| [MergeSortBU.java](../src/main/java/com/green/learning_algs4/sort/MergeSortBU.java) |     bottom up merge sort (non-recursive)     |
+| [QuickSort.java](../src/main/java/com/green/learning_algs4/sort/QuickSort.java) |             standard quick sort              |
+| [QuickSortOpt.java](../src/main/java/com/green/learning_algs4/sort/QuickSortOpt.java) |             optimized quick sort             |
+| [QuickSort3Way.java](../src/main/java/com/green/learning_algs4/sort/QuickSort.java) |               3 way quick sort               |
+| [QuickSort3WayOpt.java](../src/main/java/com/green/learning_algs4/sort/QuickSort.java) |          optimized 3 way quick sort          |
 
 ### A.Insertion Sort
 
@@ -85,22 +89,49 @@ public class MergeSortOpt
 
 ### B.ShellSort
 
-> see [wikipedia / Shellsort](https://en.wikipedia.org/wiki/Shellsort) 
+希尔排序利用了插排在处理部分排序（partial sorted）好的数组时性能较优的特点，取得了优于$O(n^2)$的性能。
 
-希尔排序的最差时间效率与所选间隔序列密切相关，当**希尔排序**使用 `3x+1` 的数列为间隔序列（1, 4, 13, 40, ...）时，最差时间开销为 $O(n^{3/2})$ 
+#### CPU Cache Hit Rate
 
-#### CPU缓存命中率影响
-
-第一种写法更接直观地（Intutively）近于希尔排序的思想：
+第一种写法较简洁，只用了3层循环，但似乎CPU缓存命中率不高，效率稍慢一些（维基百科提供的伪代码和algs4.jar包中都是采用这种方式）。解释：交替在多个子数列中走动，局部引用性不好，CPU缓存命中率低？
 
 <img src="../assets/sort/shellsort1.png">
 
 ```java
+public static <E extends Comparable<E>> void shellSort1(E[] A)
+{
+    int N = A.length;
+
+    int h = 1;
+    while (h < N / 3)
+        h = h * 3 + 1;
+    // gap sequence: 1, 4, 13, 40, ...
+    while (h >= 1)
+    {
+        // h-sort the array
+        for (int i = h; i < N; i++)
+        {
+            int j = i;
+            E val = A[i];
+            for (; j >= h && val.compareTo(A[j - h]) < 0; j -= h)
+                A[j] = A[j - h];
+            A[j] = val;
+        }
+        h /= 3;
+    }
+}
+```
+
+第二种写法使用了4层循环，加多了一层外循环，用迭代器k控制子数组间排序的方式，更直观地（Intutively）近于希尔排序的思想：
+
+<img src="../assets/sort/shellsort2.png">
+
+```java
 /**
  * make better use of CPU cache
- * seem to perform better than {@code shellSort2}
+ * seem to perform better than {@code shellSort1}
  */
-public static <E extends Comparable<E>> void shellSort1(E[] A)
+public static <E extends Comparable<E>> void shellSort2(E[] A)
 {
     int N = A.length;
 
@@ -127,43 +158,14 @@ public static <E extends Comparable<E>> void shellSort1(E[] A)
 }
 ```
 
-以下写法更加简洁，但似乎CPU缓存命中率不高，效率稍慢一些：
-
-<img src="../assets/sort/shellsort2.png">
-
-```java
-public static <E extends Comparable<E>> void shellSort2(E[] A)
-{
-    int N = A.length;
-
-    int h = 1;
-    while (h < N / 3)
-        h = h * 3 + 1;
-    // gap sequence: 1, 4, 13, 40, ...
-    while (h >= 1)
-    {
-        // h-sort the array
-        for (int i = h; i < N; i++)
-        {
-            int j = i;
-            E val = A[i];
-            for (; j >= h && val.compareTo(A[j - h]) < 0; j -= h)
-                A[j] = A[j - h];
-            A[j] = val;
-        }
-        h /= 3;
-    }
-}
-```
-
 ### C.Heap Sort
 
 作为一种$O(n\log n)$的算法，堆排序不是很出众。不过，比起归并排序，堆排序是inplace的，空间效率为$O(1)$；比起快排，堆排序能保证最差时间开销为$O(n\log n)$，而快排则有极低的概率（非常非常低的 $1/n!$）使得worst case开销为$O(n^2)$。
 
 堆排序用到的主要操作是sink，步骤分解为：
 
-1. 构建最大堆 $O(N)$ （算法分析，最差时间开销为 $O(N)$ ）
-2. 每次迭代sink最大元素 $O(N * logN)$
+1. 构建最大堆 $O(N)$ （算法分析，最差时间开销为 $O(N)$ ）
+2. 每次迭代sink最大元素 $O(N\log N)$
 
 ```java
 public class HeapSort

@@ -2,10 +2,10 @@ package com.green.learning_algs4.sort;
 
 /**
  * Shellsort using a gap sequence of
- * N / 2, N / 4, ..., 1
+ * N / 2, N / 4, ..., 4, 2, 1
  * @see ShellSort
  */
-public class ShellSort2
+public class ShellSortX
 {
     public static <E extends Comparable<E>> void sort(E[] A)
     {
