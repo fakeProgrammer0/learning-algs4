@@ -56,7 +56,7 @@ public class MSDStringSortOpt
     
     private static int chatAt(String str, int d)
     {
-        assert d >= 0 && d <= str.length();
+        // assert d >= 0 && d <= str.length();
         if (d < str.length())
             return str.charAt(d);
         return -1;

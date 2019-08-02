@@ -216,6 +216,16 @@ public class HeapSort
 
 ### D.Merge Sort
 
+#### D1.Standard Merge Sort
+
+
+
+#### D2.Optimized Merge Sort
+
+
+
+#### D3.Bottom-up Merge Sort
+
 
 
 ### E.Quick Sort

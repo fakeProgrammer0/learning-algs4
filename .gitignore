@@ -1,4 +1,5 @@
-target/
+/target/
+/course/
 .idea/
 *.iml
 *.jar

@@ -1,11 +1,13 @@
 package com.green.learning_algs4.sort;
 
+import com.green.learning_algs4.string.Alphabet;
 import com.green.learning_algs4.util.ArrayUtils;
 import com.green.learning_algs4.util.XTimer;
 import edu.princeton.cs.algs4.InplaceMSD;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import java.util.Arrays;
 
@@ -74,7 +76,9 @@ class MSDStringSortTest
 //        MSDStringSort.sort(A);
 //        MSDStringSortOpt.sort(A);
 //        QuickSort3WayString.sort(A);
-        InplaceMSD.sort(A);
+//        InplaceMSD.sort(A);
+        MSDRadixSortInplace.sort(A);
+        
         assertTrue(ArrayUtils.isSorted(A));
         ArrayUtils.print(A, false);
     }
@@ -99,9 +103,12 @@ class MSDStringSortTest
         }
         
         ArrayUtils.print(A,false);
+        
 //        MSDStringSort.sort(A);
 //        MSDStringSortOpt.sort(A);
-        QuickSort3WayString.sort(A);
+//        QuickSort3WayString.sort(A);
+        RestrictedMSDStringSort.sort(Alphabet.LOWERCASE(), A);
+        
         assertTrue(ArrayUtils.isSorted(A));
         ArrayUtils.print(A,false);
     }
@@ -163,11 +170,11 @@ class MSDStringSortTest
     void test5()
     {
         final int R = Character.MAX_VALUE + 1;
-        final int N = 1_000_000;
+//        final int N = 1_000_000;
 //        final int N = 100_000;
-//        final int N = 10_000;
-//        final int MAX_LEN = 50; // exclusive
-        final int MAX_LEN = 500; // exclusive
+        final int N = 10_000;
+        final int MAX_LEN = 50; // exclusive
+//        final int MAX_LEN = 500; // exclusive
         
         XTimer timer = new XTimer("Compare efficiency between MSD and merge sort");
         
@@ -188,10 +195,81 @@ class MSDStringSortTest
         MSDStringSort.sort(B);
         timer.stop();
         assertTrue(ArrayUtils.isSorted(B));
+    
+        B = Arrays.copyOf(A, N);
+        timer.start("inplace MSD");
+        MSDRadixSortInplace.sort(B);
+        timer.stop();
+        assertTrue(ArrayUtils.isSorted(B));
         
         B = Arrays.copyOf(A, N);
         timer.start("MSD Opt");
         MSDStringSortOpt.sort(B);
+        timer.stop();
+        assertTrue(ArrayUtils.isSorted(B));
+        
+        B = Arrays.copyOf(A, N);
+        timer.start("merge sort");
+        Arrays.sort(B);
+        timer.stop();
+        assertTrue(ArrayUtils.isSorted(B));
+        
+        System.out.println(timer);
+    }
+    
+    @RepeatedTest(5)
+    @DisplayName("Compare efficiencies using different alphabets")
+    void test6(TestInfo testInfo)
+    {
+//        Alphabet alphabet = Alphabet.LOWERCASE();
+//        Alphabet alphabet = Alphabet.UPPERCASE();
+        Alphabet alphabet = Alphabet.EXTENDED_ASCII();
+        
+        final int R = alphabet.R();
+        
+        // debug
+//        final int N = 16;
+//        final int MAX_LEN = 5; // exclusive
+        
+        final int N = 1_000_000;
+        final int MAX_LEN = 500; // exclusive
+        
+        XTimer timer = new XTimer(testInfo.getDisplayName());
+        
+        timer.start("init random strings");
+        String[] A = new String[N];
+        for(int i = 0; i < N; i++)
+        {
+            int len = (int)(Math.random() * MAX_LEN); // [0, MAX_LEN)
+            A[i] = new String(alphabet.samples(len));
+        }
+        timer.stop();
+        
+//        ArrayUtils.print(A,false);
+        
+        String[] B = Arrays.copyOf(A, N);
+        
+        // very very slow
+//        timer.start("MSD");
+//        MSDStringSort.sort(B);
+//        timer.stop();
+//        assertTrue(ArrayUtils.isSorted(B));
+        
+        B = Arrays.copyOf(A, N);
+        timer.start("MSD Opt");
+        MSDStringSortOpt.sort(B);
+        timer.stop();
+        assertTrue(ArrayUtils.isSorted(B));
+    
+        B = Arrays.copyOf(A, N);
+        timer.start("Restricted MSD");
+        RestrictedMSDStringSort.sort(alphabet, B);
+        timer.stop();
+        assertTrue(ArrayUtils.isSorted(B));
+    
+        B = Arrays.copyOf(A, N);
+        timer.start("3 way quick sort string");
+        QuickSort3WayString.sort(B);
         timer.stop();
         assertTrue(ArrayUtils.isSorted(B));
         

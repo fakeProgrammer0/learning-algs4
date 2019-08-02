@@ -4,7 +4,7 @@ package com.green.learning_algs4.sort;
  * Most Significant Digit First String Sort
  *
  * @see edu.princeton.cs.algs4.MSD
- * @see edu.princeton.cs.algs4.InplaceMSD
+ * @see MSDStringSortOpt
  */
 public class MSDStringSort
 {
