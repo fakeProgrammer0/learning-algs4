@@ -2,6 +2,7 @@ package com.green.learning_algs4.sort;
 
 /**
  * merge sort with array creations overhead
+ * special type of merge, causes the whole merge sort to be unstable
  * @see edu.princeton.cs.algs4.Merge
  */
 public class MergeSortX
@@ -26,6 +27,8 @@ public class MergeSortX
     private static <E extends Comparable<E>> void merge(E[] A, int low, int mid, int high)
     {
         E[] aux = (E[]) new Comparable[high - low + 1];
+        // two pointers iterate to the center
+        // use this case of merge make the whole merge sort unstable!!!
         int i = 0, j = low;
         for (; j <= mid; i++, j++)
             aux[i] = A[j];

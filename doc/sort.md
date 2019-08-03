@@ -15,12 +15,12 @@ Given an array consisting of $n$ elements, sort them.
 |      sorting method      | description  | worst case time efficiency | average case time efficiency | space efficiency | stable |
 | :----------------------: | :----------: | :------------------------: | :--------------------------: | :--------------: | :----: |
 |       Bubble Sort        |   冒泡排序   |          $O(n^2)$          |           $O(n^2)$           |      $O(1)$      |   ✓    |
-|      Selection Sort      |   选择排序   |          $O(n^2)$          |           $O(n^2)$           |      $O(1)$      |   ✓    |
+|      Selection Sort      |   选择排序   |          $O(n^2)$          |           $O(n^2)$           |      $O(1)$      |        |
 |      Insertion Sort      |   插入排序   |          $O(n^2)$          |           $O(n^2)$           |      $O(1)$      |   ✓    |
 |  Binary Insertion Sort   | 二分插入排序 |          $O(n^2)$          |         $O(n\log n)$         |      $O(1)$      |   ✓    |
 | Comparison Counting Sort | 比较计数排序 |          $O(n^2)$          |           $O(n^2)$           |      $O(n)$      |   ✓    |
 |        Shell Sort        |   希尔排序   |        $O(n^{3/2})$        |           unknown            |      $O(1)$      |        |
-|        Heap Sort         |    堆排序    |        $O(n\log n)$        |         $O(n\log n)$         |      $O(1)$      |   ✓    |
+|        Heap Sort         |    堆排序    |        $O(n\log n)$        |         $O(n\log n)$         |      $O(1)$      |        |
 |        Merge Sort        |   归并排序   |        $O(n\log n)$        |         $O(n\log n)$         |      $O(n)$      |   ✓    |
 |        Quick Sort        |   快速排序   |       * $O(n\log n)$       |         $O(n\log n)$         |      $O(1)$      |        |
 
@@ -160,7 +160,7 @@ public static <E extends Comparable<E>> void shellSort2(E[] A)
 
 ### C.Heap Sort
 
-作为一种$O(n\log n)$的算法，堆排序不是很出众。不过，比起归并排序，堆排序是inplace的，空间效率为$O(1)$；比起快排，堆排序能保证最差时间开销为$O(n\log n)$，而快排则有极低的概率（非常非常低的 $1/n!$）使得worst case开销为$O(n^2)$。
+作为一种$O(n\log n)$的算法，堆排序不是很出众。不过，比起归并排序，堆排序是inplace的，空间效率为$O(1)$；比起快排，堆排序能保证最差时间开销为$O(n\log n)$，而快排则有极低的概率（非常非常低的 $1/n!$）使得worst case开销为$O(n^2)$。注意：堆排序不是stable的！！
 
 堆排序用到的主要操作是sink，步骤分解为：
 

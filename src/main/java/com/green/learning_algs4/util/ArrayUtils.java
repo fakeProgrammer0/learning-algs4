@@ -1,13 +1,18 @@
 package com.green.learning_algs4.util;
 
+import com.green.learning_algs4.sort.MergeSortOpt;
+
+import java.util.Random;
+
 public class ArrayUtils
 {
     /**
      * Knuth Shuffle
+     *
+     * @param A the array to shuffle
+     * @throws IllegalArgumentException if {@code A} is {@code null}
      * @see edu.princeton.cs.algs4.StdRandom
      * Rearranges the elements of the specified array in uniformly random order.
-     * @param  A the array to shuffle
-     * @throws IllegalArgumentException if {@code A} is {@code null}
      */
     public static void shuffle(Object[] A)
     {
@@ -170,4 +175,18 @@ public class ArrayUtils
             if (o == null)
                 throw new IllegalArgumentException();
     }
+    
+    public static Integer[] rndInts(int N)
+    {
+        Random rnd = new Random();
+        return rnd.ints(N).boxed().toArray(Integer[]::new);
+    }
+    
+    public static Integer[] rndInts(int N, int L, int U)
+    {
+        Random rnd = new Random();
+        return rnd.ints(N, L, U).boxed().toArray(Integer[]::new);
+    }
+    
+    
 }

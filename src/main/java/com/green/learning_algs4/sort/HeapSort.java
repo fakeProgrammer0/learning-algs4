@@ -4,7 +4,7 @@ import com.green.learning_algs4.util.ArrayUtils;
 
 /**
  * In-place Heap Sort
- *
+ * Not Stable
  * @see edu.princeton.cs.algs4.Heap
  */
 public class HeapSort

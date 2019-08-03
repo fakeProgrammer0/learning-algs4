@@ -1,9 +1,10 @@
 package com.green.learning_algs4.util;
 
-import com.green.learning_algs4.sort.InsertionSortOpt;
+import com.green.learning_algs4.sort.*;
 import edu.princeton.cs.algs4.StdRandom;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
@@ -24,7 +25,7 @@ public class ArrayUtilsTest
         ArrayUtils.UnBufferedPrint(B);
         InsertionSortOpt.sort(B);
         InsertionSortOpt.sort(A);
-        assertArrayEquals(A,B);
+        assertArrayEquals(A, B);
     }
     
     @Test
@@ -52,4 +53,8 @@ public class ArrayUtilsTest
         System.out.println("\nelements per line: " + elementsPerLine);
         ArrayUtils.print(A, true, elementsPerLine);
     }
+    
+    
+    
+    
 }

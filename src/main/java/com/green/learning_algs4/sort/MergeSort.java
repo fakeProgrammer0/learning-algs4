@@ -2,6 +2,7 @@ package com.green.learning_algs4.sort;
 
 /**
  * standard merge sort reusing the auxiliary array
+ *
  * @see edu.princeton.cs.algs4.Merge
  */
 public class MergeSort
@@ -26,19 +27,23 @@ public class MergeSort
     
     private static <E extends Comparable<E>> void merge(E[] A, E[] aux, int low, int mid, int high)
     {
+        int l = low, r = mid + 1;
         int i = low;
-        for (; i <= mid; i++)
-            aux[i] = A[i];
-        int j = high;
-        for (; j > mid; i++, j--)
-            aux[i] = A[j];
+        while (l <= mid && r <= high)
+        {
+            if (A[l].compareTo(A[r]) <= 0)
+                aux[i++] = A[l++];
+            else aux[i++] = A[r++];
+        }
         
-        int l = low, r = high;
-        int idx = low;
-        while (l <= r)
-            if (aux[l].compareTo(aux[r]) <= 0)
-                A[idx++] = aux[l++];
-            else
-                A[idx++] = aux[r--];
+        if (l > mid)
+            while (r <= high)
+                aux[i++] = A[r++];
+        else // if (r > high)
+            while (l <= mid)
+                aux[i++] = A[l++];
+        
+        for (i = low; i <= high; i++)
+            A[i] = aux[i];
     }
 }
