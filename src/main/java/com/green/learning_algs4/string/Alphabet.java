@@ -124,11 +124,44 @@ public class Alphabet
         return Arrays.copyOf(chars, R);
     }
     
+    private static Alphabet BINARY;
+    private static Alphabet OCT;
+    private static Alphabet DIGIT;
+    private static Alphabet HEX;
     private static Alphabet ASCII;
     private static Alphabet EXTENDED_ASCII;
     private static Alphabet UNICODE;
     private static Alphabet LOWERCASE;
     private static Alphabet UPPERCASE;
+    private static Alphabet BASE64;
+    
+    public static Alphabet BINARY()
+    {
+        if(BINARY == null)
+            BINARY = new Alphabet("01");
+        return BINARY;
+    }
+    
+    public static Alphabet OCT()
+    {
+        if(OCT == null)
+            OCT = new Alphabet("01234567");
+        return OCT;
+    }
+    
+    public static Alphabet DIGIT()
+    {
+        if(DIGIT == null)
+            DIGIT = new Alphabet("0123456789");
+        return DIGIT;
+    }
+    
+    public static Alphabet HEX()
+    {
+        if(HEX == null)
+            HEX = new Alphabet("0123456789ABCDEF");
+        return HEX;
+    }
     
     public static Alphabet ASCII()
     {
@@ -193,6 +226,23 @@ public class Alphabet
             UPPERCASE = new Alphabet(tokens);
         }
         return UPPERCASE;
+    }
+    
+    public static Alphabet BASE64()
+    {
+        if(BASE64 == null)
+        {
+            StringBuilder tokens = new StringBuilder(64);
+            for(int r = 0; r < 26; r++)
+                tokens.append((char)('A' + r));
+            for(int r = 0; r < 26; r++)
+                tokens.append((char)('a' + r));
+            for(int r = 0; r < 10; r++)
+                tokens.append((char)('0' + r));
+            tokens.append("+/");
+            BASE64 = new Alphabet(tokens.toString());
+        }
+        return BASE64;
     }
     
     public char sample()
