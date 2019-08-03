@@ -2,7 +2,6 @@ package com.green.learning_algs4.st;
 
 import com.green.learning_algs4.list.XArrayList;
 import com.green.learning_algs4.list.XList;
-import com.green.learning_algs4.set.XLinkedHashSet;
 import com.green.learning_algs4.string.Alphabet;
 import com.green.learning_algs4.util.ArrayUtils;
 import com.green.learning_algs4.util.FileUtils;
@@ -66,12 +65,21 @@ class TriesSTTest
         }
         System.out.println();
         
-        assertEquals("by", tries.longestPrefixOf("bye"));
-        assertEquals("sea", tries.longestPrefixOf("seam"));
-        assertEquals("she", tries.longestPrefixOf("she"));
-        assertNotEquals("she", tries.longestPrefixOf("shell"));
-        assertEquals("shell", tries.longestPrefixOf("shell"));
-        assertEquals("", tries.longestPrefixOf("abc"));
+        assertEquals("b", tries.longestPrefix("bat"));
+        assertEquals("by", tries.longestPrefix("bye"));
+        assertEquals("sea", tries.longestPrefix("seam"));
+        assertEquals("she", tries.longestPrefix("she"));
+        assertNotEquals("she", tries.longestPrefix("shell"));
+        assertEquals("shell", tries.longestPrefix("shell"));
+        assertEquals("", tries.longestPrefix("abc"));
+    
+        assertEquals("", tries.longestPrefixKeyMatch("bat"));
+        assertEquals("by", tries.longestPrefixKeyMatch("bye"));
+        assertEquals("sea", tries.longestPrefixKeyMatch("seam"));
+        assertEquals("she", tries.longestPrefixKeyMatch("she"));
+        assertEquals("she", tries.longestPrefixKeyMatch("shell"));
+        assertNotEquals("shell", tries.longestPrefixKeyMatch("shell"));
+        assertEquals("", tries.longestPrefixKeyMatch("abc"));
         
         assertEquals(keys.length, tries.size());
         
@@ -80,7 +88,7 @@ class TriesSTTest
     
         tries.remove("");
         assertEquals(keys.length - 1,tries.size());
-        assertEquals("", tries.longestPrefixOf("abc"));
+        assertEquals("", tries.longestPrefix("abc"));
         tries.put("", 11);
         assertEquals(11, tries.get(""));
     

@@ -8,8 +8,14 @@ import com.green.learning_algs4.set.XSet;
 import com.green.learning_algs4.string.Alphabet;
 
 import java.util.Iterator;
-import java.util.Map;
 
+/**
+ * A String symbol table implemented by R-way tries, which supports empty string key.
+ * It supports several character-based operations.
+ *
+ * @param <V> value type
+ * @see edu.princeton.cs.algs4.TrieST
+ */
 public class TriesST<V> implements StringST<V>
 {
     private static class Node<Value>
@@ -95,12 +101,13 @@ public class TriesST<V> implements StringST<V>
      *
      * @param key   string key
      * @param value the associated value
-     * @throws IllegalArgumentException if {@code value} is null
+     * @throws IllegalArgumentException if either {@code key} or {@code value} is null
      *                                  if {@code key} contains any character not in the {@code alphabet}
      */
     @Override
     public void put(String key, V value)
     {
+        if (key == null) throw new IllegalArgumentException("null key isn't supported");
         if (value == null) throw new IllegalArgumentException("null value isn't supported");
         int[] keyIndices = alphabet.toIndices(key);
         root = put(root, keyIndices, value, 0); // update root
@@ -141,9 +148,9 @@ public class TriesST<V> implements StringST<V>
     
     private Node<V> get(Node<V> x, int[] keyIndices, int d)
     {
-        if (x == null) return null; // null root
+        if (x == null) return null; // null root or null link of empty leaf
         if (d == keyIndices.length) return x;
-        if (x.next == null) return null; // x has no leafs
+        if (x.next == null) return null; // x is leaf, has no kids
         
         int index = keyIndices[d];
         return get(x.next[index], keyIndices, d + 1);
@@ -241,10 +248,11 @@ public class TriesST<V> implements StringST<V>
     @Override
     public Iterable<String> orderKeys()
     {
-        XQueue<String> queue = new XArrayQueue<>(size);
-        StringBuilder prefix = new StringBuilder();
-        collect(root, prefix, queue);
-        return queue;
+//        XQueue<String> queue = new XArrayQueue<>(size);
+//        StringBuilder prefix = new StringBuilder();
+//        collect(root, prefix, queue);
+//        return queue;
+        return keysWithPrefix("");
     }
     
     private void collect(Node<V> x, StringBuilder prefix, XQueue<String> queue)
@@ -280,13 +288,14 @@ public class TriesST<V> implements StringST<V>
     public Iterable<String> keysMatch(String pattern)
     {
         XQueue<String> queue = new XLinkedQueue<>();
-        wildMatch(root, pattern, new StringBuilder(), 0, queue);
+        wildMatch(root, pattern, new StringBuilder(), queue);
         return queue;
     }
     
-    private void wildMatch(Node<V> x, String pattern, StringBuilder prefix, int d, XQueue<String> queue)
+    private void wildMatch(Node<V> x, String pattern, StringBuilder prefix, XQueue<String> queue)
     {
         if (x == null) return;
+        int d = prefix.length();
         if (d == pattern.length())
         {
             if (x.value != null)
@@ -294,45 +303,47 @@ public class TriesST<V> implements StringST<V>
             return;
         }
         
+        if (x.next == null) return;
+        
         char c = pattern.charAt(d);
         if (c == WILDCAST_TOKEN)
         {
-            if (x.next != null)
-                for (int r = 0; r < R; r++)
-                    if (x.next[r] != null)
-                    {
-                        prefix.append(alphabet.toChar(r));
-                        wildMatch(x.next[r], pattern, prefix, d + 1, queue);
-                        prefix.deleteCharAt(prefix.length() - 1);
-                    }
+            for (int r = 0; r < R; r++)
+                if (x.next[r] != null)
+                {
+                    prefix.append(alphabet.toChar(r));
+                    wildMatch(x.next[r], pattern, prefix, queue);
+                    prefix.deleteCharAt(prefix.length() - 1);
+                }
         } else
         {
             int index = alphabet.toIndex(c);
-            if (x.next != null && x.next[index] != null)
+            if (x.next[index] != null)
             {
                 prefix.append(c);
-                wildMatch(x.next[index], pattern, prefix, d + 1, queue);
+                wildMatch(x.next[index], pattern, prefix, queue);
                 prefix.deleteCharAt(prefix.length() - 1);
             }
         }
     }
     
     @Override
-    public String longestPrefixOf(String str)
+    public String longestPrefix(String query)
     {
+        if(query == null) throw new IllegalArgumentException("null prefix isn't allowed");
         // extract valid characters contained in the alphabet
         StringBuilder validPrefix = new StringBuilder();
-        // null pointer if str == null
-        for (int i = 0; i < str.length(); i++)
+        // null pointer if query == null
+        for (int i = 0; i < query.length(); i++)
         {
-            char c = str.charAt(i);
+            char c = query.charAt(i);
             if (!alphabet.contains(c)) break;
             validPrefix.append(c);
         }
         
         int[] keyIndices = alphabet.toIndices(validPrefix.toString());
         int len = search(root, keyIndices, 0);
-        return str.substring(0, len);
+        return query.substring(0, len);
     }
     
     private int search(Node<V> x, int[] keyIndices, int d)
@@ -346,5 +357,37 @@ public class TriesST<V> implements StringST<V>
             return search(x.next[index], keyIndices, d + 1);
         
         return d;
+    }
+    
+    @Override
+    public String longestPrefixKeyMatch(String query)
+    {
+        if(query == null) throw new IllegalArgumentException("null prefix isn't allowed");
+        // extract valid characters contained in the alphabet
+        StringBuilder validPrefix = new StringBuilder();
+        // null pointer if query == null
+        for (int i = 0; i < query.length(); i++)
+        {
+            char c = query.charAt(i);
+            if (!alphabet.contains(c)) break;
+            validPrefix.append(c);
+        }
+
+        int[] keyIndices = alphabet.toIndices(validPrefix.toString());
+        int len = search(root, keyIndices, 0, 0);
+        return query.substring(0, len);
+    }
+
+    private int search(Node<V> x, int[] keyIndices, int d, int length)
+    {
+        if (x == null) return length; // null root
+        if (x.value != null) length = d; // update match length
+        if(d == keyIndices.length) return length;
+
+        int index = keyIndices[d];
+        if (x.next != null && x.next[index] != null)
+            return search(x.next[index], keyIndices, d + 1, length);
+
+        return length;
     }
 }

@@ -12,5 +12,7 @@ public interface StringST<V> extends ST<String, V>
     
     Iterable<String> keysMatch(String pattern);
     
-    String longestPrefixOf(String str);
+    String longestPrefix(String str);
+    
+    String longestPrefixKeyMatch(String query);
 }
