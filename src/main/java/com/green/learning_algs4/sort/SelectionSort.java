@@ -1,5 +1,11 @@
 package com.green.learning_algs4.sort;
 
+/**
+ * selection sort
+ *  time efficiency: O(N^2)
+ * space efficiency: O(1)
+ * Unstable!!!
+ */
 public class SelectionSort
 {
     public static <E extends Comparable<E>> void sort(E[] A)

@@ -2,9 +2,7 @@ package com.green.learning_algs4.sort;
 
 import com.green.learning_algs4.util.ArrayUtils;
 import com.green.learning_algs4.util.XTimer;
-import edu.princeton.cs.algs4.Quick;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -144,7 +142,7 @@ public class SortTest
 //        final int N = 8;
         final int epoches = 1_000;
         
-        assertTrue(Sorts.isProbablyStable(
+        assertTrue(Sorts.isProbablyStableSort(
                 getSortMethod(sortClazz), epoches, N));
     }
     
@@ -167,7 +165,7 @@ public class SortTest
         final int N = 1_000;
         final int epoches = 1_000;
         
-        assertFalse(Sorts.isProbablyStable(
+        assertFalse(Sorts.isProbablyStableSort(
                 getSortMethod(sortClazz), epoches, N));
     }
     

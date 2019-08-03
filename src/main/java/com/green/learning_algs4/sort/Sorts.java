@@ -119,7 +119,7 @@ public class Sorts
      *
      * @param sortMethod a generic sorting method taking a Comparable array as
      *                   argument, which may be declared as:
-     *                   public static <E extends Comparable<E>> void sort(E[] A)
+     *                   {@code public static <E extends Comparable<E>> void sort(E[] A)}
      * @param epoches    the number of sorting tests to be run
      * @param N          the number of elements to be sorted
      * @return false if the sorting method isn't stable
@@ -127,7 +127,7 @@ public class Sorts
      * @throws IllegalArgumentException if the sorting method cannot correctly sort
      *                                  the elements
      */
-    public static boolean isProbablyStable(Method sortMethod, int epoches, int N)
+    public static boolean isProbablyStableSort(Method sortMethod, int epoches, int N)
     {
         int bound = N / 4; // generate duplicate integers
         if (bound < 0) bound = 1;
@@ -147,6 +147,7 @@ public class Sorts
             
             validateSort(origin, sorted);
 
+            // use stable sorting method to sort the original array
 //            MergeSortOpt.sort(origin);
             Arrays.sort(origin);
             

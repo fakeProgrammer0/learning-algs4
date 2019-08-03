@@ -3,7 +3,6 @@ package com.green.learning_algs4.sort;
 import com.green.learning_algs4.string.Alphabet;
 import com.green.learning_algs4.util.ArrayUtils;
 import com.green.learning_algs4.util.XTimer;
-import edu.princeton.cs.algs4.InplaceMSD;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -107,7 +106,7 @@ class MSDStringSortTest
 //        MSDStringSort.sort(A);
 //        MSDStringSortOpt.sort(A);
 //        QuickSort3WayString.sort(A);
-        RestrictedMSDStringSort.sort(Alphabet.LOWERCASE(), A);
+        MSDStringSortBounded.sort(Alphabet.LOWERCASE(), A);
         
         assertTrue(ArrayUtils.isSorted(A));
         ArrayUtils.print(A,false);
@@ -263,7 +262,7 @@ class MSDStringSortTest
     
         B = Arrays.copyOf(A, N);
         timer.start("Restricted MSD");
-        RestrictedMSDStringSort.sort(alphabet, B);
+        MSDStringSortBounded.sort(alphabet, B);
         timer.stop();
         assertTrue(ArrayUtils.isSorted(B));
     

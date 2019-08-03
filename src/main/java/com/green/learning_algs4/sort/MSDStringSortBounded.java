@@ -4,11 +4,11 @@ import com.green.learning_algs4.string.Alphabet;
 
 /**
  * Modified Significant Digit First String Sort
- * Uses a restricted alphabet rather than the whole unicode character
+ * Uses a given alphabet rather than the whole unicode character
  * @see MSDStringSort
  * @see edu.princeton.cs.algs4.MSD
  */
-public class RestrictedMSDStringSort
+public class MSDStringSortBounded
 {
     private final Alphabet alphabet;
     private final int R;
@@ -17,7 +17,7 @@ public class RestrictedMSDStringSort
     
     private static final int INSERTION_CUTOFF = 15;
     
-    public RestrictedMSDStringSort(Alphabet alphabet, String[] A)
+    public MSDStringSortBounded(Alphabet alphabet, String[] A)
     {
         this.alphabet = alphabet;
         this.R = alphabet.R();
@@ -28,7 +28,7 @@ public class RestrictedMSDStringSort
     
     public static void sort(Alphabet alphabet, String[] A)
     {
-        new RestrictedMSDStringSort(alphabet, A);
+        new MSDStringSortBounded(alphabet, A);
     }
     
     private void sort(int d, int low, int high)

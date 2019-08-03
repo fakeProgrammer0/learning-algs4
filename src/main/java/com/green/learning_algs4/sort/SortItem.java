@@ -2,6 +2,10 @@ package com.green.learning_algs4.sort;
 
 import java.util.Random;
 
+/**
+ * A simple k-v wrapper object used for testing sort stability
+ * used in {@code Sorts.isProbablyStableSort}
+ */
 class SortItem implements Comparable<SortItem>
 {
     private final int key;

@@ -2,7 +2,7 @@ package com.green.learning_algs4.sort;
 
 /**
  * merge sort with array creations overhead
- * special type of merge, causes the whole merge sort to be unstable
+ * use special type of merge, causing the whole merge sort to be unstable
  * @see edu.princeton.cs.algs4.Merge
  */
 public class MergeSortX
