@@ -10,11 +10,12 @@ import com.green.learning_algs4.string.Alphabet;
 import java.util.Iterator;
 
 /**
- * A String symbol table implemented by R-way tries, which supports empty string key.
- * It supports several character-based operations.
- *
+ * A String symbol table implemented by R-way tries. It implements several
+ * character-based operations specified in {@code StringST} interface.
+ * It also accepts empty string as a key.
  * @param <V> value type
- * @see edu.princeton.cs.algs4.TrieST
+ * @see StringST for string symbol table
+ * @see edu.princeton.cs.algs4.TrieST for similar implementation
  */
 public class TriesST<V> implements StringST<V>
 {
@@ -61,7 +62,6 @@ public class TriesST<V> implements StringST<V>
     
     private boolean invalidKey(String key)
     {
-//        if (key == null || key.isEmpty()) return true;
         if (key == null) return true;
         
         // allow empty string
@@ -97,9 +97,9 @@ public class TriesST<V> implements StringST<V>
     }
     
     /**
-     * put <K, V> in the tries
-     *
-     * @param key   string key
+     * Store a key and its associated value in the tries. When {@code key} also exists in
+     * the tries, just update its associated value.
+     * @param key   string key, can be an empty string
      * @param value the associated value
      * @throws IllegalArgumentException if either {@code key} or {@code value} is null
      *                                  if {@code key} contains any character not in the {@code alphabet}
@@ -111,7 +111,7 @@ public class TriesST<V> implements StringST<V>
         if (value == null) throw new IllegalArgumentException("null value isn't supported");
         int[] keyIndices = alphabet.toIndices(key);
         root = put(root, keyIndices, value, 0); // update root
-        validateNodeSize();
+//        validateNodeSize(); // for debug
     }
     
     private Node<V> put(Node<V> x, int[] keyIndices, V value, int d)
@@ -163,7 +163,7 @@ public class TriesST<V> implements StringST<V>
         
         int[] keyIndices = alphabet.toIndices(key);
         root = remove(root, keyIndices, 0); // update root
-        validateNodeSize();
+//        validateNodeSize(); // for debug
     }
     
     private Node<V> remove(Node<V> x, int[] keyIndices, int d)
@@ -328,7 +328,7 @@ public class TriesST<V> implements StringST<V>
     }
     
     @Override
-    public String longestPrefix(String query)
+    public String longestCommonPrefix(String query)
     {
         if(query == null) throw new IllegalArgumentException("null prefix isn't allowed");
         // extract valid characters contained in the alphabet
