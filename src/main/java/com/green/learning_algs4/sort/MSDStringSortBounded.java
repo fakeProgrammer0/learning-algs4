@@ -20,7 +20,7 @@ public class MSDStringSortBounded
     public MSDStringSortBounded(Alphabet alphabet, String[] A)
     {
         this.alphabet = alphabet;
-        this.R = alphabet.R();
+        this.R = alphabet.radix();
         this.A = A;
         this.aux = new String[A.length];
         sort(0, 0, A.length - 1);

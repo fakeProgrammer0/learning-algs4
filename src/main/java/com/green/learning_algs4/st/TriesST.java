@@ -1,6 +1,5 @@
 package com.green.learning_algs4.st;
 
-import com.green.learning_algs4.list.XArrayQueue;
 import com.green.learning_algs4.list.XLinkedQueue;
 import com.green.learning_algs4.list.XQueue;
 import com.green.learning_algs4.set.XLinkedHashSet;
@@ -38,7 +37,7 @@ public class TriesST<V> implements StringST<V>
     public TriesST(Alphabet alphabet)
     {
         this.alphabet = alphabet;
-        this.R = alphabet.R();
+        this.R = alphabet.radix();
     }
     
     @SuppressWarnings("unchecked")

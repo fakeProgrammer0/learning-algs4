@@ -20,7 +20,7 @@ public class KMP
             if (pattern == null || pattern.isEmpty())
                 throw new IllegalArgumentException("pattern is null or empty");
             alphabet = new Alphabet(pattern);
-            int R = alphabet.R();
+            int R = alphabet.radix();
             
             final int M = pattern.length();
             stateTrans = new int[R][M];

@@ -12,7 +12,7 @@ class AlphabetTest
 //        Alphabet alphabet = Alphabet.BASE64();
         Alphabet alphabet = Alphabet.UPPERCASE();
         
-        for(int r = 0; r < alphabet.R(); r++)
+        for(int r = 0; r < alphabet.radix(); r++)
             System.out.printf("%d : %c\n", r, alphabet.toChar(r));
     }
     

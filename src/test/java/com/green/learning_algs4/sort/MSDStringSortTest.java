@@ -224,7 +224,7 @@ class MSDStringSortTest
 //        Alphabet alphabet = Alphabet.UPPERCASE();
         Alphabet alphabet = Alphabet.EXTENDED_ASCII();
         
-        final int R = alphabet.R();
+        final int R = alphabet.radix();
         
         // debug
 //        final int N = 16;

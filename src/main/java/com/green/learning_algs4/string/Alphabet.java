@@ -74,7 +74,7 @@ public class Alphabet implements Iterable<Character>
         return char2Index.get(c);
     }
     
-    public int R()
+    public int radix()
     {
         return R;
     }
