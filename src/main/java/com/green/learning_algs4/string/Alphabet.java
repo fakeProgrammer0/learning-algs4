@@ -10,7 +10,7 @@ import java.util.*;
  *
  * @see edu.princeton.cs.algs4.Alphabet
  */
-public class Alphabet
+public class Alphabet implements Iterable<Character>
 {
     private final int R; // the size of the Alphabet
     private final char[] chars; // forward index
@@ -27,15 +27,14 @@ public class Alphabet
             throw new IllegalArgumentException("null or empty tokens");
         
         Map<Character, Integer> invertedIndex = new HashMap<>();
-        for (int i = 0; i < tokens.length; )
+        for (int i = 0, r = 0; i < tokens.length; i++)
         {
             char token = tokens[i];
-            
             if (invertedIndex.containsKey(token))
 //                throw new IllegalArgumentException("duplicate token <" + token + ">: tokens["
 //                        + invertedIndex.get(token) + "] and tokens[" + i + "]");
                 continue;
-            invertedIndex.put(token, i++);
+            invertedIndex.put(token, r++);
         }
         
         char2Index = Collections.unmodifiableMap(invertedIndex);
@@ -123,6 +122,39 @@ public class Alphabet
     public char[] getChars()
     {
         return Arrays.copyOf(chars, R);
+    }
+    
+    @Override
+    public Iterator<Character> iterator()
+    {
+        return new AlphabetIterator();
+    }
+    
+    private class AlphabetIterator implements Iterator<Character>
+    {
+        private int index;
+    
+        public AlphabetIterator()
+        {
+        }
+    
+        @Override
+        public boolean hasNext()
+        {
+            return index < R;
+        }
+    
+        @Override
+        public Character next()
+        {
+            return chars[index++];
+        }
+    
+        @Override
+        public void remove()
+        {
+            throw new UnsupportedOperationException();
+        }
     }
     
     private static Alphabet BINARY;

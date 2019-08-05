@@ -34,22 +34,25 @@ public class SubstringTest
                 "party. Now is the time for all good people to come to the aid of their party. Now is the time for all good\n" +
                 "Democrats to come to the aid of their party.";
         
-        String pattern = "attack at dawn";
+        String[] patterns = {
+                "attack at dawn",
+                "party",
+                "Democrats to come",
+                "Democrats",
+                "Democratstocome",
+                "Republican"
+        };
         
-        int index = KMP.search(text, pattern);
-        assertEquals(index, text.indexOf(pattern));
-    
-        Scanner scanner = new Scanner(System.in);
-        do{
-            System.out.print("pattern: ");
-            pattern = scanner.nextLine();
-            index = KMP.search(text, pattern);
-            assertEquals(index,text.indexOf(pattern));
+        for (String pattern : patterns)
+        {
+            System.out.printf("pattern: %s\n", pattern);
+            int index = KMP.search(text, pattern);
+            assertEquals(index, text.indexOf(pattern));
             System.out.printf("index: %d\n\n", index);
-        }while (scanner.hasNext());
+        }
     }
     
-    public static void main(String[]args)
+    public static void main(String[] args)
     {
         String text = "Now is the time for all people to come to the aid of their party. Now is the time for all good people to\n" +
                 "come to the aid of their party. Now is the time for many good people to come to the aid of their party.\n" +
@@ -78,13 +81,14 @@ public class SubstringTest
         assertEquals(index, text.indexOf(pattern));
         
         Scanner scanner = new Scanner(System.in);
-        do{
+        do
+        {
             System.out.print("pattern: ");
             System.out.flush();
             pattern = scanner.nextLine();
             index = KMP.search(text, pattern);
-            assertEquals(index,text.indexOf(pattern));
+            assertEquals(index, text.indexOf(pattern));
             System.out.printf("index: %d\n\n", index);
-        }while (scanner.hasNext());
+        } while (scanner.hasNext());
     }
 }
