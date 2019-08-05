@@ -7,6 +7,7 @@ import java.util.*;
  * only use a limited range of characters rather than
  * the unicode set defined by java char.
  * immutable
+ *
  * @see edu.princeton.cs.algs4.Alphabet
  */
 public class Alphabet
@@ -137,35 +138,35 @@ public class Alphabet
     
     public static Alphabet BINARY()
     {
-        if(BINARY == null)
+        if (BINARY == null)
             BINARY = new Alphabet("01");
         return BINARY;
     }
     
     public static Alphabet OCT()
     {
-        if(OCT == null)
+        if (OCT == null)
             OCT = new Alphabet("01234567");
         return OCT;
     }
     
     public static Alphabet DIGIT()
     {
-        if(DIGIT == null)
+        if (DIGIT == null)
             DIGIT = new Alphabet("0123456789");
         return DIGIT;
     }
     
     public static Alphabet HEX()
     {
-        if(HEX == null)
+        if (HEX == null)
             HEX = new Alphabet("0123456789ABCDEF");
         return HEX;
     }
     
     public static Alphabet ASCII()
     {
-        if(ASCII == null)
+        if (ASCII == null)
         {
             int R = 2 << 7;
             char[] tokens = new char[R];
@@ -178,7 +179,7 @@ public class Alphabet
     
     public static Alphabet EXTENDED_ASCII()
     {
-        if(EXTENDED_ASCII == null)
+        if (EXTENDED_ASCII == null)
         {
             int R = 2 << 8;
             char[] tokens = new char[R];
@@ -191,7 +192,7 @@ public class Alphabet
     
     public static Alphabet UNICODE()
     {
-        if(UNICODE == null)
+        if (UNICODE == null)
         {
             int R = Character.MAX_VALUE + 1;
             char[] tokens = new char[R];
@@ -204,7 +205,7 @@ public class Alphabet
     
     public static Alphabet LOWERCASE()
     {
-        if(LOWERCASE == null)
+        if (LOWERCASE == null)
         {
             int R = 26;
             char[] tokens = new char[R];
@@ -217,7 +218,7 @@ public class Alphabet
     
     public static Alphabet UPPERCASE()
     {
-        if(UPPERCASE == null)
+        if (UPPERCASE == null)
         {
             int R = 26;
             char[] tokens = new char[R];
@@ -230,15 +231,15 @@ public class Alphabet
     
     public static Alphabet BASE64()
     {
-        if(BASE64 == null)
+        if (BASE64 == null)
         {
             StringBuilder tokens = new StringBuilder(64);
-            for(int r = 0; r < 26; r++)
-                tokens.append((char)('A' + r));
-            for(int r = 0; r < 26; r++)
-                tokens.append((char)('a' + r));
-            for(int r = 0; r < 10; r++)
-                tokens.append((char)('0' + r));
+            for (int r = 0; r < 26; r++)
+                tokens.append((char) ('A' + r));
+            for (int r = 0; r < 26; r++)
+                tokens.append((char) ('a' + r));
+            for (int r = 0; r < 10; r++)
+                tokens.append((char) ('0' + r));
             tokens.append("+/");
             BASE64 = new Alphabet(tokens.toString());
         }
@@ -247,7 +248,7 @@ public class Alphabet
     
     public char sample()
     {
-        int rndIndex = (int)(Math.random() * R);
+        int rndIndex = (int) (Math.random() * R);
         return chars[rndIndex];
     }
     
@@ -259,9 +260,30 @@ public class Alphabet
     {
         char[] samples = new char[N];
         Random rnd = new Random();
-        for(int i = 0; i < N; i++)
+        for (int i = 0; i < N; i++)
             samples[i] = chars[rnd.nextInt(R)];
         
         return samples;
+    }
+    
+    public String rndString(int length)
+    {
+        return new String(samples(length));
+    }
+    
+    public String[] rndStrings(int N, int maxLength)
+    {
+        Random rnd = new Random();
+        String[] results = new String[N];
+        char[] aux = new char[maxLength];
+        int bound = maxLength + 1;
+        for (int i = 0; i < N; i++)
+        {
+            int len = rnd.nextInt(bound);
+            for (int j = 0; j < len; j++)
+                aux[j] = chars[rnd.nextInt(R)];
+            results[i] = new String(aux, 0, len);
+        }
+        return results;
     }
 }
