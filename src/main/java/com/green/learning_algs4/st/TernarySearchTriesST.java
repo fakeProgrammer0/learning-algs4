@@ -87,7 +87,8 @@ public class TernarySearchTriesST<V> implements StringST<V>
     public V get(String key)
     {
         validateKey(key);
-        Node<V> x = get(root, key, 0);
+//        Node<V> x = get(root, key, 0);
+        Node<V> x = get(root, key);
         return x == null ? null : x.value;
     }
     
@@ -95,12 +96,38 @@ public class TernarySearchTriesST<V> implements StringST<V>
     {
         if (x == null) return null;
 //        assert key.length() > 0;
-        int c = key.charAt(d);
+        char c = key.charAt(d);
         if (c < x.c) return get(x.left, key, d);
         else if (c > x.c) return get(x.right, key, d);
         else if (d < key.length() - 1)
             return get(x.mid, key, d + 1);
         else return x;
+    }
+    
+    /**
+     * get the node with specific key
+     * Non recursive version
+     * @param x search start node
+     * @param key string key
+     * @return the node with specific key
+     */
+    private Node<V> get(Node<V> x, String key)
+    {
+//        Node<V> x = root;
+//        assert !key.isEmpty();
+        int d = 0;
+        while (x != null)
+        {
+            char c = key.charAt(d);
+            if (c < x.c) x = x.left;
+            else if (c > x.c) x = x.right;
+            else {
+                d++;
+                if(d == key.length()) break;
+                x = x.mid;
+            }
+        }
+        return x;
     }
     
     @Override
@@ -197,7 +224,8 @@ public class TernarySearchTriesST<V> implements StringST<V>
         if (prefix.isEmpty())
             return orderKeys();
         
-        Node<V> x = get(root, prefix, 0);
+//        Node<V> x = get(root, prefix, 0);
+        Node<V> x = get(root, prefix);
         XQueue<String> queue = new XLinkedQueue<>();
         if (x != null)
         {

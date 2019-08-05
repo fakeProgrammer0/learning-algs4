@@ -290,30 +290,6 @@ class TriesSTTest
     }
     
     @Test
-    void testTST()
-    {
-        TST<Integer> tst = new TST<>();
-        assertThrows(IllegalArgumentException.class, () -> tst.put("", 0));
-        
-        tst.put("123", 123);
-        tst.put("b", 232);
-        tst.put("ahoagja", 1217);
-        
-        assertEquals(3, tst.size());
-        tst.put("b", null);
-        assertEquals(3, tst.size());
-        assertNull(tst.get("b"));
-        
-        int cnt = 0;
-        for (String key : tst.keys())
-        {
-            cnt++;
-            System.out.print(key + " ");
-        }
-        assertEquals(2, cnt);
-    }
-    
-    @Test
     void testTSTDelete()
     {
         // The whole test routine passes, but something is wrong...
@@ -345,5 +321,39 @@ class TriesSTTest
         // only get 2 keys, inconsistent with size == 3
         assertEquals(2, cnt);
         assertEquals(3, tst.size());
+    }
+    
+    @Test
+    void testTSTDeleteAfterFix()
+    {
+        // The whole test routine passes
+        
+        TST<Integer> tst = new TST<>();
+        tst.put("a", 1);
+        tst.put("b", 2);
+        tst.put("c", 3);
+        assertEquals(3, tst.size());
+        
+        /*
+        use put method to remove b from the TST, as suggested by the
+        api contract "If the value is {@code null}, this effectively
+        deletes the key from the symbol table."
+         */
+        tst.put("b", null);
+        
+        // expected tst.size() == 2, but was 3
+        assertEquals(2, tst.size());
+        assertNull(tst.get("b"));
+        
+        int cnt = 0;
+        for (String key : tst.keys())
+        {
+            cnt++;
+            assertNotEquals("b", key);
+            System.out.print(key + " ");
+        }
+        // only get 2 keys, inconsistent with size == 3
+        assertEquals(2, cnt);
+        assertEquals(2, tst.size());
     }
 }
