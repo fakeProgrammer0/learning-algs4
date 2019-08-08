@@ -20,6 +20,8 @@ public abstract class AbstractTries implements OrderedStringCollection
         protected abstract boolean isEndOfStr();
         
         protected abstract void removeEndOfStr();
+        
+        protected abstract Object getNodeValue();
     }
     
     /**
@@ -60,6 +62,15 @@ public abstract class AbstractTries implements OrderedStringCollection
         return validPrefixLength(str) != str.length();
     }
     
+    protected void validateStr(String str)
+    {
+        checkNullStr(str);
+        for(int i = 0; i < str.length(); i++)
+            if(!alphabet.contains(str.charAt(i)))
+                throw new IllegalArgumentException("character <" + str.charAt(i)
+                        + "> isn't contained in the alphabet");
+    }
+    
     public int size()
     {
         return size;
@@ -96,7 +107,7 @@ public abstract class AbstractTries implements OrderedStringCollection
         assert cnt == x.kids;
     }
     
-    protected Node get(String str)
+    protected Node getNode(String str)
     {
         checkNullStr(str);
         
@@ -115,13 +126,13 @@ public abstract class AbstractTries implements OrderedStringCollection
         checkNullStr(str);
         if (invalidStr(str)) return false;
         
-        Node x = get(str);
+        Node x = getNode(str);
         return x != null && x.isEndOfStr();
     }
     
-    public boolean remove(String str)
+    protected Object removeNode(String str)
     {
-        if (invalidStr(str)) return false;
+        if (invalidStr(str)) return null;
         
         Node x = root;
         XStack<Node> ancestors = new XLinkedStack<>();
@@ -129,7 +140,7 @@ public abstract class AbstractTries implements OrderedStringCollection
         int index = -1;
         for (int d = 0; d < str.length(); d++)
         {
-            if (x == null || x.next == null) return false;
+            if (x == null || x.next == null) return null;
             index = alphabet.toIndex(str.charAt(d));
             ancestors.push(x);
             nodeIndices.push(index);
@@ -137,8 +148,9 @@ public abstract class AbstractTries implements OrderedStringCollection
         }
         
         if (x == null || !x.isEndOfStr())
-            return false;
+            return null;
         
+        Object retVal = x.getNodeValue();
         x.removeEndOfStr();
         size--;
         while (x.kids == 0)
@@ -154,7 +166,7 @@ public abstract class AbstractTries implements OrderedStringCollection
         }
         
         checkNodeSize(); // for debug
-        return true;
+        return retVal;
     }
     
     public void clear()
@@ -170,14 +182,14 @@ public abstract class AbstractTries implements OrderedStringCollection
     
     public Iterable<String> keysWithPrefix(String prefix)
     {
-        Node x = get(prefix);
+        Node x = getNode(prefix);
         XQueue<String> queue = new XLinkedQueue<>();
         if (x == null) return queue;
         collect(x, new StringBuilder(prefix), queue);
         return queue;
     }
     
-    protected void collect(Node x, StringBuilder prefix, XQueue<String> queue)
+    private void collect(Node x, StringBuilder prefix, XQueue<String> queue)
     {
         if (x == null) return;
         if (x.isEndOfStr())

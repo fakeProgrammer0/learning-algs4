@@ -1,4 +1,4 @@
-package com.green.learning_algs4.st;
+package com.green.learning_algs4.string;
 
 import com.green.learning_algs4.list.XLinkedQueue;
 import com.green.learning_algs4.list.XQueue;
@@ -12,7 +12,7 @@ import java.util.Iterator;
  * @see OrderedStringST for string symbol table
  * @see edu.princeton.cs.algs4.TST for similar implementation
  */
-public class TernarySearchTriesST<V> implements OrderedStringST<V>
+public class TernarySearchTriesSTFull<V> implements OrderedStringST<V>
 {
     private static class Node<Value>
     {
@@ -30,7 +30,7 @@ public class TernarySearchTriesST<V> implements OrderedStringST<V>
     private Node<V> root;
     private int size = 0;
     
-    public TernarySearchTriesST()
+    public TernarySearchTriesSTFull()
     {
     }
     

@@ -27,7 +27,7 @@ public class StringSetTest
         for (int i = 0; i < keys.length; i++)
         {
             tries.add(keys[i]);
-            assertTrue(tries.containsKey(keys[i]));
+            assertTrue(tries.contains(keys[i]));
             assertEquals(i + 1, tries.size());
         }
         
@@ -78,7 +78,7 @@ public class StringSetTest
         for (int i = 0; i < keys.length; i++)
         {
             tries.remove(keys[i]);
-            assertFalse(tries.containsKey(keys[i]));
+            assertFalse(tries.contains(keys[i]));
             assertEquals(keys.length - i - 1, tries.size());
         }
         

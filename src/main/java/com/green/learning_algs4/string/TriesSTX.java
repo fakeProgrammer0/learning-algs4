@@ -1,10 +1,9 @@
-package com.green.learning_algs4.st;
+package com.green.learning_algs4.string;
 
 import com.green.learning_algs4.list.XLinkedQueue;
 import com.green.learning_algs4.list.XQueue;
 import com.green.learning_algs4.set.XLinkedHashSet;
 import com.green.learning_algs4.set.XSet;
-import com.green.learning_algs4.string.Alphabet;
 
 import java.util.Iterator;
 
@@ -16,7 +15,7 @@ import java.util.Iterator;
  * @see OrderedStringST for string symbol table
  * @see edu.princeton.cs.algs4.TrieST for similar implementation
  */
-public class TriesST<V> implements OrderedStringST<V>
+public class TriesSTX<V> implements OrderedStringST<V>
 {
     private static class Node<Value>
     {
@@ -34,7 +33,7 @@ public class TriesST<V> implements OrderedStringST<V>
     
     private Node<V> root; // default null
     
-    public TriesST(Alphabet alphabet)
+    public TriesSTX(Alphabet alphabet)
     {
         this.alphabet = alphabet;
         this.R = alphabet.radix();

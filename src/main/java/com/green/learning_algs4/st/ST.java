@@ -2,6 +2,12 @@ package com.green.learning_algs4.st;
 
 import com.green.learning_algs4.set.XSet;
 
+/**
+ *
+ * @param <K> key type
+ * @param <V> value type
+ * @see java.util.Map
+ */
 public interface ST<K, V> extends Iterable<ST.Entry<K, V>>
 {
     class Entry<K, V>

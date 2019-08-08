@@ -1,5 +1,6 @@
-package com.green.learning_algs4.st;
+package com.green.learning_algs4.string;
 
+import com.green.learning_algs4.st.ST;
 import com.green.learning_algs4.string.OrderedStringCollection;
 
 /**

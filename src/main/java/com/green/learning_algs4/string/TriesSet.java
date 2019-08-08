@@ -1,10 +1,5 @@
 package com.green.learning_algs4.string;
 
-import com.green.learning_algs4.list.XLinkedQueue;
-import com.green.learning_algs4.list.XQueue;
-import com.green.learning_algs4.set.XSet;
-import com.green.learning_algs4.st.OrderedStringST;
-
 import java.util.Iterator;
 
 /**
@@ -34,6 +29,12 @@ public class TriesSet extends AbstractTries
         {
             this.endOfStr = false;
         }
+    
+        @Override
+        protected Object getNodeValue()
+        {
+            return endOfStr;
+        }
     }
     
     public TriesSet(Alphabet alphabet)
@@ -52,8 +53,7 @@ public class TriesSet extends AbstractTries
      */
     public boolean add(String str)
     {
-        if (str == null)
-            throw new IllegalArgumentException("null string isn't supported");
+        checkNullStr(str);
         if (invalidStr(str))
             throw new IllegalArgumentException("input string contains " +
                     "character(s) not in the alphabet");
@@ -82,6 +82,14 @@ public class TriesSet extends AbstractTries
         size++;
         checkNodeSize(); // for debug
         return true;
+    }
+    
+    @Override
+    public boolean remove(String str)
+    {
+        Object val = removeNode(str);
+        if(val == null) return false;
+        return (Boolean) val;
     }
     
     public Iterator<String> iterator()

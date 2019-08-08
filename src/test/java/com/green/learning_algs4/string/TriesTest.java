@@ -9,9 +9,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TriesTest
 {
-    private TriesSet initTriesSet(String[] strings)
+    private static TriesSet initTriesSet(Alphabet alphabet, String[] strings)
     {
-        TriesSet triesSet = new TriesSet(Alphabet.LOWERCASE());
+        TriesSet triesSet = new TriesSet(alphabet);
         for (int i = 0; i < strings.length; i++)
         {
             triesSet.add(strings[i]);
@@ -19,6 +19,42 @@ public class TriesTest
             assertEquals(i + 1, triesSet.size());
         }
         return triesSet;
+    }
+    
+    private static TernarySearchTriesSet initTSTSet(String[] strings)
+    {
+        TernarySearchTriesSet triesSet = new TernarySearchTriesSet();
+        for (int i = 0; i < strings.length; i++)
+        {
+            triesSet.add(strings[i]);
+            assertTrue(triesSet.contains(strings[i]));
+            assertEquals(i + 1, triesSet.size());
+        }
+        return triesSet;
+    }
+    
+    private static <V> TriesST<V> initTriesST(Alphabet alphabet, String[] keys, V[] values)
+    {
+        TriesST<V> triesST = new TriesST<>(alphabet);
+        for (int i = 0; i < keys.length; i++)
+        {
+            triesST.put(keys[i], values[i]);
+            assertTrue(triesST.contains(keys[i]));
+            assertEquals(i + 1, triesST.size());
+        }
+        return triesST;
+    }
+    
+    private static <V> TernarySearchTriesST<V> initTSTST(String[] keys, V[] values)
+    {
+        TernarySearchTriesST<V> triesST = new TernarySearchTriesST<>();
+        for (int i = 0; i < keys.length; i++)
+        {
+            triesST.put(keys[i], values[i]);
+            assertTrue(triesST.containsKey(keys[i]));
+            assertEquals(i + 1, triesST.size());
+        }
+        return triesST;
     }
     
     @Test
@@ -34,11 +70,17 @@ public class TriesTest
                 "the",
         };
         
-        AbstractTries tries = initTriesSet(keys);
+//        TriesSet tries = initTriesSet(Alphabet.LOWERCASE(), keys);
+//        TriesST<String> tries = initTriesST(Alphabet.LOWERCASE(), keys, keys);
+        
+//        TernarySearchTriesSet tries = initTSTSet(keys);
+        TernarySearchTriesST<String> tries = initTSTST(keys, keys);
+        
         for (int i = 0; i < keys.length; i++)
         {
             System.out.printf("remove <%s>\n", keys[i]);
-            assertTrue(tries.remove(keys[i]));
+//            assertTrue(tries.remove(keys[i]));
+            tries.remove(keys[i]);
             assertFalse(tries.contains(keys[i]));
             assertEquals(keys.length - 1 - i, tries.size());
         }
@@ -47,12 +89,12 @@ public class TriesTest
         assertEquals(0, tries.size());
     }
     
-    private static void checkWildMatch(AbstractTries tries, String pattern, String... expected)
+    private static void checkWildMatch(OrderedStringCollection tries, String pattern, String... expected)
     {
         checkIterableSetEquals(tries.keysMatch(pattern), expected);
     }
     
-    private static void checkPrefixMatch(AbstractTries tries, String prefix, String... expected)
+    private static void checkPrefixMatch(OrderedStringCollection tries, String prefix, String... expected)
     {
         checkIterableSetEquals(tries.keysWithPrefix(prefix), expected);
     }
@@ -78,7 +120,11 @@ public class TriesTest
                 "the",
         };
         
-        AbstractTries tries = initTriesSet(keys);
+//        AbstractTries tries = initTriesSet(Alphabet.LOWERCASE(), keys);
+//        OrderedStringCollection tries = initTriesST(Alphabet.LOWERCASE(), keys, keys);
+        
+//        OrderedStringCollection tries = initTSTSet(keys);
+        OrderedStringCollection tries = initTSTST(keys, keys);
         
         assertTrue(IterableUtils.isSorted(tries.orderKeys()));
         
