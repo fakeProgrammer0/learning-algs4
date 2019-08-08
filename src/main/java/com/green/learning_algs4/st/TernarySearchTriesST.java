@@ -9,10 +9,10 @@ import java.util.Iterator;
 
 /**
  * @param <V> value type
- * @see StringST for string symbol table
+ * @see OrderedStringST for string symbol table
  * @see edu.princeton.cs.algs4.TST for similar implementation
  */
-public class TernarySearchTriesST<V> implements StringST<V>
+public class TernarySearchTriesST<V> implements OrderedStringST<V>
 {
     private static class Node<Value>
     {

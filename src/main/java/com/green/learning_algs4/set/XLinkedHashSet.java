@@ -1,7 +1,6 @@
 package com.green.learning_algs4.set;
 
 
-
 import com.green.learning_algs4.list.XArrayList;
 import com.green.learning_algs4.list.XList;
 import com.green.learning_algs4.util.MathUtil;
@@ -66,6 +65,13 @@ public class XLinkedHashSet<E> implements XSet<E>
         this.loadFactor = loadFactor;
         
         table = (Node<E>[]) new Node[capacity];
+    }
+    
+    public XLinkedHashSet(Iterable<E> iterable)
+    {
+        this(DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR);
+        for (E e : iterable)
+            add(e);
     }
     
     @Override
@@ -264,5 +270,18 @@ public class XLinkedHashSet<E> implements XSet<E>
     public Iterator<E> iterator()
     {
         return setToList().iterator();
+    }
+    
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof XSet)) return false;
+        XSet<E> set = (XSet<E>) obj;
+        for (E e : set)
+            if (!contains(e))
+                return false;
+        return true;
     }
 }

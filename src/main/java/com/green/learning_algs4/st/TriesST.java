@@ -10,13 +10,13 @@ import java.util.Iterator;
 
 /**
  * A String symbol table implemented by R-way tries. It implements several
- * character-based operations specified in {@code StringST} interface.
+ * character-based operations specified in {@code OrderedStringST} interface.
  * It also accepts empty string as a key.
  * @param <V> value type
- * @see StringST for string symbol table
+ * @see OrderedStringST for string symbol table
  * @see edu.princeton.cs.algs4.TrieST for similar implementation
  */
-public class TriesST<V> implements StringST<V>
+public class TriesST<V> implements OrderedStringST<V>
 {
     private static class Node<Value>
     {

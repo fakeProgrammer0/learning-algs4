@@ -1,13 +1,15 @@
-package com.green.learning_algs4.set;
+package com.green.learning_algs4.string;
 
 import com.green.learning_algs4.list.XLinkedQueue;
 import com.green.learning_algs4.list.XQueue;
-import com.green.learning_algs4.st.StringST;
+import com.green.learning_algs4.set.XLinkedHashSet;
+import com.green.learning_algs4.set.XSet;
+import com.green.learning_algs4.st.OrderedStringST;
 
 import java.util.Iterator;
 
 /**
- * @see StringST for string symbol table
+ * @see OrderedStringST for string symbol table
  * @see edu.princeton.cs.algs4.TST for similar implementation
  */
 public class TernarySearchTriesSet

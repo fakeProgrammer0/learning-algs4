@@ -1,13 +1,6 @@
-package com.green.learning_algs4.st;
+package com.green.learning_algs4.string;
 
-/**
- * String symbol table, specially designed for symbol tables using strings as keys.
- * Besides basic key-value operations, it also supports several high efficient
- * character-based operations to work with string keys.
- * @param <V> value type
- * @see com.green.learning_algs4.st.ST
- */
-public interface StringST<V> extends ST<String, V>
+public interface OrderedStringCollection
 {
     /**
      * @return all string keys in lexical order
@@ -49,6 +42,4 @@ public interface StringST<V> extends ST<String, V>
      *         also a prefix of an exist key, but it may not be a key itself.
      */
     String longestCommonPrefix(String query);
-    
-    
 }

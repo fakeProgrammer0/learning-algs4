@@ -23,7 +23,7 @@ class TriesSTTest
     @Test
     void testPutGet()
     {
-        StringST<Integer> tries = new TriesST<>(Alphabet.LOWERCASE());
+        OrderedStringST<Integer> tries = new TriesST<>(Alphabet.LOWERCASE());
         
         assertTrue(tries.isEmpty());
         
@@ -118,8 +118,8 @@ class TriesSTTest
     @Test
     void testTST1()
     {
-//        StringST<Integer> tries = new TriesST<>(Alphabet.LOWERCASE());
-        StringST<Integer> tries = new TernarySearchTriesST<>();
+//        OrderedStringST<Integer> tries = new TriesST<>(Alphabet.LOWERCASE());
+        OrderedStringST<Integer> tries = new TernarySearchTriesST<>();
         
         assertTrue(tries.isEmpty());
         
@@ -220,7 +220,7 @@ class TriesSTTest
     {
 //        TriesST<String> tries = new TriesST<>(Alphabet.ASCII());
 //        TernarySearchTriesST<String> tries = new TernarySearchTriesST<>();
-        StringST<String> tries = new TernarySearchTriesST<>();
+        OrderedStringST<String> tries = new TernarySearchTriesST<>();
         
         ST<String, String> st = new LinkedHashST<>();
         
