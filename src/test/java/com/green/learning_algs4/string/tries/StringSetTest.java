@@ -1,6 +1,6 @@
-package com.green.learning_algs4.set;
+package com.green.learning_algs4.string.tries;
 
-import com.green.learning_algs4.string.TernarySearchTriesSet;
+import com.green.learning_algs4.string.tries.TernarySearchTriesSet;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

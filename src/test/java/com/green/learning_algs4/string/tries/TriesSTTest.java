@@ -1,11 +1,13 @@
-package com.green.learning_algs4.st;
+package com.green.learning_algs4.string.tries;
 
 import com.green.learning_algs4.list.XArrayList;
 import com.green.learning_algs4.list.XList;
+import com.green.learning_algs4.st.LinkedHashST;
+import com.green.learning_algs4.st.ST;
 import com.green.learning_algs4.string.Alphabet;
-import com.green.learning_algs4.string.OrderedStringST;
-import com.green.learning_algs4.string.TernarySearchTriesST;
-import com.green.learning_algs4.string.TriesST;
+import com.green.learning_algs4.string.tries.OrderedStringST;
+import com.green.learning_algs4.string.tries.TernarySearchTriesST;
+import com.green.learning_algs4.string.tries.TriesST;
 import com.green.learning_algs4.util.ArrayUtils;
 import com.green.learning_algs4.util.FileUtils;
 import edu.princeton.cs.algs4.StdRandom;

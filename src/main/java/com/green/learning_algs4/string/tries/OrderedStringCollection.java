@@ -1,4 +1,4 @@
-package com.green.learning_algs4.string;
+package com.green.learning_algs4.string.tries;
 
 public interface OrderedStringCollection
 {

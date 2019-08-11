@@ -1,8 +1,7 @@
-package com.green.learning_algs4.string;
+package com.green.learning_algs4.string.tries;
 
 import com.green.learning_algs4.set.XLinkedHashSet;
 import com.green.learning_algs4.set.XSet;
-import com.green.learning_algs4.string.OrderedStringST;
 
 import java.util.Iterator;
 
@@ -113,7 +112,8 @@ public class TernarySearchTriesST<V> extends AbstractTST
     }
     
     @SuppressWarnings("unchecked")
-    private void collect(AbstractTST.Node x, StringBuilder prefixBuilder, XSet<Entry<String, V>> set)
+    private void collect(AbstractTST.Node x, StringBuilder prefixBuilder,
+                         XSet<Entry<String, V>> set)
     {
         if (x == null) return;
         

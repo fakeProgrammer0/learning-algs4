@@ -1,9 +1,10 @@
-package com.green.learning_algs4.string;
+package com.green.learning_algs4.string.tries;
 
 import com.green.learning_algs4.list.XLinkedQueue;
 import com.green.learning_algs4.list.XLinkedStack;
 import com.green.learning_algs4.list.XQueue;
 import com.green.learning_algs4.list.XStack;
+import com.green.learning_algs4.string.Alphabet;
 
 
 public abstract class AbstractTries implements OrderedStringCollection

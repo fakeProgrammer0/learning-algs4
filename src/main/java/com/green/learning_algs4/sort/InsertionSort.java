@@ -24,7 +24,7 @@ public class InsertionSort
         }
     }
     
-    static void sortStrings(String[] A, int low, int high, int d)
+    public static void sortStrings(String[] A, int low, int high, int d)
     {
         for (int i = low + 1; i <= high; i++)
         {

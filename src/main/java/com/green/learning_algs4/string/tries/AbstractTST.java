@@ -1,4 +1,4 @@
-package com.green.learning_algs4.string;
+package com.green.learning_algs4.string.tries;
 
 import com.green.learning_algs4.list.XLinkedQueue;
 import com.green.learning_algs4.list.XLinkedStack;

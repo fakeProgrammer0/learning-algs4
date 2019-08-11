@@ -367,7 +367,7 @@ public class XLinkedList<E> extends XAbstractList<E>
     {
         private Node<E> current;
         
-        public XLinkedListIterator()
+        private XLinkedListIterator()
         {
             current = head;
         }

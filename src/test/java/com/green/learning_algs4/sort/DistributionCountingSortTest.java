@@ -1,5 +1,7 @@
 package com.green.learning_algs4.sort;
 
+import com.green.learning_algs4.string.sort.DistributionCountingSort;
+import com.green.learning_algs4.string.sort.DistributionCountingSortX;
 import com.green.learning_algs4.util.ArrayUtils;
 import com.green.learning_algs4.util.XTimer;
 import org.junit.jupiter.api.DisplayName;
@@ -110,7 +112,7 @@ class DistributionCountingSortTest
     void test4()
     {
         Integer[] A = {Integer.MAX_VALUE, 1, Integer.MIN_VALUE, 0};
-        assertThrows(IllegalArgumentException.class, ()->DistributionCountingSortX.sort(A));
+        assertThrows(IllegalArgumentException.class, ()-> DistributionCountingSortX.sort(A));
     }
     
     @Test

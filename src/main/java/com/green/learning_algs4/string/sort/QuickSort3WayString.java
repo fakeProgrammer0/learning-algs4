@@ -1,5 +1,6 @@
-package com.green.learning_algs4.sort;
+package com.green.learning_algs4.string.sort;
 
+import com.green.learning_algs4.sort.InsertionSort;
 import com.green.learning_algs4.util.ArrayUtils;
 
 /**

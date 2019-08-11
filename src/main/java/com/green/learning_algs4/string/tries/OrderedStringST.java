@@ -1,7 +1,6 @@
-package com.green.learning_algs4.string;
+package com.green.learning_algs4.string.tries;
 
 import com.green.learning_algs4.st.ST;
-import com.green.learning_algs4.string.OrderedStringCollection;
 
 /**
  * String symbol table, specially designed for symbol tables using strings as keys.

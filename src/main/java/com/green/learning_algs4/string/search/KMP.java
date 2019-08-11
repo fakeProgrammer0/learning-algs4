@@ -1,9 +1,10 @@
-package com.green.learning_algs4.string;
+package com.green.learning_algs4.string.search;
 
 import com.green.learning_algs4.set.XLinkedHashSet;
 import com.green.learning_algs4.set.XSet;
 import com.green.learning_algs4.st.LinkedHashST;
 import com.green.learning_algs4.st.ST;
+import com.green.learning_algs4.string.Alphabet;
 
 /**
  * @see edu.princeton.cs.algs4.KMP

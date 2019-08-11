@@ -1,11 +1,11 @@
-package com.green.learning_algs4.sort;
+package com.green.learning_algs4.string.sort;
 
 import com.green.learning_algs4.list.XArrayList;
 
 /**
  * a variant of DistributionCountingSort which use O(N) space,
  * where <b>N</b> is the length of the array to be sorted.
- * @see com.green.learning_algs4.sort.DistributionCountingSort
+ * @see DistributionCountingSort
  */
 @Deprecated
 public class DistributionCountingSortX

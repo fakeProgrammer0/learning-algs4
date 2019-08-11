@@ -1,4 +1,6 @@
-package com.green.learning_algs4.string;
+package com.green.learning_algs4.string.tries;
+
+import com.green.learning_algs4.string.Alphabet;
 
 import java.util.Iterator;
 

@@ -1,4 +1,4 @@
-package com.green.learning_algs4.sort;
+package com.green.learning_algs4.string.sort;
 
 /**
  * Most Significant Digit First String Sort

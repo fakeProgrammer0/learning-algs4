@@ -1,7 +1,9 @@
-package com.green.learning_algs4.string;
+package com.green.learning_algs4.string.tries;
 
 import com.green.learning_algs4.set.XLinkedHashSet;
 import com.green.learning_algs4.set.XSet;
+import com.green.learning_algs4.string.Alphabet;
+import com.green.learning_algs4.string.tries.*;
 import com.green.learning_algs4.util.IterableUtils;
 import org.junit.jupiter.api.Test;
 
