@@ -2,6 +2,7 @@ package com.green.learning.algs4.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -13,7 +14,7 @@ public class ReplaceLineSep
     public enum LineSep
     {
         WINDOWS("\r\n"),
-        LINUX("\n"),
+        UNIX("\n"),
         ;
         
         private final String token;
@@ -61,7 +62,7 @@ public class ReplaceLineSep
     
     private static void replaceFileLineSep(File file, LineSep lineSep)
     {
-        String filename = file.getName();
+        String filename = file.getAbsolutePath();
         File target = new File(filename + TEMP_SUFFIX);
         
         try (
@@ -79,15 +80,23 @@ public class ReplaceLineSep
         {
             e.printStackTrace();
         }
-        
-        file.deleteOnExit();
-        target.renameTo(file);
+    
+        try
+        {
+            java.nio.file.Files.delete(file.toPath());
+            java.nio.file.Files.move(target.toPath(),file.toPath());
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
     
     
     public static void main(String[] args)
     {
-        replaceLineSep(LineSep.LINUX, "./src/", Pattern.compile(".*\\.java"));
+        String dirname = "./src/";
+//        String dirname = "./test/";
+        replaceLineSep(LineSep.UNIX, dirname, Pattern.compile(".*\\.java"));
     }
     
 }
