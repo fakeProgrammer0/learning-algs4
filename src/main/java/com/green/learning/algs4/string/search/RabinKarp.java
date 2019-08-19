@@ -1,7 +1,5 @@
 package com.green.learning.algs4.string.search;
 
-import com.green.learning.algs4.string.StringUtils;
-
 import java.math.BigInteger;
 import java.util.Random;
 
@@ -20,8 +18,7 @@ public class RabinKarp
     
     public RabinKarp(String pattern)
     {
-        if (StringUtils.isEmpty(pattern))
-            throw new IllegalArgumentException("pattern should not be null or empty");
+        SubstringSearchs.checkPattern(pattern);
         
         M = pattern.length();
         R = Character.MAX_VALUE + 1;
@@ -65,8 +62,7 @@ public class RabinKarp
     
     public int search(String text)
     {
-        if (StringUtils.isEmpty(text))
-            throw new IllegalArgumentException("text should not be null or empty");
+        SubstringSearchs.checkText(text);
         final int N = text.length();
         if (N < M) return -1;
         

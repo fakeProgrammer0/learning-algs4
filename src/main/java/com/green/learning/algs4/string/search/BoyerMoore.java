@@ -1,7 +1,6 @@
 package com.green.learning.algs4.string.search;
 
 import com.green.learning.algs4.string.Alphabet;
-import com.green.learning.algs4.string.StringUtils;
 
 public class BoyerMoore
 {
@@ -87,8 +86,7 @@ public class BoyerMoore
     
     public BoyerMoore(String pattern)
     {
-        if (StringUtils.isEmpty(pattern))
-            throw new IllegalArgumentException("pattern should not be null or empty");
+        SubstringSearchs.checkPattern(pattern);
         this.pattern = pattern;
         this.M = pattern.length();
         alphabet = new Alphabet(pattern);
@@ -99,8 +97,7 @@ public class BoyerMoore
     
     public int search(String text)
     {
-        if (StringUtils.isEmpty(text))
-            throw new IllegalArgumentException("text should not be null or empty");
+        SubstringSearchs.checkText(text);
         final int N = text.length();
         if (N < M) return -1;
         

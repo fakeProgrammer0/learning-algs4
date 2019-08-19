@@ -16,10 +16,9 @@ public class KMP
         private final int[][] stateTrans;
         private final Alphabet alphabet; // 原来alphabet还可以这么用，简直很神了
         
-        public DFA(String pattern)
+        private DFA(String pattern)
         {
-            if (pattern == null || pattern.isEmpty())
-                throw new IllegalArgumentException("pattern is null or empty");
+            SubstringSearchs.checkPattern(pattern);
             alphabet = new Alphabet(pattern);
             int R = alphabet.radix();
             
@@ -64,16 +63,14 @@ public class KMP
     
     public KMP(String pattern)
     {
-        if (pattern == null || pattern.isEmpty())
-            throw new IllegalArgumentException("pattern is null or empty");
+        SubstringSearchs.checkPattern(pattern);
         M = pattern.length();
         dfa = new DFA(pattern);
     }
     
     public int search(String text)
     {
-        if (text == null || text.isEmpty())
-            throw new IllegalArgumentException("text is null or empty");
+        SubstringSearchs.checkText(text);
         int i, j;
         for (i = 0, j = 0; i < text.length() && j < M; i++)
             j = dfa.transition(j, text.charAt(i));
@@ -100,8 +97,7 @@ public class KMP
         @SuppressWarnings("unchecked")
         public DFA2(String pattern)
         {
-            if (pattern == null || pattern.isEmpty())
-                throw new IllegalArgumentException("pattern is null or empty");
+            SubstringSearchs.checkPattern(pattern);
             
             charSet = new XLinkedHashSet<>();
             for (int j = 0; j < pattern.length(); j++)
@@ -190,8 +186,7 @@ public class KMP
         
         public DFA3(String pattern)
         {
-            if (pattern == null || pattern.isEmpty())
-                throw new IllegalArgumentException("pattern is null or empty");
+            SubstringSearchs.checkPattern(pattern);
             
             charSet = new XLinkedHashSet<>();
             for (int j = 0; j < pattern.length(); j++)

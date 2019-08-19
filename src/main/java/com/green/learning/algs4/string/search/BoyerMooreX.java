@@ -2,7 +2,6 @@ package com.green.learning.algs4.string.search;
 
 import com.green.learning.algs4.list.XLinkedList;
 import com.green.learning.algs4.string.Alphabet;
-import com.green.learning.algs4.string.StringUtils;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -76,8 +75,7 @@ public class BoyerMooreX
     
     public BoyerMooreX(String pattern)
     {
-        if (StringUtils.isEmpty(pattern))
-            throw new IllegalArgumentException("pattern should not be null or empty");
+        SubstringSearchs.checkPattern(pattern);
         this.pattern = pattern;
         alphabet = new Alphabet(pattern);
         rightmostIndices = getRightmostIndices();
@@ -93,8 +91,7 @@ public class BoyerMooreX
     
     public int search(String text)
     {
-        if (StringUtils.isEmpty(text))
-            throw new IllegalArgumentException("text should not be null or empty");
+        SubstringSearchs.checkText(text);
         
         final int M = pattern.length(), N = text.length();
         int d1, d2;

@@ -1,7 +1,6 @@
 package com.green.learning.algs4.string.search;
 
 import com.green.learning.algs4.string.Alphabet;
-import com.green.learning.algs4.string.StringUtils;
 
 public class BoyerMooreBadShift
 {
@@ -11,15 +10,12 @@ public class BoyerMooreBadShift
     
     public BoyerMooreBadShift(String pattern)
     {
-        if (StringUtils.isEmpty(pattern))
-            throw new IllegalArgumentException("pattern should not be null or empty");
+        SubstringSearchs.checkPattern(pattern);
         this.pattern = pattern;
         alphabet = new Alphabet(pattern);
         rightmostIndices = new int[alphabet.radix()];
         for (int j = 0; j < pattern.length(); j++)
             rightmostIndices[alphabet.toIndex(pattern.charAt(j))] = j;
-        
-        
     }
     
     private int badSymbolShift(int j, char c)
@@ -31,8 +27,7 @@ public class BoyerMooreBadShift
     
     public int search(String text)
     {
-        if (StringUtils.isEmpty(text))
-            throw new IllegalArgumentException("text should not be null or empty");
+        SubstringSearchs.checkText(text);
         
         final int M = pattern.length(), N = text.length();
         for (int i = 0, shift = 0; i <= N - M; i += shift)

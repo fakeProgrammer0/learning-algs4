@@ -1,7 +1,8 @@
-package com.green.learning.algs4.string;
+package com.green.learning.algs4.string.search;
 
 import com.green.learning.algs4.string.search.BoyerMoore;
 import com.green.learning.algs4.string.search.BoyerMooreX;
+import com.green.learning.algs4.string.search.Horspool;
 import com.green.learning.algs4.string.search.KMP;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +10,7 @@ import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SubstringTest
+public class SubstringSearchTest
 {
     
     
@@ -53,6 +54,7 @@ public class SubstringTest
             int index = KMP.search(text, pattern);
             assertEquals(index, text.indexOf(pattern));
             assertEquals(index, BoyerMoore.search(text,pattern));
+            assertEquals(index, Horspool.search(text,pattern));
             System.out.printf("index: %d\n\n", index);
         }
     }
