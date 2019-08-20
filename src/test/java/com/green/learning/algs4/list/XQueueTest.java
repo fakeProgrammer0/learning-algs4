@@ -13,8 +13,13 @@ public class XQueueTest
     public void simpleTest()
     {
 //        XQueue<Integer> queue = new XArrayQueue<>();
-        XQueue<Integer> queue = new XLinkedQueue<>();
-        final int N = 10000;
+//        XQueue<Integer> queue = new XLinkedQueue<>();
+        XQueue<Integer> queue = new XLinkedQueueX<>();
+        
+//        final int N = 10000;
+        final int N = 1000;
+//        final int N = 16;
+        
         for(int i = 0; i < N; i++)
         {
             if(StdRandom.bernoulli(0.6))
@@ -22,7 +27,7 @@ public class XQueueTest
             else queue.enqueue(null);
         }
         
-        System.out.println(queue);
+//        System.out.println(queue);
         Assertions.assertEquals(N, queue.size());
         
         Iterator<Integer> iterator = queue.iterator();
@@ -47,6 +52,14 @@ public class XQueueTest
         iterator = queue.iterator();
         Assertions.assertTrue(iterator.hasNext());
         
+        while (!queue.isEmpty())
+            queue.dequeue();
+        
+        queue.enqueue(null);
+        queue.enqueue(1);
+        queue.enqueue(2);
+        queue.enqueue(3);
+        
         queue.clear();
         System.out.println(queue);
         
@@ -54,8 +67,8 @@ public class XQueueTest
         Assertions.assertFalse(iterator.hasNext());
         Assertions.assertTrue(queue.isEmpty());
         Assertions.assertEquals(0, queue.size());
-        Assertions.assertThrows(NoSuchElementException.class, ()-> queue.peek());
-        Assertions.assertThrows(NoSuchElementException.class, ()-> queue.dequeue());
+        Assertions.assertThrows(NoSuchElementException.class, queue::peek);
+        Assertions.assertThrows(NoSuchElementException.class, queue::dequeue);
     }
     
     @Test

@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
  * {@link edu.princeton.cs.algs4.Queue} & {@link edu.princeton.cs.algs4.LinkedQueue}
  * @param <E> the generic parameter type
  */
-public class XLinkedQueue<E> implements XQueue<E>, Iterable<E>
+public class XLinkedQueue<E> implements XQueue<E>
 {
     private static class Node<T>
     {
