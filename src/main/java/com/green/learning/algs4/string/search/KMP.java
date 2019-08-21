@@ -1,229 +1,109 @@
 package com.green.learning.algs4.string.search;
 
-import com.green.learning.algs4.set.XLinkedHashSet;
-import com.green.learning.algs4.set.XSet;
-import com.green.learning.algs4.st.LinkedHashST;
-import com.green.learning.algs4.st.ST;
-import com.green.learning.algs4.string.Alphabet;
+import com.green.learning.algs4.list.XLinkedQueue;
+import com.green.learning.algs4.list.XQueue;
 
 /**
- * @see edu.princeton.cs.algs4.KMP
+ * Knuth-Morris-Pratt algorithm for substring search
+ * <a href="http://www.iti.fh-flensburg.de/lang/algorithmen/pattern/kmpen.htm#"></a>
  */
 public class KMP
 {
-    private static class DFA
-    {
-        private final int[][] stateTrans;
-        private final Alphabet alphabet; // 原来alphabet还可以这么用，简直很神了
-        
-        private DFA(String pattern)
-        {
-            SubstringSearchs.checkPattern(pattern);
-            alphabet = new Alphabet(pattern);
-            int R = alphabet.radix();
-            
-            final int M = pattern.length();
-            stateTrans = new int[R][M];
-            
-            // init transitions at state 0
-            stateTrans[alphabet.toIndex(pattern.charAt(0))][0] = 1;
-            
-            int x = 0;
-            for (int j = 1; j < M; j++)
-            {
-                // set mismatch transitions
-                for (int r = 0; r < R; r++)
-                    stateTrans[r][j] = stateTrans[r][x];
-                
-                // set match transition
-                int index = alphabet.toIndex(pattern.charAt(j));
-                stateTrans[index][j] = j + 1;
-                
-                // update mismatch state x
-                x = stateTrans[index][x];
-            }
-        }
-        
-        /**
-         * make a transition and return the next state
-         *
-         * @param currState the current state
-         * @param c         the input character
-         * @return the next state after the transition
-         */
-        public int transition(int currState, char c)
-        {
-            if(!alphabet.contains(c)) return 0;
-            return stateTrans[alphabet.toIndex(c)][currState];
-        }
-    }
-    
+    private final String pattern;
     private final int M;
-    private final DFA dfa;
+    private final int[] next;
     
     public KMP(String pattern)
     {
         SubstringSearchs.checkPattern(pattern);
-        M = pattern.length();
-        dfa = new DFA(pattern);
+        this.pattern = pattern;
+        this.M = pattern.length();
+        next = new int[M + 1];
+        initNext();
+    }
+    
+    /**
+     * Calculate the next table
+     */
+    private void initNext()
+    {
+        next[0] = -1;
+        int j = 1, b = 0;
+        // b = b[j], but there's no need to store the array b[]
+        while (j < M)
+        {
+            // update next[j] in last iteration
+            next[j] = pattern.charAt(b) == pattern.charAt(j) ? next[b] : b;
+            while (b >= 0 && pattern.charAt(b) != pattern.charAt(j))
+                b = next[b];
+            j++; b++;
+        }
+        next[j] = b;
+    }
+    
+    /**
+     * Calculate the next table
+     */
+    private void initNext0()
+    {
+        int j = 0, b = -1;
+        // b = b[j], but there's no need to store the array b[]
+        next[j] = b;
+        while (j < M)
+        {
+            while (b >= 0 && pattern.charAt(b) != pattern.charAt(j))
+                b = next[b];
+            j++; b++;
+            if(j < M && pattern.charAt(b) == pattern.charAt(j))
+                // 递推（数学归纳），尝试更短的border，由于next[b]此时已计算完成，所以直接设置为next[b]即可
+                next[j] = next[b];
+            else next[j] = b;
+        }
     }
     
     public int search(String text)
     {
-        SubstringSearchs.checkText(text);
-        int i, j;
-        for (i = 0, j = 0; i < text.length() && j < M; i++)
-            j = dfa.transition(j, text.charAt(i));
-        if (j == M) return i - M;
+        SubstringSearchs.checkText(text, M);
+        final int N = text.length();
+        int i = 0, j = 0;
+        while (i < N)
+        {
+            while (j >= 0 && pattern.charAt(j) != text.charAt(i))
+                j = next[j];
+            i++; j++;
+            if(j == M) return i - M;
+        }
         return -1;
     }
     
     public static int search(String text, String pattern)
     {
-        KMP kmp = new KMP(pattern);
-        return kmp.search(text);
+        return new KMP(pattern).search(text);
     }
     
-    /**
-     * consumes more space and slow than DFA
-     * better implementation than DFA3
-     */
-    @Deprecated
-    private static class DFA2
+    public Iterable<Integer> searchAll(String text)
     {
-        private final ST<Character, Integer>[] stateTrans;
-        private final XSet<Character> charSet;
-        
-        @SuppressWarnings("unchecked")
-        public DFA2(String pattern)
+        SubstringSearchs.checkText(text, M);
+        XQueue<Integer> occurIndices = new XLinkedQueue<>();
+        final int N = text.length();
+        int i = 0, j = 0;
+        while (i < N)
         {
-            SubstringSearchs.checkPattern(pattern);
-            
-            charSet = new XLinkedHashSet<>();
-            for (int j = 0; j < pattern.length(); j++)
-                charSet.add(pattern.charAt(j));
-            
-            final int M = pattern.length();
-            stateTrans = (ST<Character, Integer>[]) new ST[M];
-            for(int j = 0; j < M; j++)
-                stateTrans[j] = new LinkedHashST<>();
-            
-            // init transitions at state 0
-            for (char c : charSet)
-                stateTrans[0].put(c,0);
-            stateTrans[0].put(pattern.charAt(0),1);
-            
-            int x = 0;
-            for (int j = 1; j < M; j++)
+            while (j >= 0 && pattern.charAt(j) != text.charAt(i))
+                j = next[j];
+            i++; j++;
+            if(j == M)
             {
-                // set mismatch transitions
-                for (char c : charSet)
-                    stateTrans[j].put(c, transition(x,c));
-                
-                char input = pattern.charAt(j);
-                // set match transition
-                stateTrans[j].put(input,j+1);
-                
-                // update mismatch state x
-                x = transition(x, input);
+                occurIndices.enqueue(i - M);
+                // 最大限度移动pattern，继续查找text中其余pattern
+                j = next[M];
             }
         }
-        
-        /**
-         * make a transition and return the next state
-         *
-         * @param currState the current state
-         * @param c         the input character
-         * @return the next state after the transition
-         */
-        public int transition(int currState, char c)
-        {
-            if(!charSet.contains(c)) return 0;
-            return stateTrans[currState].get(c);
-        }
+        return occurIndices;
     }
     
-    @Deprecated
-    private static class DFA3
+    public static Iterable<Integer> searchAll(String text, String pattern)
     {
-        private static class Transition
-        {
-            private final int currState;
-            private final char c;
-            
-            public Transition(int currState, char c)
-            {
-                this.currState = currState;
-                this.c = c;
-            }
-            
-            @Override
-            public boolean equals(Object obj)
-            {
-                if (obj == null) return false;
-                if (obj == this) return true;
-                if (!(obj instanceof Transition)) return false;
-                Transition that = (Transition) obj;
-                return this.currState == that.currState
-                        && this.c == that.c;
-            }
-            
-            @Override
-            public int hashCode()
-            {
-                return Integer.hashCode(currState) ^ Character.hashCode(c);
-            }
-            
-            @Override
-            public String toString()
-            {
-                return String.format("{state: %d, input: %c}", currState, c);
-            }
-        }
-        
-        private final ST<Transition, Integer> trans2NextState;
-        private final XSet<Character> charSet;
-        
-        public DFA3(String pattern)
-        {
-            SubstringSearchs.checkPattern(pattern);
-            
-            charSet = new XLinkedHashSet<>();
-            for (int j = 0; j < pattern.length(); j++)
-                charSet.add(pattern.charAt(j));
-            
-            trans2NextState = new LinkedHashST<>();
-            
-            // init transitions at state 0
-            for (char c : charSet)
-                trans2NextState.put(new Transition(0, c), 0);
-            trans2NextState.put(new Transition(0, pattern.charAt(0)), 1);
-            
-            int x = 0;
-            for (int j = 1; j < pattern.length(); j++)
-            {
-                // set mismatch transitions
-                for (char c : charSet)
-                    trans2NextState.put(new Transition(j, c), transition(x, c));
-                
-                char input = pattern.charAt(j);
-                // set match transition
-                trans2NextState.put(new Transition(j, input), j + 1);
-                
-                // update mismatch state x
-                x = transition(x, input);
-            }
-        }
-        
-        public int transition(int currState, char c)
-        {
-            // 1.a simple implementation
-//            Integer nextState = trans2NextState.get(new Transition(currState, c));
-//            return nextState == null ? 0 : nextState;
-            
-            // 2.an alternative optimized implementation
-            if(!charSet.contains(c)) return 0;
-            return trans2NextState.get(new Transition(currState,c));
-        }
+        return new KMP(pattern).searchAll(text);
     }
 }
