@@ -9,6 +9,7 @@ import java.util.Iterator;
 public class BoyerMooreX
 {
     private final String pattern;
+    private final int M;
     private final Alphabet alphabet;
     private final int[] rightmostIndices;
     private final int[] goodSuffixShifts;
@@ -16,7 +17,6 @@ public class BoyerMooreX
     private int[] getRightmostIndices()
     {
         int[] badSymbolShifts = new int[alphabet.radix()];
-        final int M = pattern.length();
         for (int j = 0; j < M; j++)
             badSymbolShifts[alphabet.toIndex(pattern.charAt(j))] = j;
         return badSymbolShifts;
@@ -77,6 +77,7 @@ public class BoyerMooreX
     {
         SubstringSearchs.checkPattern(pattern);
         this.pattern = pattern;
+        this.M = pattern.length();
         alphabet = new Alphabet(pattern);
         rightmostIndices = getRightmostIndices();
         goodSuffixShifts = buildGoodSuffixShifts(pattern);
@@ -91,9 +92,9 @@ public class BoyerMooreX
     
     public int search(String text)
     {
-        SubstringSearchs.checkText(text);
+        SubstringSearchs.checkText(text, M);
         
-        final int M = pattern.length(), N = text.length();
+        final int N = text.length();
         int d1, d2;
         for (int i = 0, shift = 0; i <= N - M; i += shift)
         {

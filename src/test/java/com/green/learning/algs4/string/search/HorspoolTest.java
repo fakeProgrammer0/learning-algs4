@@ -13,4 +13,12 @@ class HorspoolTest
         String pattern = "BARBER";
         assertEquals(text.indexOf(pattern),  Horspool.search(text, pattern));
     }
+    
+    @Test
+    void test2()
+    {
+        String text = "BESS_KNEW_ABOUT_BAOBAB";
+        String pattern = "BAOBAB";
+        assertEquals(text.indexOf(pattern),  Horspool.search(text, pattern));
+    }
 }

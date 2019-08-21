@@ -1,9 +1,5 @@
 package com.green.learning.algs4.string.search;
 
-import com.green.learning.algs4.string.search.BoyerMoore;
-import com.green.learning.algs4.string.search.BoyerMooreX;
-import com.green.learning.algs4.string.search.Horspool;
-import com.green.learning.algs4.string.search.KMP;
 import org.junit.jupiter.api.Test;
 
 import java.util.Scanner;
@@ -51,10 +47,11 @@ public class SubstringSearchTest
         for (String pattern : patterns)
         {
             System.out.printf("pattern: %s\n", pattern);
-            int index = KMP.search(text, pattern);
+            int index = KMPDFA.search(text, pattern);
             assertEquals(index, text.indexOf(pattern));
             assertEquals(index, BoyerMoore.search(text,pattern));
             assertEquals(index, Horspool.search(text,pattern));
+            assertEquals(index, KMPBorder.search(text,pattern));
             System.out.printf("index: %d\n\n", index);
         }
     }
@@ -84,7 +81,7 @@ public class SubstringSearchTest
         
         String pattern = "attack at dawn";
         
-        int index = KMP.search(text, pattern);
+        int index = KMPDFA.search(text, pattern);
         assertEquals(index, text.indexOf(pattern));
         
         Scanner scanner = new Scanner(System.in);
@@ -93,7 +90,7 @@ public class SubstringSearchTest
             System.out.print("pattern: ");
             System.out.flush();
             pattern = scanner.nextLine();
-            index = KMP.search(text, pattern);
+            index = KMPDFA.search(text, pattern);
             assertEquals(index, text.indexOf(pattern));
             System.out.printf("index: %d\n\n", index);
         } while (scanner.hasNext());
