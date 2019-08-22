@@ -96,45 +96,5 @@ public class SubstringSearchTest
         } while (scanner.hasNext());
     }
     
-    @Test
-    void testBuildGoodSuffixShifts()
-    {
-        String pat1 = "ABCBAB";
-        int[] goodSuffixShifts = BoyerMooreX.buildGoodSuffixShifts(pat1);
-        assertEquals(2, goodSuffixShifts[4]);
-        assertEquals(4, goodSuffixShifts[3]);
-        assertEquals(4, goodSuffixShifts[2]);
-        assertEquals(4, goodSuffixShifts[1]);
-        assertEquals(4, goodSuffixShifts[0]);
-    }
-    
-    @Test
-    void test2()
-    {
-        String pat1 = "BAOBAB";
-        int[] goodSuffix = BoyerMooreX.buildGoodSuffixShifts(pat1);
-        assertEquals(2, goodSuffix[4]);
-        assertEquals(5, goodSuffix[3]);
-        assertEquals(5, goodSuffix[2]);
-        assertEquals(5, goodSuffix[1]);
-        assertEquals(5, goodSuffix[0]);
-    }
-    
-    @Test
-    void testBoyerMoore1()
-    {
-        String pattern = "BAOBAB";
-        String text = "BESS_KNEW_ABOUT_BAOBABS";
-        assertEquals(text.indexOf(pattern), BoyerMoore.search(text,pattern));
-        assertEquals(text.indexOf(pattern), BoyerMooreX.search(text,pattern));
-    }
-    
-    @Test
-    void testBoyerMoore2()
-    {
-        String pattern = "EXAMPLE";
-        String text = "HERE IS A SIMPLE EXAMPLE";
-        assertEquals(text.indexOf(pattern), BoyerMoore.search(text,pattern));
-        assertEquals(text.indexOf(pattern), BoyerMooreX.search(text,pattern));
-    }
+   
 }

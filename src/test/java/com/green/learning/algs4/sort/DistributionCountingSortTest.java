@@ -38,14 +38,14 @@ class DistributionCountingSortTest
             DistributionCountingSort.sort(B);
             timer.stop();
             assertTrue(ArrayUtils.isSorted(B));
-            final long distriConsume = timer.lastIntervalMs();
+            final long distriConsume = timer.lastIntervalMS();
         
             B = Arrays.copyOf(A, A.length);
             timer.start("merge sort");
             Arrays.sort(B);
             timer.stop();
             assertTrue(ArrayUtils.isSorted(B));
-            final long mergeConsume = timer.lastIntervalMs();
+            final long mergeConsume = timer.lastIntervalMS();
         
             System.out.println("At iteration " + i);
             if (distriConsume < mergeConsume)

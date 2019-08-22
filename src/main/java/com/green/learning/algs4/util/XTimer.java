@@ -48,11 +48,17 @@ public class XTimer
                     "  to: " + end.toString() + lineSep +
                     "total ms: " + (end.getTime() - start.getTime()) + lineSep;
         }
+        
+        public long totalMS()
+        {
+            return end.getTime() - start.getTime();
+        }
     }
     
     private String name;
     private Interval currInterval;
     private XList<Interval> intervals = new XArrayList<>();
+    private long totalIntervalMS = 0;
     
     public XTimer()
     {
@@ -80,24 +86,41 @@ public class XTimer
     {
         currInterval.end();
         intervals.append(currInterval);
+        totalIntervalMS += currInterval.totalMS();
         currInterval = null;
     }
     
     public void clear()
     {
         currInterval = null;
+        totalIntervalMS = 0;
         intervals.clear();
     }
     
     /**
      * @return the last interval in milliseconds
      */
-    public long lastIntervalMs()
+    public long lastIntervalMS()
     {
         if(intervals.isEmpty())
             throw new IllegalStateException();
         Interval interval = intervals.get(intervals.size() - 1);
         return interval.end.getTime() - interval.start.getTime();
+    }
+    
+    public long totalIntervalsMS()
+    {
+        return totalIntervalMS;
+    }
+    
+    public double avgIntervalMS()
+    {
+        return totalIntervalMS * 1.0 / intervals.size();
+    }
+    
+    public String getName()
+    {
+        return name;
     }
     
     @Override

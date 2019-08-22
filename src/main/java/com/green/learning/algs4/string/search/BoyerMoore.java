@@ -51,12 +51,12 @@ public class BoyerMoore
         return goodSuffixShifts;
     }
     
-    private void checkGoodSuffixShifts()
-    {
-        int[] goodShifts = BoyerMooreX.buildGoodSuffixShifts(pattern);
-        for(int j = 0; j < M - 1; j++)
-            assert goodSuffixShifts[j] == goodShifts[j] + M - 1 - j;
-    }
+//    private void checkGoodSuffixShifts()
+//    {
+//        int[] goodShifts = BoyerMooreX.buildGoodSuffixShifts(pattern);
+//        for(int j = 0; j < M - 1; j++)
+//            assert goodSuffixShifts[j] == goodShifts[j] + M - 1 - j;
+//    }
     
     /**
      * Is pattern[rightStart : M-1] a prefix of pattern?
@@ -92,14 +92,13 @@ public class BoyerMoore
         alphabet = new Alphabet(pattern);
         badSymbolShifts = getBadSymbolShifts();
         goodSuffixShifts = getGoodSuffixShifts();
-        checkGoodSuffixShifts();
+//        checkGoodSuffixShifts();
     }
     
     public int search(String text)
     {
         SubstringSearchs.checkText(text, M);
         final int N = text.length();
-        if (N < M) return -1;
         
         int d1, d2;
         for (int i = M - 1, j; i < N; )

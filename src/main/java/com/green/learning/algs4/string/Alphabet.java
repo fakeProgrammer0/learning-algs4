@@ -125,6 +125,18 @@ public class Alphabet implements Iterable<Character>
     }
     
     @Override
+    public String toString()
+    {
+        final String sep = ", ";
+        StringBuilder sb = new StringBuilder("{");
+        for(int r = 0; r < R - 1; r++)
+            sb.append(chars[r]).append(sep);
+        sb.append(chars[R - 1]);
+        sb.append("}");
+        return sb.toString();
+    }
+    
+    @Override
     public Iterator<Character> iterator()
     {
         return new AlphabetIterator();
@@ -300,6 +312,12 @@ public class Alphabet implements Iterable<Character>
     
     public String rndString(int length)
     {
+        return new String(samples(length));
+    }
+    
+    public String rndString(int minLength, int maxLength)
+    {
+        int length = (int)(Math.random() * (maxLength - minLength + 1) + minLength);
         return new String(samples(length));
     }
     

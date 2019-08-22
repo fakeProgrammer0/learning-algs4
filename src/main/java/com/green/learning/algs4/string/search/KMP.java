@@ -5,6 +5,9 @@ import com.green.learning.algs4.list.XQueue;
 
 /**
  * Knuth-Morris-Pratt algorithm for substring search
+ * let M be the pattern length and N be the text length
+ * space efficiency: O(M)
+ * worst case time efficiency: O(M + N)
  * <a href="http://www.iti.fh-flensburg.de/lang/algorithmen/pattern/kmpen.htm#"></a>
  */
 public class KMP

@@ -6,7 +6,8 @@ import com.green.learning.algs4.list.XList;
 import com.green.learning.algs4.list.XQueue;
 
 /**
- * Knuth-Morris-Pratt algorithm for substring search
+ * A modified Knuth-Morris-Pratt (KMP) algorithm for substring search, whose
+ * efficiency is lower than the original KMP algorithm.
  * <a href="http://www.iti.fh-flensburg.de/lang/algorithmen/pattern/kmpen.htm#"></a>
  * @see KMP for a optimized version
  */

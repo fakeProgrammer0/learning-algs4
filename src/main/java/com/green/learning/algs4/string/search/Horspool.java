@@ -5,7 +5,7 @@ import com.green.learning.algs4.string.Alphabet;
 /**
  * A simplified version of BoyerMoore
  * <a href="https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore%E2%80%93Horspool_algorithm"></a>
- * @see BoyerMooreBadShift for a Boyer Moore variant using only bad symbol shifts
+ * @see BoyerMooreBadSymbolShift for a Boyer Moore variant using only bad symbol shifts
  * @see BoyerMoore for a full implementation of Boyer Moore
  */
 public class Horspool

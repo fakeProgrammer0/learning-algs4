@@ -47,7 +47,8 @@ class KMPBorderTest
         {
             System.out.printf("pattern: %s\n", pattern);
             int lastOccurIndex = -1;
-            for(int index: KMPBorder.searchAll(text, pattern))
+            Iterable<Integer> iterable = KMPBorder.searchAll(text, pattern);
+            for(int index: iterable)
             {
                 System.out.printf("-> %d\n", index);
                 assertEquals(text.indexOf(pattern, lastOccurIndex + 1), index);
@@ -57,8 +58,10 @@ class KMPBorderTest
             System.out.println();
             
             assertIterableEquals(
-                    KMPBorder.searchAll(text,pattern),
+                    iterable,
                     KMP.searchAll(text,pattern));
+            
+            assertIterableEquals(iterable, BoyerMooreX.searchAll(text, pattern));
         }
     }
 }

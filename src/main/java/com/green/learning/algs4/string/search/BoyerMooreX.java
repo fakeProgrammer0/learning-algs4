@@ -1,10 +1,8 @@
 package com.green.learning.algs4.string.search;
 
-import com.green.learning.algs4.list.XLinkedList;
+import com.green.learning.algs4.list.XLinkedQueue;
+import com.green.learning.algs4.list.XQueue;
 import com.green.learning.algs4.string.Alphabet;
-
-import java.util.Arrays;
-import java.util.Iterator;
 
 public class BoyerMooreX
 {
@@ -14,6 +12,16 @@ public class BoyerMooreX
     private final int[] rightmostIndices;
     private final int[] goodSuffixShifts;
     
+    public BoyerMooreX(String pattern)
+    {
+        SubstringSearchs.checkPattern(pattern);
+        this.pattern = pattern;
+        this.M = pattern.length();
+        alphabet = new Alphabet(pattern);
+        rightmostIndices = getRightmostIndices();
+        goodSuffixShifts = getGoodSuffixShifts();
+    }
+    
     private int[] getRightmostIndices()
     {
         int[] badSymbolShifts = new int[alphabet.radix()];
@@ -22,65 +30,38 @@ public class BoyerMooreX
         return badSymbolShifts;
     }
     
-    /**
-     * a brute-force method calculate good suffix shifts table
-     * @param pattern the pattern
-     * @return the good suffix shifts table
-     */
-    public static int[] buildGoodSuffixShifts(String pattern)
+    private int[] getGoodSuffixShifts()
     {
-        final int M = pattern.length();
-        int[] goodSuffixShifts = new int[M];
-        Arrays.fill(goodSuffixShifts, M);
+        /*
+         f[i]: the rightmost starting position of the widest border of pattern[i ... M-1]
+         */
+        int[] f = new int[M + 1];
+        int[] s = new int[M + 1];
         
-        int rightEnd = M - 1;
-        goodSuffixShifts[rightEnd] = 1;
-        
-        XLinkedList<Integer> leftEnds = new XLinkedList<>();
-        char endChar = pattern.charAt(rightEnd);
-        for(int j = 0; j < rightEnd; j++)
-            if(pattern.charAt(j) == endChar)
-                leftEnds.addFirst(j);
-        if(leftEnds.isEmpty())
+        // case 1
+        int i = M, j = M + 1;
+        f[M] = M + 1;
+        while (i > 0)
         {
-            // endChar is unique in pattern
-            // set all goodSuffixSifts[i] to M
-            goodSuffixShifts[rightEnd] = M;
-            return goodSuffixShifts;
-        }
-        
-        for (int k = M - 2; k >= 0; k--)
-        {
-            int rightStart = k + 1;
-            Iterator<Integer> leftEndIterator = leftEnds.iterator();
-            while (leftEndIterator.hasNext())
+            while (j <= M && pattern.charAt(i - 1) != pattern.charAt(j - 1))
             {
-                int leftEnd = leftEndIterator.next();
-                int le, r;
-                for (le = leftEnd, r = rightEnd;
-                     le >= 0 && r >= rightStart
-                             && pattern.charAt(le) == pattern.charAt(r);
-                     le--, r--)
-                    ;
-                if (le < 0 || r < rightStart)
-                {
-                    goodSuffixShifts[k] = rightEnd - leftEnd;
-                    break;
-                }
+                if (s[j] == 0) s[j] = j - i;
+                j = f[j];
             }
-            // if goodSuffixShifts[k] is unset, it remains with value M
+            i--;
+            j--;
+            f[i] = j;
         }
-        return goodSuffixShifts;
-    }
-    
-    public BoyerMooreX(String pattern)
-    {
-        SubstringSearchs.checkPattern(pattern);
-        this.pattern = pattern;
-        this.M = pattern.length();
-        alphabet = new Alphabet(pattern);
-        rightmostIndices = getRightmostIndices();
-        goodSuffixShifts = buildGoodSuffixShifts(pattern);
+        
+        // case 2
+        j = f[0];
+        for (i = 0; i <= M; i++)
+        {
+            if (s[i] == 0) s[i] = j;
+            if (i == j) j = f[j];
+        }
+        
+        return s;
     }
     
     private int badSymbolShift(int j, char c)
@@ -102,15 +83,41 @@ public class BoyerMooreX
             for (; pattern.charAt(j) == text.charAt(i + j); j--)
                 if (j == 0) return i;
             d1 = badSymbolShift(j, text.charAt(i + j));
-            d2 = goodSuffixShifts[j];
+            d2 = goodSuffixShifts[j + 1];
             shift = Math.max(d1, d2);
         }
-        
         return -1;
     }
     
     public static int search(String text, String pattern)
     {
         return new BoyerMooreX(pattern).search(text);
+    }
+    
+    public Iterable<Integer> searchAll(String text)
+    {
+        SubstringSearchs.checkText(text, M);
+        XQueue<Integer> occurIndices = new XLinkedQueue<>();
+        final int N = text.length();
+        for (int i = 0, j; i <= N - M; )
+        {
+            j = M - 1;
+            for (; j >= 0 && pattern.charAt(j) == text.charAt(i + j); j--) ;
+            if (j < 0)
+            {
+                occurIndices.enqueue(i);
+                // 将pattern向右移动最长border的长度
+                i += goodSuffixShifts[0];
+            } else
+            {
+                i += Math.max(badSymbolShift(j, text.charAt(i + j)), goodSuffixShifts[j + 1]);
+            }
+        }
+        return occurIndices;
+    }
+    
+    public static Iterable<Integer> searchAll(String text, String pattern)
+    {
+        return new BoyerMooreX(pattern).searchAll(text);
     }
 }

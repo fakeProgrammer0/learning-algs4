@@ -2,13 +2,13 @@ package com.green.learning.algs4.string.search;
 
 import com.green.learning.algs4.string.Alphabet;
 
-public class BoyerMooreBadShift
+public class BoyerMooreBadSymbolShift
 {
     private final String pattern;
     private final Alphabet alphabet;
     private final int[] rightmostIndices;
     
-    public BoyerMooreBadShift(String pattern)
+    public BoyerMooreBadSymbolShift(String pattern)
     {
         SubstringSearchs.checkPattern(pattern);
         this.pattern = pattern;
@@ -45,6 +45,6 @@ public class BoyerMooreBadShift
     
     public static int search(String text, String pattern)
     {
-        return new BoyerMooreBadShift(pattern).search(text);
+        return new BoyerMooreBadSymbolShift(pattern).search(text);
     }
 }
