@@ -25,7 +25,7 @@ class SimplexTest
         Simplex lpSolver = new Simplex(A, b, c);
 //        assertEquals(maxObjVal, lpSolver.maxObjectiveValue());
         assertTrue(MathUtils.floatEqual(maxObjVal,lpSolver.maxObjectiveValue()));
-        assertArrayEquals(optSolution, lpSolver.optimalSolution());
+        assertArrayEquals(optSolution, lpSolver.primal());
     }
     
     @DisplayName("Brewer's Problem")
@@ -51,7 +51,7 @@ class SimplexTest
         System.out.println("max objective value: " + simplex.maxObjectiveValue());
         
         System.out.println("optimal solution: ");
-        double[] optimalSolution = simplex.optimalSolution();
+        double[] optimalSolution = simplex.primal();
         for(int i = 0; i < optSolution.length; i++)
         {
             assertTrue(MathUtils.floatEqual(optSolution[i], optimalSolution[i]));
@@ -60,40 +60,4 @@ class SimplexTest
         }
     }
     
-    @Test
-    void test3()
-    {
-        /*
-        original form
-         x +  y ≥ 4
-         x + 3y ≥ 6
-        x ≥ 0, y ≥ 0
-        
-        standard form
-        x +  y - u = 4
-        x + 3y - v = 6
-        x ≥ 0, y ≥ 0, u ≥ 0, v ≥ 0
-         */
-        double[][] A = {{1, 1, -1, 0}, {1, 3, 0, -1}};
-        double[] b = {4, 6};
-        
-        // min 2x + y
-        double[] c1 = {-2, -1};
-        double[] x1 = {3, 1};
-        double minVal = 7;
-        
-        Simplex simplex1 = new Simplex(A,b, c1);
-        assertTrue(MathUtils.floatEqual(minVal, simplex1.maxObjectiveValue()));
-        System.out.println("max objective value: " + simplex1.maxObjectiveValue());
-    
-        System.out.println("optimal solution: ");
-        double[] optimalSolution = simplex1.optimalSolution();
-        for(int i = 0; i < x1.length; i++)
-        {
-            assertTrue(MathUtils.floatEqual(x1[i], optimalSolution[i]));
-            System.out.printf("%d : %.6f%n", i, optimalSolution[i]);
-//            System.out.println(i + " : " + optimalSolution[i]);
-        }
-        
-    }
 }

@@ -5,3 +5,6 @@
 *.jar
 *.uml
 /test/
+
+/src/test/java/com/green/learning/algs4/iterative/SimplexXTest.java
+/src/main/java/com/green/learning/algs4/iterative/SimplexX.java
