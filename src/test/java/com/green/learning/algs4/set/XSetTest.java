@@ -1,6 +1,6 @@
 package com.green.learning.algs4.set;
 
-import com.green.learning.algs4.util.MathUtil;
+import com.green.learning.algs4.util.MathUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -36,19 +36,19 @@ public class XSetTest
     @ValueSource(ints = {0, 1, 7, 8, 15, 16, 31, 32, 256})
     public void testExpandToPowerOf2(int N)
     {
-        System.out.println(N + " : " + MathUtil.expandToPowerOf2(N));
+        System.out.println(N + " : " + MathUtils.expandToPowerOf2(N));
     }
     
     @Test
     public void testExpandToPowerOf2_Abnormal()
     {
         // 边界值
-        Assertions.assertThrows(AssertionError.class, () -> MathUtil.expandToPowerOf2(-0));
-        Assertions.assertThrows(AssertionError.class, () -> MathUtil.expandToPowerOf2(-1));
-        Assertions.assertThrows(AssertionError.class, () -> MathUtil.expandToPowerOf2(-128));
+        Assertions.assertThrows(AssertionError.class, () -> MathUtils.expandToPowerOf2(-0));
+        Assertions.assertThrows(AssertionError.class, () -> MathUtils.expandToPowerOf2(-1));
+        Assertions.assertThrows(AssertionError.class, () -> MathUtils.expandToPowerOf2(-128));
         
-        Assertions.assertEquals(1, MathUtil.expandToPowerOf2(1 << 30) >> 30);
-        Assertions.assertThrows(IllegalArgumentException.class, () -> MathUtil.expandToPowerOf2((1 << 30) + 1));
+        Assertions.assertEquals(1, MathUtils.expandToPowerOf2(1 << 30) >> 30);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> MathUtils.expandToPowerOf2((1 << 30) + 1));
     }
     
     @Test

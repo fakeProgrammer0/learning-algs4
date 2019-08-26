@@ -2,7 +2,7 @@ package com.green.learning.algs4.st;
 
 import com.green.learning.algs4.set.XLinkedHashSet;
 import com.green.learning.algs4.set.XSet;
-import com.green.learning.algs4.util.MathUtil;
+import com.green.learning.algs4.util.MathUtils;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -42,7 +42,7 @@ public class ArrayHashST<K, V> implements ST<K, V>
             throw new IllegalArgumentException("capacity should be positive");
         if (initialCapacity > MAXIMUM_CAPACITY)
             throw new IllegalArgumentException("maximum capacity is " + MAXIMUM_CAPACITY);
-        this.capacity = MathUtil.expandToPowerOf2(initialCapacity);
+        this.capacity = MathUtils.expandToPowerOf2(initialCapacity);
         if (this.capacity > MAXIMUM_CAPACITY) this.capacity = MAXIMUM_CAPACITY;
         
         if (loadFactor <= 0)
