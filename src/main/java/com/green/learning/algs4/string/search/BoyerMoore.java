@@ -97,8 +97,9 @@ public class BoyerMoore
     
     public int search(String text)
     {
-        SubstringSearchs.checkText(text, M);
+        SubstringSearchs.checkText(text);
         final int N = text.length();
+        if(N < M) return -1;
         
         int d1, d2;
         for (int i = M - 1, j; i < N; )

@@ -66,8 +66,10 @@ public class KMP
     
     public int search(String text)
     {
-        SubstringSearchs.checkText(text, M);
+        SubstringSearchs.checkText(text);
         final int N = text.length();
+        if(N < M) return -1;
+        
         int i = 0, j = 0;
         while (i < N)
         {
@@ -86,7 +88,7 @@ public class KMP
     
     public Iterable<Integer> searchAll(String text)
     {
-        SubstringSearchs.checkText(text, M);
+        SubstringSearchs.checkText(text);
         XQueue<Integer> occurIndices = new XLinkedQueue<>();
         final int N = text.length();
         int i = 0, j = 0;

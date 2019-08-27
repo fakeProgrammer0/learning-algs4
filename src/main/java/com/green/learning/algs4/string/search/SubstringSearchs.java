@@ -10,6 +10,13 @@ public class SubstringSearchs
             throw new IllegalArgumentException("pattern should not be null or empty");
     }
     
+    static void checkText(String text)
+    {
+        if (StringUtils.isEmpty(text))
+            throw new IllegalArgumentException("text should not be null or empty");
+    }
+    
+    @Deprecated
     static void checkText(String text, int M)
     {
         if (StringUtils.isEmpty(text))

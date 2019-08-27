@@ -70,9 +70,12 @@ public class KMPDFA
     
     public int search(String text)
     {
-        SubstringSearchs.checkText(text, M);
+        SubstringSearchs.checkText(text);
+        final int N = text.length();
+        if(N < M) return -1;
+        
         int i, j;
-        for (i = 0, j = 0; i < text.length() && j < M; i++)
+        for (i = 0, j = 0; i < N && j < M; i++)
             j = dfa.transition(j, text.charAt(i));
         if (j == M) return i - M;
         return -1;

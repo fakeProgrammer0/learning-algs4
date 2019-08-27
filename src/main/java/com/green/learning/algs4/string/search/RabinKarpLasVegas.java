@@ -4,19 +4,24 @@ import java.math.BigInteger;
 import java.util.Random;
 
 /**
+ * Las Vegas version of Rabin Karp Algorithm
  * @see edu.princeton.cs.algs4.RabinKarp
  */
-public class RabinKarp
+public class RabinKarpLasVegas
 {
     private final int M;
     private final int R;
     private final long Q;
-    private final long RM; // R ^ (M - 1) % Q
+    
+    /**
+     * R ^ (M - 1) % Q
+     */
+    private final long RM_1;
     
     private final String pattern;
     private final long patternHash;
     
-    public RabinKarp(String pattern)
+    public RabinKarpLasVegas(String pattern)
     {
         SubstringSearchs.checkPattern(pattern);
         
@@ -24,13 +29,17 @@ public class RabinKarp
         R = Character.MAX_VALUE + 1;
         Q = longRndPrime();
         
+//        R = 256;
+//        Q = 1245128771;
+        
         this.pattern = pattern;
         patternHash = hash(pattern, M);
         
+        // precompute R^(m-1) % Q
         long RM = 1;
         for (int i = 1; i <= M - 1; i++)
             RM = (RM * R) % Q;
-        this.RM = RM;
+        this.RM_1 = RM;
     }
     
     private static long longRndPrime()
@@ -48,12 +57,13 @@ public class RabinKarp
     {
         long hash = 0;
         for (int i = 0; i < end; i++)
-            hash += (hash * R + key.charAt(i)) % Q;
+            hash = (hash * R + key.charAt(i)) % Q;
         return hash;
     }
     
     private boolean checkEqual(String text, int i)
     {
+        assert i + M <= text.length();
         for (int j = 0; j < M; j++, i++)
             if (pattern.charAt(j) != text.charAt(i))
                 return false;
@@ -62,7 +72,7 @@ public class RabinKarp
     
     public int search(String text)
     {
-        SubstringSearchs.checkText(text, M);
+        SubstringSearchs.checkText(text);
         final int N = text.length();
         if (N < M) return -1;
         
@@ -70,10 +80,19 @@ public class RabinKarp
         if (textHash == patternHash && checkEqual(text, 0)) return 0;
         for (int i = 1; i <= N - M; i++)
         {
-            textHash = textHash * R - text.charAt(i - 1) * RM + text.charAt(i);
+            // remove leading digit
+            textHash = (textHash + Q - text.charAt(i - 1) * RM_1 % Q) % Q;
+            // add trailing digit
+            textHash = (textHash * R + text.charAt(i + M - 1)) % Q;
+            
             if (textHash == patternHash && checkEqual(text, i))
                 return i;
         }
         return -1;
+    }
+    
+    public static int search(String text, String pattern)
+    {
+        return new RabinKarpLasVegas(pattern).search(text);
     }
 }

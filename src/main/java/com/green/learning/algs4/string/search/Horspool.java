@@ -39,8 +39,10 @@ public class Horspool
     
     public int search(String text)
     {
-        SubstringSearchs.checkText(text, M);
+        SubstringSearchs.checkText(text);
         final int N = text.length();
+        if(N < M) return -1;
+        
         for (int i = 0; i <= N - M; )
         {
             for (int j = M - 1; pattern.charAt(j) == text.charAt(i + j); j--)

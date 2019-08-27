@@ -73,9 +73,10 @@ public class BoyerMooreX
     
     public int search(String text)
     {
-        SubstringSearchs.checkText(text, M);
-        
+        SubstringSearchs.checkText(text);
         final int N = text.length();
+        if(N < M) return -1;
+        
         int d1, d2;
         for (int i = 0, shift = 0; i <= N - M; i += shift)
         {
@@ -96,7 +97,7 @@ public class BoyerMooreX
     
     public Iterable<Integer> searchAll(String text)
     {
-        SubstringSearchs.checkText(text, M);
+        SubstringSearchs.checkText(text);
         XQueue<Integer> occurIndices = new XLinkedQueue<>();
         final int N = text.length();
         for (int i = 0, j; i <= N - M; )

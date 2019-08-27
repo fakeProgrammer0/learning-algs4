@@ -28,9 +28,10 @@ public class BoyerMooreBadSymbolShift
     public int search(String text)
     {
         final int M = pattern.length();
-        SubstringSearchs.checkText(text, M);
-        
+        SubstringSearchs.checkText(text);
         final int N = text.length();
+        if(N < M) return -1;
+        
         for (int i = 0, shift = 0; i <= N - M; i += shift)
         {
             int j = M - 1;

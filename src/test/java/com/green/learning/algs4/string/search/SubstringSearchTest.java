@@ -49,9 +49,17 @@ public class SubstringSearchTest
             System.out.printf("pattern: %s\n", pattern);
             int index = KMPDFA.search(text, pattern);
             assertEquals(index, text.indexOf(pattern));
+            assertEquals(index, BoyerMooreBadSymbolShift.search(text,pattern));
             assertEquals(index, BoyerMoore.search(text,pattern));
+            assertEquals(index, BoyerMooreX.search(text,pattern));
             assertEquals(index, Horspool.search(text,pattern));
+            assertEquals(index, KMP.search(text,pattern));
             assertEquals(index, KMPBorder.search(text,pattern));
+    
+//            assertEquals(index, new edu.princeton.cs.algs4.RabinKarp(pattern).search(text));
+            assertEquals(index, RabinKarpLasVegas.search(text,pattern));
+            assertEquals(index, RabinKarpMonteCarlo.search(text,pattern));
+            
             System.out.printf("index: %d\n\n", index);
         }
     }
