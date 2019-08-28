@@ -1,5 +1,7 @@
 package com.green.learning.algs4.string.search;
 
+import com.green.learning.algs4.list.XLinkedQueue;
+import com.green.learning.algs4.list.XQueue;
 import com.green.learning.algs4.set.XLinkedHashSet;
 import com.green.learning.algs4.set.XSet;
 
@@ -119,5 +121,39 @@ public class RabinKarpMonteCarlo
     public static int search(String text, String pattern)
     {
         return new RabinKarpMonteCarlo(pattern).search(text);
+    }
+    
+    public Iterable<Integer> searchAll(String text)
+    {
+        SubstringSearchs.checkText(text);
+        final int N = text.length();
+        XQueue<Integer> queue = new XLinkedQueue<>();
+        if (N < M) return queue;
+        
+        long[] textHashs = new long[HASH_COUNT];
+        for (int x = 0; x < HASH_COUNT; x++)
+            textHashs[x] = hash(text, M, Qs[x]);
+        if (checkEqual(textHashs)) queue.enqueue(0);
+        
+        for (int i = 1; i <= N - M; i++)
+        {
+            for (int x = 0; x < HASH_COUNT; x++)
+            {
+                long Q = Qs[x];
+                // remove leading digit
+                textHashs[x] = (textHashs[x] + Q - text.charAt(i - 1) * RM_1s[x] % Q) % Q;
+                // add trailing digit
+                textHashs[x] = (textHashs[x] * R + text.charAt(i + M - 1)) % Q;
+            }
+            
+            if (checkEqual(textHashs))
+                queue.enqueue(i);
+        }
+        return queue;
+    }
+    
+    public static Iterable<Integer> searchAll(String text, String pattern)
+    {
+        return new RabinKarpMonteCarlo(pattern).searchAll(text);
     }
 }

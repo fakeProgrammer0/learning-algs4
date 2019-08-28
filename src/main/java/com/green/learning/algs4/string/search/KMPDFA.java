@@ -1,5 +1,7 @@
 package com.green.learning.algs4.string.search;
 
+import com.green.learning.algs4.list.XLinkedQueue;
+import com.green.learning.algs4.list.XQueue;
 import com.green.learning.algs4.set.XLinkedHashSet;
 import com.green.learning.algs4.set.XSet;
 import com.green.learning.algs4.st.LinkedHashST;
@@ -15,6 +17,7 @@ public class KMPDFA
     {
         private final int[][] stateTrans;
         private final Alphabet alphabet; // 原来alphabet还可以这么用，简直很神了
+        private final int X;
         
         private DFA(String pattern)
         {
@@ -42,6 +45,7 @@ public class KMPDFA
                 // update mismatch state x
                 x = stateTrans[index][x];
             }
+            X = x;
         }
         
         /**
@@ -55,6 +59,11 @@ public class KMPDFA
         {
             if(!alphabet.contains(c)) return 0;
             return stateTrans[alphabet.toIndex(c)][currState];
+        }
+    
+        public int stateAfterMatch()
+        {
+            return X;
         }
     }
     
@@ -85,6 +94,30 @@ public class KMPDFA
     {
         KMPDFA kmp = new KMPDFA(pattern);
         return kmp.search(text);
+    }
+    
+    public Iterable<Integer> searchAll(String text)
+    {
+        SubstringSearchs.checkText(text);
+        final int N = text.length();
+        XQueue<Integer> queue = new XLinkedQueue<>();
+        if(N < M) return queue;
+        
+        for (int i = 0, j = 0; i < N; i++)
+        {
+            j = dfa.transition(j, text.charAt(i));
+            if (j == M)
+            {
+                queue.enqueue(i - M + 1);
+                j = dfa.stateAfterMatch();
+            }
+        }
+        return queue;
+    }
+    
+    public static Iterable<Integer> searchAll(String text, String pattern)
+    {
+        return new KMPDFA(pattern).searchAll(text);
     }
     
     /**

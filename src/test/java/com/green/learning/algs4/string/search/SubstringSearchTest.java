@@ -49,9 +49,12 @@ public class SubstringSearchTest
             System.out.printf("pattern: %s\n", pattern);
             int index = KMPDFA.search(text, pattern);
             assertEquals(index, text.indexOf(pattern));
+            
             assertEquals(index, BoyerMooreBadSymbolShift.search(text,pattern));
-            assertEquals(index, BoyerMoore.search(text,pattern));
             assertEquals(index, BoyerMooreX.search(text,pattern));
+            assertEquals(index, BoyerMoore.search(text,pattern));
+            
+            
             assertEquals(index, Horspool.search(text,pattern));
             assertEquals(index, KMP.search(text,pattern));
             assertEquals(index, KMPBorder.search(text,pattern));
@@ -61,6 +64,70 @@ public class SubstringSearchTest
             assertEquals(index, RabinKarpMonteCarlo.search(text,pattern));
             
             System.out.printf("index: %d\n\n", index);
+        }
+    }
+    
+    @Test
+    void testSearchAll1()
+    {
+        String text = "Now is the time for all people to come to the aid of their party. Now is the time for all good people to" +
+                "come to the aid of their party. Now is the time for many good people to come to the aid of their party." +
+                "Now is the time for all good people to come to the aid of their party. Now is the time for a lot of good" +
+                "people to come to the aid of their party. Now is the time for all of the good people to come to the aid of" +
+                "their party. Now is the time for all good people to come to the aid of their party. Now is the time for" +
+                "each good person to come to the aid of their party. Now is the time for all good people to come to the aid" +
+                "of their party. Now is the time for all good Republicans to come to the aid of their party. Now is the" +
+                "time for all good people to come to the aid of their party. Now is the time for many or all good people to" +
+                "come to the aid of their party. Now is the time for all good people to come to the aid of their party. Now" +
+                "is the time for all good Democrats to come to the aid of their party. Now is the time for all people to" +
+                "come to the aid of their party. Now is the time for all good people to come to the aid of their party. Now" +
+                "is the time for many good people to come to the aid of their party. Now is the time for all good people to" +
+                "come to the aid of their party. Now is the time for a lot of good people to come to the aid of their" +
+                "party. Now is the time for all of the good people to come to the aid of their party. Now is the time for" +
+                "all good people to come to the aid of their attack at dawn party. Now is the time for each person to come" +
+                "to the aid of their party. Now is the time for all good people to come to the aid of their party. Now is" +
+                "the time for all good Republicans to come to the aid of their party. Now is the time for all good people" +
+                "to come to the aid of their party. Now is the time for many or all good people to come to the aid of their" +
+                "party. Now is the time for all good people to come to the aid of their party. Now is the time for all good" +
+                "Democrats to come to the aid of their party.";
+        
+        String[] patterns = {
+                "attack at dawn",
+                "party",
+                "all",
+                "to the aid of",
+                "Democrats to come",
+                "Democrats",
+                "Democratstocome",
+                "Republican",
+                "all good people"
+        };
+        
+        for(String pattern: patterns)
+        {
+            System.out.printf("pattern: %s\n", pattern);
+            int lastOccurIndex = -1;
+            Iterable<Integer> iterable = KMPBorder.searchAll(text, pattern);
+            for(int index: iterable)
+            {
+                System.out.printf("-> %d\n", index);
+                assertEquals(text.indexOf(pattern, lastOccurIndex + 1), index);
+                lastOccurIndex = index;
+            }
+            assertEquals(text.indexOf(pattern, lastOccurIndex + 1), -1);
+            System.out.println();
+            
+            assertIterableEquals(iterable, KMP.searchAll(text,pattern));
+            assertIterableEquals(iterable, KMPDFA.searchAll(text,pattern));
+            
+            assertIterableEquals(iterable, BoyerMoore.searchAll(text, pattern));
+            assertIterableEquals(iterable, BoyerMooreX.searchAll(text, pattern));
+            assertIterableEquals(iterable, BoyerMooreBadSymbolShift.searchAll(text, pattern));
+            
+            assertIterableEquals(iterable, Horspool.searchAll(text, pattern));
+            
+            assertIterableEquals(iterable,RabinKarpLasVegas.searchAll(text,pattern));
+            assertIterableEquals(iterable,RabinKarpMonteCarlo.searchAll(text,pattern));
         }
     }
     

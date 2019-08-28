@@ -78,14 +78,14 @@ public class BoyerMooreX
         if(N < M) return -1;
         
         int d1, d2;
-        for (int i = 0, shift = 0; i <= N - M; i += shift)
+        for (int i = 0; i <= N - M;)
         {
             int j = M - 1;
             for (; pattern.charAt(j) == text.charAt(i + j); j--)
                 if (j == 0) return i;
             d1 = badSymbolShift(j, text.charAt(i + j));
             d2 = goodSuffixShifts[j + 1];
-            shift = Math.max(d1, d2);
+            i += Math.max(d1, d2);
         }
         return -1;
     }

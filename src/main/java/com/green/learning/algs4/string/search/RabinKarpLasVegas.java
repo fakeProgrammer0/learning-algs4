@@ -1,5 +1,8 @@
 package com.green.learning.algs4.string.search;
 
+import com.green.learning.algs4.list.XLinkedQueue;
+import com.green.learning.algs4.list.XQueue;
+
 import java.math.BigInteger;
 import java.util.Random;
 
@@ -94,5 +97,33 @@ public class RabinKarpLasVegas
     public static int search(String text, String pattern)
     {
         return new RabinKarpLasVegas(pattern).search(text);
+    }
+    
+    public Iterable<Integer> searchAll(String text)
+    {
+        SubstringSearchs.checkText(text);
+        final int N = text.length();
+        XQueue<Integer> queue = new XLinkedQueue<>();
+        if (N < M) return queue;
+        
+        long textHash = hash(text, M);
+        if (textHash == patternHash && checkEqual(text, 0))
+            queue.enqueue(0);
+        for (int i = 1; i <= N - M; i++)
+        {
+            // remove leading digit
+            textHash = (textHash + Q - text.charAt(i - 1) * RM_1 % Q) % Q;
+            // add trailing digit
+            textHash = (textHash * R + text.charAt(i + M - 1)) % Q;
+            
+            if (textHash == patternHash && checkEqual(text, i))
+                queue.enqueue(i);
+        }
+        return queue;
+    }
+    
+    public static Iterable<Integer> searchAll(String text, String pattern)
+    {
+        return new RabinKarpLasVegas(pattern).searchAll(text);
     }
 }

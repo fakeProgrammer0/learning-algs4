@@ -1,10 +1,13 @@
 package com.green.learning.algs4.string.search;
 
+import com.green.learning.algs4.list.XLinkedQueue;
+import com.green.learning.algs4.list.XQueue;
 import com.green.learning.algs4.string.Alphabet;
 
 /**
  * A simplified version of BoyerMoore
  * <a href="https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore%E2%80%93Horspool_algorithm"></a>
+ *
  * @see BoyerMooreBadSymbolShift for a Boyer Moore variant using only bad symbol shifts
  * @see BoyerMoore for a full implementation of Boyer Moore
  */
@@ -41,7 +44,7 @@ public class Horspool
     {
         SubstringSearchs.checkText(text);
         final int N = text.length();
-        if(N < M) return -1;
+        if (N < M) return -1;
         
         for (int i = 0; i <= N - M; )
         {
@@ -56,5 +59,31 @@ public class Horspool
     {
         Horspool horspool = new Horspool(pattern);
         return horspool.search(text);
+    }
+    
+    public Iterable<Integer> searchAll(String text)
+    {
+        SubstringSearchs.checkText(text);
+        XQueue<Integer> occurIndices = new XLinkedQueue<>();
+        final int N = text.length();
+        if (N < M) return occurIndices;
+        
+        for (int i = 0; i <= N - M; )
+        {
+            int j = M - 1;
+            for (; j >= 0 && pattern.charAt(j) == text.charAt(i + j); j--) ;
+            if (j < 0)
+            {
+                occurIndices.enqueue(i);
+                i++;
+            } else
+                i += badShift(text.charAt(i + M - 1));
+        }
+        return occurIndices;
+    }
+    
+    public static Iterable<Integer> searchAll(String text, String pattern)
+    {
+        return new Horspool(pattern).searchAll(text);
     }
 }
