@@ -47,18 +47,22 @@ public class SubstringSearchTest
         for (String pattern : patterns)
         {
             System.out.printf("pattern: %s\n", pattern);
-            int index = KMPDFA.search(text, pattern);
-            assertEquals(index, text.indexOf(pattern));
+            int index = text.indexOf(pattern);
             
-            assertEquals(index, BoyerMooreBadSymbolShift.search(text,pattern));
-            assertEquals(index, BoyerMooreX.search(text,pattern));
-            assertEquals(index, BoyerMoore.search(text,pattern));
+            assertEquals(index, BruteForceSubstringSearch.search(text,pattern));
+            assertEquals(index, BruteForceSubstringSearchX.search(text,pattern));
             
-            
-            assertEquals(index, Horspool.search(text,pattern));
             assertEquals(index, KMP.search(text,pattern));
             assertEquals(index, KMPBorder.search(text,pattern));
-    
+            assertEquals(index, KMPDFA.search(text,pattern));
+            
+            assertEquals(index, BoyerMooreX.search(text,pattern));
+            assertEquals(index, BoyerMoore.search(text,pattern));
+            assertEquals(index, BoyerMooreGoodSuffixShift.search(text,pattern));
+            assertEquals(index, BoyerMooreBadSymbolShift.search(text,pattern));
+            
+            assertEquals(index, Horspool.search(text,pattern));
+            
 //            assertEquals(index, new edu.princeton.cs.algs4.RabinKarp(pattern).search(text));
             assertEquals(index, RabinKarpLasVegas.search(text,pattern));
             assertEquals(index, RabinKarpMonteCarlo.search(text,pattern));
@@ -117,11 +121,15 @@ public class SubstringSearchTest
             assertEquals(text.indexOf(pattern, lastOccurIndex + 1), -1);
             System.out.println();
             
+            assertIterableEquals(iterable, BruteForceSubstringSearch.searchAll(text,pattern));
+            assertIterableEquals(iterable, BruteForceSubstringSearchX.searchAll(text,pattern));
+            
             assertIterableEquals(iterable, KMP.searchAll(text,pattern));
             assertIterableEquals(iterable, KMPDFA.searchAll(text,pattern));
             
             assertIterableEquals(iterable, BoyerMoore.searchAll(text, pattern));
             assertIterableEquals(iterable, BoyerMooreX.searchAll(text, pattern));
+            assertIterableEquals(iterable, BoyerMooreGoodSuffixShift.searchAll(text, pattern));
             assertIterableEquals(iterable, BoyerMooreBadSymbolShift.searchAll(text, pattern));
             
             assertIterableEquals(iterable, Horspool.searchAll(text, pattern));
