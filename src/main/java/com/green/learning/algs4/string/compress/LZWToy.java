@@ -8,14 +8,40 @@ import edu.princeton.cs.algs4.BinaryOut;
 
 /**
  * Lempel Ziv Welch Algorithm
- *
+ * It's just a toy example to demonstrate the basic idea of the LZW algorithm.
+ * Because the {@code substring} method of {@code String} require O(N) time to
+ * get a substring of a string with length <b>N</b> in java 8, the {@code compress}
+ * method can be very very slow.
  * @see edu.princeton.cs.algs4.LZW
  */
 public class LZWToy implements Compress
 {
     private static final int R = 256;
-    private static final int W = 16;
-    private static final int MAX_CODEWORD = 1 << W;
+    
+    /**
+     * Warning: If W is not a multiple of 8-bits, the client should automatically write
+     * the {@code EOF} character to indicate the end of the compress file.
+     *
+     * Reason:
+     * This client uses the {@code write(int, W)} method of {@code BinaryOut} to write
+     * {@code W} bits to the compress file. If W is not a multiple of 8-bits, then
+     * total bits of the file might not be a multiple of 8-bits, and the
+     * {@code BinaryOut} library will add padding 0s at the end of the file.
+     *
+     * When the client uses {@code readInt(W)} method of {@code BinaryIn} to read
+     * a {@code W}-bit integer, it will finally get the padding zeros which are
+     * no more than {@code W} bits. At this time, an {@code NoSuchElementException}
+     * will be thrown by the {@code BinaryIn} class.
+     */
+    private static final int EOF = R;
+    
+//    private static final int W = 16;
+    private static final int W = 12;
+    
+    /**
+     * codeword upper bound (exclusive)
+     */
+    private static final int CODEWORD_UPPER_BOUND = 1 << W;
     
     private LZWToy()
     {
@@ -34,19 +60,15 @@ public class LZWToy implements Compress
         return "lzw";
     }
     
-    private static OrderedStringST<Integer> getCodewords()
+    @Override
+    public void compress(BinaryIn in, BinaryOut out)
     {
         OrderedStringST<Integer> codewords = new TriesST<>(Alphabet.EXTENDED_ASCII());
         for (char r = 0; r < R; r++)
             codewords.put(r + "", (int) r);
-        return codewords;
-    }
-    
-    @Override
-    public void compress(BinaryIn in, BinaryOut out)
-    {
-        OrderedStringST<Integer> codewords = getCodewords();
-        int currMaxCode = R;
+        
+        int nextCode = EOF + 1;
+        
         String input = in.readString();
         while (true)
         {
@@ -55,31 +77,37 @@ public class LZWToy implements Compress
             out.write(code, W);
             input = input.substring(longestPrefix.length());
             if (input.isEmpty()) break;
-            if (currMaxCode < MAX_CODEWORD)
-                codewords.put(longestPrefix + input.charAt(0), currMaxCode++);
+            if (nextCode < CODEWORD_UPPER_BOUND)
+                codewords.put(longestPrefix + input.charAt(0), nextCode++);
         }
+        out.write(EOF, W);
         out.close();
     }
     
     @Override
     public void expand(BinaryIn in, BinaryOut out)
     {
-        String[] decodeTable = new String[MAX_CODEWORD];
+        String[] decodeTable = new String[CODEWORD_UPPER_BOUND];
         for (char r = 0; r < R; r++)
             decodeTable[r] = String.valueOf(r);
-        int currMaxCode = R - 1;
+        decodeTable[EOF] = ""; // look ahead for EOF
+        int nextCode = EOF + 1;
         
-        String predecessor = null;
-        while (!in.isEmpty())
+        int code = in.readInt(W);
+        if(code == EOF) return;
+        String val = decodeTable[code];
+        
+        while (true)
         {
-            int code = in.readInt(W);
-            String decode = (code == currMaxCode + 1)
-                    ? predecessor + predecessor.charAt(0)
+            out.write(val);
+            code = in.readInt(W);
+            if(code == EOF) break;
+            String decode = code == nextCode
+                    ? val + val.charAt(0)
                     : decodeTable[code];
-            out.write(decode);
-            if (currMaxCode < MAX_CODEWORD && predecessor != null)
-                decodeTable[currMaxCode++] = predecessor + decode.charAt(0);
-            predecessor = decode;
+            if (nextCode < CODEWORD_UPPER_BOUND)
+                decodeTable[nextCode++] = val + decode.charAt(0);
+            val = decode;
         }
         out.close();
     }
