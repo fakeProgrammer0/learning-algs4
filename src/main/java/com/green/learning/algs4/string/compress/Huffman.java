@@ -9,7 +9,10 @@ import com.green.learning.algs4.tree.XPriorityQueue;
 import edu.princeton.cs.algs4.BinaryIn;
 import edu.princeton.cs.algs4.BinaryOut;
 
-public class Huffman
+/**
+ * @see edu.princeton.cs.algs4.Huffman
+ */
+public class Huffman implements Compress
 {
     private static class Node implements Comparable<Node>
     {
@@ -55,13 +58,25 @@ public class Huffman
     }
     
     private static final int R = 256;
-    public static final String COMPRESS_SUFFIX = ".huff";
+    
+    private static Huffman instance;
     
     private Huffman()
     {
     }
     
-    public static void compress(BinaryIn in, BinaryOut out)
+    public static Huffman getInstance()
+    {
+        if (instance == null) instance = new Huffman();
+        return instance;
+    }
+    
+    public String compressFileSuffix()
+    {
+        return "huff";
+    }
+    
+    public void compress(BinaryIn in, BinaryOut out)
     {
         // extended-ASCII
         String input = in.readString();
@@ -142,27 +157,21 @@ public class Huffman
             encodes.put(x.c, code);
         } else
         {
-//            if (x.left != null)
-            {
-                codeBuilder.append(false);
-                inorder(x.left, codeBuilder, encodes);
-                codeBuilder.remove(codeBuilder.size() - 1);
-            }
-
-//            if (x.right != null)
-            {
-                codeBuilder.append(true);
-                inorder(x.right, codeBuilder, encodes);
-                codeBuilder.remove(codeBuilder.size() - 1);
-            }
+            codeBuilder.append(false);
+            inorder(x.left, codeBuilder, encodes);
+            codeBuilder.remove(codeBuilder.size() - 1);
+            
+            codeBuilder.append(true);
+            inorder(x.right, codeBuilder, encodes);
+            codeBuilder.remove(codeBuilder.size() - 1);
         }
     }
     
-    public static void expand(BinaryIn in, BinaryOut out)
+    public void expand(BinaryIn in, BinaryOut out)
     {
         Node root = readEncodingTree(in);
         int N = in.readInt();
-        for(int i = 0; i < N; i++)
+        for (int i = 0; i < N; i++)
         {
             Node x = root;
             while (x.isNotLeaf())
