@@ -1,9 +1,10 @@
-package com.green.learning.algs4.string.tries;
+package com.green.learning.algs4.string.trie;
 
 import com.green.learning.algs4.list.XLinkedQueue;
 import com.green.learning.algs4.list.XQueue;
 import com.green.learning.algs4.set.XLinkedHashSet;
 import com.green.learning.algs4.set.XSet;
+import com.green.learning.algs4.string.trie.OrderedStringST;
 
 import java.util.Iterator;
 

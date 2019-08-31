@@ -1,4 +1,4 @@
-package com.green.learning.algs4.string.tries;
+package com.green.learning.algs4.string.trie;
 
 import com.green.learning.algs4.list.XArrayList;
 import com.green.learning.algs4.list.XList;
@@ -121,7 +121,7 @@ class TriesSTTest
     void testTST1()
     {
 //        OrderedStringST<Integer> tries = new TriesST<>(Alphabet.LOWERCASE());
-        OrderedStringST<Integer> tries = new TernarySearchTriesST<>();
+        OrderedStringST<Integer> tries = new TernarySearchTrieST<>();
         
         assertTrue(tries.isEmpty());
         
@@ -222,7 +222,7 @@ class TriesSTTest
     {
 //        TriesST<String> tries = new TriesST<>(Alphabet.ASCII());
 //        TernarySearchTriesST<String> tries = new TernarySearchTriesST<>();
-        OrderedStringST<String> tries = new TernarySearchTriesST<>();
+        OrderedStringST<String> tries = new TernarySearchTrieST<>();
         
         ST<String, String> st = new LinkedHashST<>();
         

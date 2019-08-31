@@ -1,8 +1,8 @@
 package com.green.learning.algs4.string.compress;
 
 import com.green.learning.algs4.string.Alphabet;
-import com.green.learning.algs4.string.tries.OrderedStringST;
-import com.green.learning.algs4.string.tries.TriesST;
+import com.green.learning.algs4.string.trie.OrderedStringST;
+import com.green.learning.algs4.string.trie.TrieST;
 import edu.princeton.cs.algs4.BinaryIn;
 import edu.princeton.cs.algs4.BinaryOut;
 
@@ -63,7 +63,7 @@ public class LZWToy implements Compress
     @Override
     public void compress(BinaryIn in, BinaryOut out)
     {
-        OrderedStringST<Integer> codewords = new TriesST<>(Alphabet.EXTENDED_ASCII());
+        OrderedStringST<Integer> codewords = new TrieST<>(Alphabet.EXTENDED_ASCII());
         for (char r = 0; r < R; r++)
             codewords.put(r + "", (int) r);
         

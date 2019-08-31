@@ -1,4 +1,4 @@
-package com.green.learning.algs4.string.tries;
+package com.green.learning.algs4.string.trie;
 
 import com.green.learning.algs4.set.XLinkedHashSet;
 import com.green.learning.algs4.set.XSet;
@@ -46,9 +46,9 @@ public class TriesTest
         return triesST;
     }
     
-    private static <V> TernarySearchTriesST<V> initTSTST(String[] keys, V[] values)
+    private static <V> TernarySearchTrieST<V> initTSTST(String[] keys, V[] values)
     {
-        TernarySearchTriesST<V> triesST = new TernarySearchTriesST<>();
+        TernarySearchTrieST<V> triesST = new TernarySearchTrieST<>();
         for (int i = 0; i < keys.length; i++)
         {
             triesST.put(keys[i], values[i]);
@@ -75,7 +75,7 @@ public class TriesTest
 //        TriesST<String> tries = initTriesST(Alphabet.LOWERCASE(), keys, keys);
         
 //        TernarySearchTriesSet tries = initTSTSet(keys);
-        TernarySearchTriesST<String> tries = initTSTST(keys, keys);
+        TernarySearchTrieST<String> tries = initTSTST(keys, keys);
         
         for (int i = 0; i < keys.length; i++)
         {

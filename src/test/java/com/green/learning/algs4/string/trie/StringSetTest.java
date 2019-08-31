@@ -1,4 +1,4 @@
-package com.green.learning.algs4.string.tries;
+package com.green.learning.algs4.string.trie;
 
 import org.junit.jupiter.api.Test;
 
