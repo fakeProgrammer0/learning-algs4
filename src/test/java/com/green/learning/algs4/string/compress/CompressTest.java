@@ -25,10 +25,10 @@ class CompressTest
     
     @ParameterizedTest
     @ValueSource(classes = {
-//            RunLength.class,
+            RunLength.class,
 //            Huffman.class,
 //            LZWToy.class
-            LZW.class
+//            LZW.class
     })
     void test1(Class<? extends Compress> clazz)
             throws NoSuchMethodException, InvocationTargetException, IllegalAccessException
@@ -45,8 +45,8 @@ class CompressTest
                 "democracy.txt",
                 "notes.pdf",
                 "GifCam.exe",
-                "largeEWD.txt",
-                "leipzig1M.txt"
+//                "largeEWD.txt",
+//                "leipzig1M.txt"
         };
         
         for (String filename : files)

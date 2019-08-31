@@ -14,11 +14,13 @@ public class RunLength implements Compress
     
     private static RunLength instance;
     
-    private RunLength() {}
+    private RunLength()
+    {
+    }
     
     public static Compress getInstance()
     {
-        if(instance == null) instance = new RunLength();
+        if (instance == null) instance = new RunLength();
         return instance;
     }
     
@@ -26,6 +28,24 @@ public class RunLength implements Compress
     {
         return "run";
     }
+
+//    public void compress(BinaryIn in, BinaryOut out)
+//    {
+//        int bitCount = 0;
+//        boolean bit = false;
+//        boolean b = bit;
+//        while (!in.isEmpty())
+//        {
+//            while (bitCount < MAX_CONSECUTIVE_BITS &&
+//                    !in.isEmpty() && (b = in.readBoolean()) == bit)
+//                bitCount++;
+//            out.write(bitCount, lgR);
+//            bitCount = bit == b ? 0 : 1;
+//            bit = !bit;
+//        }
+//        if (bitCount == 1) out.write(bitCount);
+//        out.close();
+//    }
     
     public void compress(BinaryIn in, BinaryOut out)
     {
@@ -33,14 +53,24 @@ public class RunLength implements Compress
         boolean bit = false;
         while (!in.isEmpty())
         {
-            while (bitCount < MAX_CONSECUTIVE_BITS &&
-                    !in.isEmpty() && in.readBoolean() == bit)
+            boolean b = in.readBoolean();
+            if (b == bit)
+            {
                 bitCount++;
-            out.write(bitCount, lgR);
-            bit = !bit;
-            bitCount = bitCount == MAX_CONSECUTIVE_BITS ? 0 : 1;
+                if (bitCount == MAX_CONSECUTIVE_BITS)
+                {
+                    out.write(bitCount, lgR);
+                    bitCount = 0;
+                    bit = !bit;
+                }
+            } else
+            {
+                out.write(bitCount, lgR);
+                bitCount = 1;
+                bit = !bit;
+            }
         }
-        if (bitCount == 1) out.write(bitCount);
+        out.write(bitCount, lgR);
         out.close();
     }
     
