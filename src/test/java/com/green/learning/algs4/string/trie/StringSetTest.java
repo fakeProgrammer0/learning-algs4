@@ -10,7 +10,7 @@ public class StringSetTest
     @Test
     void testTST()
     {
-        TernarySearchTriesSet tries = new TernarySearchTriesSet();
+        TernarySearchTrieSet tries = new TernarySearchTrieSet();
         assertTrue(tries.isEmpty());
         
         String[] keys = {

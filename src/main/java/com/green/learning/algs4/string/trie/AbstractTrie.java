@@ -1,4 +1,4 @@
-package com.green.learning.algs4.string.tries;
+package com.green.learning.algs4.string.trie;
 
 import com.green.learning.algs4.list.XLinkedQueue;
 import com.green.learning.algs4.list.XLinkedStack;
@@ -7,7 +7,7 @@ import com.green.learning.algs4.list.XStack;
 import com.green.learning.algs4.string.Alphabet;
 
 
-public abstract class AbstractTries implements OrderedStringCollection
+public abstract class AbstractTrie implements OrderedStringCollection
 {
     protected static abstract class Node
     {
@@ -37,7 +37,7 @@ public abstract class AbstractTries implements OrderedStringCollection
     protected int size = 0;
     protected Node root;
     
-    protected AbstractTries(Alphabet alphabet)
+    protected AbstractTrie(Alphabet alphabet)
     {
         this.alphabet = alphabet;
         this.R = alphabet.radix();

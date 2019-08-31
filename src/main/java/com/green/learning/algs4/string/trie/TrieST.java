@@ -14,10 +14,10 @@ import java.util.Iterator;
  * @see OrderedStringST for string symbol table
  * @see edu.princeton.cs.algs4.TrieST for similar implementation
  */
-public class TriesST<V> extends AbstractTries
+public class TrieST<V> extends AbstractTrie
         implements OrderedStringST<V>
 {
-    private static class Node extends AbstractTries.Node
+    private static class Node extends AbstractTrie.Node
     {
         private Object value;
     
@@ -40,7 +40,7 @@ public class TriesST<V> extends AbstractTries
         }
     }
     
-    public TriesST(Alphabet alphabet)
+    public TrieST(Alphabet alphabet)
     {
        super(alphabet);
     }
@@ -63,7 +63,7 @@ public class TriesST<V> extends AbstractTries
         if (root == null)
             root = new Node();
     
-        AbstractTries.Node x = root;
+        AbstractTrie.Node x = root;
         for (int d = 0; d < key.length(); d++)
         {
             if (x.next == null)
@@ -89,7 +89,7 @@ public class TriesST<V> extends AbstractTries
     @Override
     public V get(String key)
     {
-        AbstractTries.Node x = getNode(key);
+        AbstractTrie.Node x = getNode(key);
         if(x == null) return null;
         return (V) x.getNodeValue();
     }
@@ -124,7 +124,7 @@ public class TriesST<V> extends AbstractTries
     }
     
     @SuppressWarnings("unchecked")
-    private void collect(AbstractTries.Node x, StringBuilder prefix, XSet<Entry<String, V>> set)
+    private void collect(AbstractTrie.Node x, StringBuilder prefix, XSet<Entry<String, V>> set)
     {
         if (x == null) return;
         if (x.isEndOfStr())

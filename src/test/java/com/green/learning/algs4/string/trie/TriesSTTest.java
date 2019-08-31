@@ -25,7 +25,7 @@ class TriesSTTest
     @Test
     void testPutGet()
     {
-        OrderedStringST<Integer> tries = new TriesST<>(Alphabet.LOWERCASE());
+        OrderedStringST<Integer> tries = new TrieST<>(Alphabet.LOWERCASE());
         
         assertTrue(tries.isEmpty());
         
@@ -210,7 +210,7 @@ class TriesSTTest
     @Test
     void testPut1()
     {
-        TriesST<Integer> tries = new TriesST<>(Alphabet.LOWERCASE());
+        TrieST<Integer> tries = new TrieST<>(Alphabet.LOWERCASE());
         
         assertThrows(IllegalArgumentException.class, () -> tries.put("a", null));
         assertThrows(IllegalArgumentException.class, () -> tries.put("123", 1));

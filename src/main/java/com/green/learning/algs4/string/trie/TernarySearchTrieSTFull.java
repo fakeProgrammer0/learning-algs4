@@ -12,7 +12,7 @@ import java.util.Iterator;
  * @see OrderedStringST for string symbol table
  * @see edu.princeton.cs.algs4.TST for similar implementation
  */
-public class TernarySearchTriesSTFull<V> implements OrderedStringST<V>
+public class TernarySearchTrieSTFull<V> implements OrderedStringST<V>
 {
     private static class Node<Value>
     {
@@ -30,7 +30,7 @@ public class TernarySearchTriesSTFull<V> implements OrderedStringST<V>
     private Node<V> root;
     private int size = 0;
     
-    public TernarySearchTriesSTFull()
+    public TernarySearchTrieSTFull()
     {
     }
     

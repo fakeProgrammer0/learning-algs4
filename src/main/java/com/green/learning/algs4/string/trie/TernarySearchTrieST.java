@@ -10,7 +10,7 @@ import java.util.Iterator;
  * @see OrderedStringST for string symbol table
  * @see edu.princeton.cs.algs4.TST for similar implementation
  */
-public class TernarySearchTriesST<V> extends AbstractTST
+public class TernarySearchTrieST<V> extends AbstractTST
         implements OrderedStringST<V>
 {
     private static class Node extends AbstractTST.Node
@@ -41,7 +41,7 @@ public class TernarySearchTriesST<V> extends AbstractTST
         }
     }
     
-    public TernarySearchTriesST()
+    public TernarySearchTrieST()
     {
     }
     

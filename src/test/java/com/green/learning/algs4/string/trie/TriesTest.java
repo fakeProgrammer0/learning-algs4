@@ -10,9 +10,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TriesTest
 {
-    private static TriesSet initTriesSet(Alphabet alphabet, String[] strings)
+    private static TrieSet initTriesSet(Alphabet alphabet, String[] strings)
     {
-        TriesSet triesSet = new TriesSet(alphabet);
+        TrieSet triesSet = new TrieSet(alphabet);
         for (int i = 0; i < strings.length; i++)
         {
             triesSet.add(strings[i]);
@@ -22,9 +22,9 @@ public class TriesTest
         return triesSet;
     }
     
-    private static TernarySearchTriesSet initTSTSet(String[] strings)
+    private static TernarySearchTrieSet initTSTSet(String[] strings)
     {
-        TernarySearchTriesSet triesSet = new TernarySearchTriesSet();
+        TernarySearchTrieSet triesSet = new TernarySearchTrieSet();
         for (int i = 0; i < strings.length; i++)
         {
             triesSet.add(strings[i]);
@@ -34,9 +34,9 @@ public class TriesTest
         return triesSet;
     }
     
-    private static <V> TriesST<V> initTriesST(Alphabet alphabet, String[] keys, V[] values)
+    private static <V> TrieST<V> initTriesST(Alphabet alphabet, String[] keys, V[] values)
     {
-        TriesST<V> triesST = new TriesST<>(alphabet);
+        TrieST<V> triesST = new TrieST<>(alphabet);
         for (int i = 0; i < keys.length; i++)
         {
             triesST.put(keys[i], values[i]);

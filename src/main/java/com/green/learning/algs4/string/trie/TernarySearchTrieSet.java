@@ -1,4 +1,4 @@
-package com.green.learning.algs4.string.tries;
+package com.green.learning.algs4.string.trie;
 
 import java.util.Iterator;
 
@@ -6,7 +6,7 @@ import java.util.Iterator;
  * @see OrderedStringST for string symbol table
  * @see edu.princeton.cs.algs4.TST for similar implementation
  */
-public class TernarySearchTriesSet extends AbstractTST
+public class TernarySearchTrieSet extends AbstractTST
         implements OrderedStringSet
 {
     private static class Node extends AbstractTST.Node
@@ -37,7 +37,7 @@ public class TernarySearchTriesSet extends AbstractTST
         }
     }
     
-    public TernarySearchTriesSet()
+    public TernarySearchTrieSet()
     {
     }
     

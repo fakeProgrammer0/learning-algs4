@@ -12,10 +12,10 @@ import java.util.Iterator;
  * @see OrderedStringST for string symbol table
  * @see edu.princeton.cs.algs4.TrieST for similar implementation
  */
-public class TriesSet extends AbstractTries
+public class TrieSet extends AbstractTrie
         implements OrderedStringSet
 {
-    private static class Node extends AbstractTries.Node
+    private static class Node extends AbstractTrie.Node
     {
         // does this Node represents a string?
         private boolean endOfStr;
@@ -39,7 +39,7 @@ public class TriesSet extends AbstractTries
         }
     }
     
-    public TriesSet(Alphabet alphabet)
+    public TrieSet(Alphabet alphabet)
     {
         super(alphabet);
     }
@@ -63,7 +63,7 @@ public class TriesSet extends AbstractTries
         if (root == null)
             root = new Node();
         
-        AbstractTries.Node x = root;
+        AbstractTrie.Node x = root;
         for (int d = 0; d < str.length(); d++)
         {
             if (x.next == null)
