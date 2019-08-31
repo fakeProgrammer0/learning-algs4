@@ -27,7 +27,8 @@ class CompressTest
     @ValueSource(classes = {
 //            RunLength.class,
 //            Huffman.class,
-            LZWToy.class
+//            LZWToy.class
+            LZW.class
     })
     void test1(Class<? extends Compress> clazz)
             throws NoSuchMethodException, InvocationTargetException, IllegalAccessException
