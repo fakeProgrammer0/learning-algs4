@@ -39,10 +39,14 @@ class CompressTest
         String suffix = instance.compressFileSuffix();
         
         String[] files = {
+                "ababLZW.txt",
+                "abraLZW.txt",
                 "letters.txt",
                 "democracy.txt",
-//                "notes.pdf",
-//                "GifCam.exe",
+                "notes.pdf",
+                "GifCam.exe",
+                "largeEWD.txt",
+                "leipzig1M.txt"
         };
         
         for (String filename : files)
@@ -60,6 +64,7 @@ class CompressTest
             
             timer.start("compress " + filename);
             instance.compress(compressInput, compressOutput);
+//            LZW.getInstance().compress(compressInput, compressOutput);
             timer.stop();
             
             long originalLength = new File(originalFilePath).length();
@@ -74,15 +79,16 @@ class CompressTest
             
             timer.start("expand " + filename);
             instance.expand(expandInput, expandOutput);
+//            LZWToy.getInstance().expand(expandInput, expandOutput);
             timer.stop();
             
             String originalFileMD5 = FileUtils.md5(originalFilePath);
-            String expandFileMD5 = FileUtils.md5(originalFilePath);
+            String expandFileMD5 = FileUtils.md5(expandFilePath);
             assertEquals(originalFileMD5, expandFileMD5);
 //        System.out.println("original file md5: " + originalFileMD5);
             
             String originalFileSHA = FileUtils.sha(originalFilePath);
-            String expandFileSHA = FileUtils.sha(originalFilePath);
+            String expandFileSHA = FileUtils.sha(expandFilePath);
             assertEquals(originalFileSHA, expandFileSHA);
 //        System.out.println("original file sha: " + originalFileSHA);
             
@@ -96,7 +102,9 @@ class CompressTest
     @Test
     void test2()
     {
-        System.out.println(Alphabet.LOWERCASE());
+        assertSame(LZW.getInstance().compressFileSuffix(),
+                LZW.getInstance().compressFileSuffix());
+//        System.out.println(Alphabet.LOWERCASE());
     }
     
     
