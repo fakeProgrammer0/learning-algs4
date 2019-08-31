@@ -26,6 +26,19 @@ public class RegExpNFA
     private final UnweightedDigraph digraph;
     
     private static final char WILDCARD_CHAR = '.';
+    private static final char ESCAPE_CHAR = '\\';
+    
+    private static final XSet<Character> META_CHARACTERS;
+    
+    static
+    {
+        char[] metaChars = {'(', ')', '|', '*', '+'};
+        XSet<Character> metaCharSet = new XLinkedHashSet<>();
+        for (char metaChar : metaChars)
+            metaCharSet.add(metaChar);
+        
+        META_CHARACTERS = metaCharSet;
+    }
     
     public RegExpNFA(String regexp)
     {
@@ -49,6 +62,7 @@ public class RegExpNFA
         
         for (int i = 0; i < M; i++)
         {
+            // left parenthesis
             int lp = i;
             char token = regexp.charAt(i);
             if (token == '|')
@@ -62,27 +76,34 @@ public class RegExpNFA
             {
                 graph.addEdge(i, i + 1);
                 int op = operators.pop();
+                
+                // 2-way or
                 if (regexp.charAt(op) == '|')
                 {
                     lp = operators.pop();
                     graph.addEdge(lp, op + 1);
                     graph.addEdge(op, i);
-                }
+                } else if (regexp.charAt(op) == '(')
+                    lp = op;
+                else throw new IllegalArgumentException();
             }
             
             if (i < M - 1)
             {
                 char lookahead = regexp.charAt(i + 1);
-                if(lookahead == '*' || lookahead == '+')
+                if (lookahead == '*' || lookahead == '+')
                 {
                     graph.addEdge(i + 1, lp);
                     graph.addEdge(i + 1, i + 2);
-                    if(lookahead == '*')
+                    if (lookahead == '*')
                         graph.addEdge(lp, i + 1);
                     i++;
                 }
             }
         }
+        
+        if (!operators.isEmpty())
+            throw new IllegalArgumentException("invalid regular expression");
         
         return graph;
     }
@@ -96,17 +117,22 @@ public class RegExpNFA
         final int N = text.length();
         for (int i = 0; i < N; i++)
         {
+            char c = text.charAt(i);
+            
             states.remove(M);
             XSet<Integer> newStates = new XLinkedHashSet<>();
-            char c = text.charAt(i);
             for (int state : states)
             {
-                if (regexp.charAt(state) == c || regexp.charAt(state) == WILDCARD_CHAR)
+                if (regexp.charAt(state) == WILDCARD_CHAR
+                        || !META_CHARACTERS.contains(c) && regexp.charAt(state) == c)
                     newStates.add(state + 1);
             }
             
             transition(newStates);
             states = newStates;
+            
+            // optimized if no states reachable
+            if (states.isEmpty()) return false;
         }
         
         return states.contains(M);

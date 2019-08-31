@@ -1,5 +1,8 @@
 package com.green.learning.algs4.string.regexp;
 
+/**
+ * @see edu.princeton.cs.algs4.GREP
+ */
 public class Grep
 {
     private final RegExpNFA pattern;

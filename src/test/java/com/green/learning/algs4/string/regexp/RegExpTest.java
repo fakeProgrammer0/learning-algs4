@@ -18,6 +18,27 @@ class RegExpTest
     }
     
     @Test
+    void test3()
+    {
+        String regexp = "(AB)*A";
+        RegExpNFA pattern = new RegExpNFA(regexp);
+        
+        assertFalse(pattern.match("AAAA"));
+        assertTrue(pattern.match("ABA"));
+        assertFalse(pattern.match("ABBBBA"));
+        assertTrue(pattern.match("A"));
+    }
+    
+    @Test
+    void test4()
+    {
+        String regexp = "A(AB)*";
+        RegExpNFA pattern = new RegExpNFA(regexp);
+        
+        assertFalse(pattern.match("A)"));
+    }
+    
+    @Test
     void test2()
     {
         String regexp = "A+B";
