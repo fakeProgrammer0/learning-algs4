@@ -8,6 +8,10 @@ import com.green.learning.algs4.set.XLinkedHashSet;
 import com.green.learning.algs4.set.XSet;
 import com.green.learning.algs4.string.StringUtils;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @see edu.princeton.cs.algs4.NFA
  */
@@ -25,16 +29,22 @@ public class RegExpNFA
     private static final char WILDCARD_CHAR = '.';
     private static final char ESCAPE_CHAR = '\\';
     
-    private static final XSet<Character> META_CHARACTERS;
+    private static final Set<Character> META_CHARACTERS;
+    private static final Set<Character> TRANSITION_TO_NEXT_META_CHARS;
     
     static
     {
         char[] metaChars = {'(', ')', '|', '?', '*', '+'};
-        XSet<Character> metaCharSet = new XLinkedHashSet<>();
+        Set<Character> metaCharSet = new HashSet<>(metaChars.length);
         for (char metaChar : metaChars)
             metaCharSet.add(metaChar);
+        META_CHARACTERS = Collections.unmodifiableSet(metaCharSet);
         
-        META_CHARACTERS = metaCharSet;
+        char[] autoTransitionChars = {'(', ')', '*', '+', '?'};
+        Set<Character> autoTransCharSet = new HashSet<>();
+        for (char c : autoTransitionChars)
+            autoTransCharSet.add(c);
+        TRANSITION_TO_NEXT_META_CHARS = Collections.unmodifiableSet(autoTransCharSet);
     }
     
     public RegExpNFA(String regexp)
@@ -53,6 +63,90 @@ public class RegExpNFA
     }
     
     private UnweightedDigraph buildTransitionGraph()
+    {
+        UnweightedDigraph graph = new AdjListUnweightedDigraph(M + 1);
+        XStack<Integer> operators = new XLinkedStack<>();
+        
+        for (int i = 0; i < M; i++)
+        {
+            // left parenthesis
+            int lp = i;
+            char token = regexp.charAt(i);
+            if (token == '|' || token == '(')
+            {
+                operators.push(i);
+            } else if (token == ')')
+            {
+                int op = operators.pop();
+                
+                if (regexp.charAt(op) == '|')
+                {
+                    // 2-way or
+//                    lp = operators.pop();
+//                    graph.addEdge(lp, op + 1);
+//                    graph.addEdge(op, i);
+                    
+                    // multi-way or
+                    XBag<Integer> ors = new XBag<>();
+                    do
+                    {
+                        ors.add(op);
+                        op = operators.pop();
+                    } while (regexp.charAt(op) == '|');
+                    
+                    assert regexp.charAt(op) == '(';
+                    lp = op;
+                    
+                    for (int or : ors)
+                    {
+                        graph.addEdge(lp, or + 1);
+                        graph.addEdge(or, i);
+                    }
+                }
+                
+                if (regexp.charAt(op) == '(')
+                    lp = op;
+                else throw new IllegalArgumentException();
+            }
+            
+            if (TRANSITION_TO_NEXT_META_CHARS.contains(token))
+                graph.addEdge(i, i + 1);
+            
+            if (i < M - 1)
+            {
+                char lookahead = regexp.charAt(i + 1);
+                
+                // buggy code
+                if (lookahead == '*' || lookahead == '+' || lookahead == '?')
+                {
+                    switch (lookahead)
+                    {
+                        case '?':
+                        {
+                            graph.addEdge(lp, i + 1);
+                            break;
+                        }
+                        case '*':
+                        {
+                            graph.addEdge(lp, i + 1);
+                        }
+                        case '+':
+                        {
+                            graph.addEdge(i + 1, lp);
+                        }
+                    }
+                }
+            }
+        }
+        
+        if (!operators.isEmpty())
+            throw new IllegalArgumentException("invalid regular expression");
+        
+        return graph;
+    }
+    
+    // buggy code
+    private UnweightedDigraph buildTransitionGraph0()
     {
         UnweightedDigraph graph = new AdjListUnweightedDigraph(M + 1);
         XStack<Integer> operators = new XLinkedStack<>();
@@ -107,6 +201,8 @@ public class RegExpNFA
             if (i < M - 1)
             {
                 char lookahead = regexp.charAt(i + 1);
+                
+                // buggy code
                 if (lookahead == '*' || lookahead == '+' || lookahead == '?')
                 {
                     i++;

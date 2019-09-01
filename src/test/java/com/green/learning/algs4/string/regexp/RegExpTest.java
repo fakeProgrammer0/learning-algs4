@@ -1,5 +1,6 @@
 package com.green.learning.algs4.string.regexp;
 
+import com.green.learning.algs4.list.XList;
 import com.green.learning.algs4.util.FileUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,28 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RegExpTest
 {
+    static class PatternTextWrapper
+    {
+        private final String regexp;
+        private final String[] texts;
+        
+        public PatternTextWrapper(String regexp, String... texts)
+        {
+            this.regexp = regexp;
+            this.texts = texts;
+        }
+        
+        public String getRegexp()
+        {
+            return regexp;
+        }
+        
+        public String[] getTexts()
+        {
+            return texts;
+        }
+    }
+    
     @Test
     void test1()
     {
@@ -94,15 +117,15 @@ class RegExpTest
         String text1 = "2018 12";
         assertTrue(pattern.match(text1));
         assertTrue(grep.search(text1));
-    
+        
         String text2 = "2018 12 25";
         assertFalse(pattern.match(text2));
         assertTrue(grep.search(text2));
-    
+        
         String text3 = "2019 12 21 - 2019 12 22";
         assertFalse(pattern.match(text3));
         assertTrue(grep.search(text3));
-    
+        
         String text4 = "2019 09 01 - 2019 12 20";
         assertFalse(pattern.match(text4));
         assertTrue(grep.search(text4));
@@ -122,7 +145,7 @@ class RegExpTest
                 "1?63",
         };
         
-        for(String regexp: regexps)
+        for (String regexp : regexps)
         {
             System.out.println("grep: \"" + regexp + "\"");
             Grep grep = new Grep(regexp);
@@ -158,18 +181,28 @@ class RegExpTest
     @Test
     void testGreedy()
     {
-        assertTrue(new RegExpNFA(".?").match("A"));
-        assertFalse(new RegExpNFA(".?").match("AA"));
-    
-        assertTrue(Pattern.compile("A+?").matcher("A").matches());
-        assertTrue(Pattern.compile("A+?").matcher("AA").matches());
+        PatternTextWrapper[] wrappers = {
+                new PatternTextWrapper(".?", "A", "AA", "", ".?"),
+                new PatternTextWrapper("A+?", "A", "AA", "", "AAB"),
+                new PatternTextWrapper(".*?", "A", "AA", "", "AAB"),
+        };
         
-        assertTrue(new RegExpNFA("A+?").match("A"));
-        assertFalse(new RegExpNFA("A+?").match("AA"));
-    
-        
-    
-        assertFalse(new RegExpNFA(".*?").match("A"));
-        assertFalse(new RegExpNFA(".*?").match("AA"));
+        for (PatternTextWrapper wrapper : wrappers)
+        {
+            Pattern pattern1 = Pattern.compile(wrapper.getRegexp());
+            RegExpNFA pattern2 = new RegExpNFA(wrapper.getRegexp());
+            System.out.println("pattern: \"" + wrapper.getRegexp() + "\"");
+            
+            for(String txt: wrapper.getTexts())
+            {
+                boolean match = pattern2.match(txt);
+                System.out.println("match \"" + txt + "\" : " + match);
+                assertEquals(
+                        pattern1.matcher(txt).matches(),
+                        match
+                );
+            }
+            System.out.println();
+        }
     }
 }
