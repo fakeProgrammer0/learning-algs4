@@ -3,10 +3,7 @@ package com.green.learning.algs4.string.regexp;
 import com.green.learning.algs4.graph.AdjListUnweightedDigraph;
 import com.green.learning.algs4.graph.Digraph;
 import com.green.learning.algs4.graph.UnweightedDigraph;
-import com.green.learning.algs4.list.XLinkedQueue;
-import com.green.learning.algs4.list.XLinkedStack;
-import com.green.learning.algs4.list.XQueue;
-import com.green.learning.algs4.list.XStack;
+import com.green.learning.algs4.list.*;
 import com.green.learning.algs4.set.XLinkedHashSet;
 import com.green.learning.algs4.set.XSet;
 import com.green.learning.algs4.string.StringUtils;
@@ -32,7 +29,7 @@ public class RegExpNFA
     
     static
     {
-        char[] metaChars = {'(', ')', '|', '*', '+'};
+        char[] metaChars = {'(', ')', '|', '?', '*', '+'};
         XSet<Character> metaCharSet = new XLinkedHashSet<>();
         for (char metaChar : metaChars)
             metaCharSet.add(metaChar);
@@ -77,13 +74,32 @@ public class RegExpNFA
                 graph.addEdge(i, i + 1);
                 int op = operators.pop();
                 
-                // 2-way or
                 if (regexp.charAt(op) == '|')
                 {
-                    lp = operators.pop();
-                    graph.addEdge(lp, op + 1);
-                    graph.addEdge(op, i);
-                } else if (regexp.charAt(op) == '(')
+                    // 2-way or
+//                    lp = operators.pop();
+//                    graph.addEdge(lp, op + 1);
+//                    graph.addEdge(op, i);
+                    
+                    // multi-way or
+                    XBag<Integer> ors = new XBag<>();
+                    do
+                    {
+                        ors.add(op);
+                        op = operators.pop();
+                    } while (regexp.charAt(op) == '|');
+                    
+                    assert regexp.charAt(op) == '(';
+                    lp = op;
+                    
+                    for (int or : ors)
+                    {
+                        graph.addEdge(lp, or + 1);
+                        graph.addEdge(or, i);
+                    }
+                }
+                
+                if (regexp.charAt(op) == '(')
                     lp = op;
                 else throw new IllegalArgumentException();
             }
@@ -91,13 +107,27 @@ public class RegExpNFA
             if (i < M - 1)
             {
                 char lookahead = regexp.charAt(i + 1);
-                if (lookahead == '*' || lookahead == '+')
+                if (lookahead == '*' || lookahead == '+' || lookahead == '?')
                 {
-                    graph.addEdge(i + 1, lp);
-                    graph.addEdge(i + 1, i + 2);
-                    if (lookahead == '*')
-                        graph.addEdge(lp, i + 1);
                     i++;
+                    switch (lookahead)
+                    {
+                        case '?':
+                        {
+                            graph.addEdge(lp, i);
+                            graph.addEdge(i, i + 1);
+                            break;
+                        }
+                        case '*':
+                        {
+                            graph.addEdge(lp, i);
+                        }
+                        case '+':
+                        {
+                            graph.addEdge(i, lp);
+                            graph.addEdge(i, i + 1);
+                        }
+                    }
                 }
             }
         }
