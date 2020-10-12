@@ -54,6 +54,33 @@ public class ArrayUtils
         print(A, true);
     }
     
+    public static <E> void print(int[] A, boolean buffered)
+    {
+        final String sep = ", ";
+        
+        if (buffered)
+        {
+            StringBuilder sb = new StringBuilder("[");
+            for (int x : A)
+                sb.append(x).append(sep);
+            int idx = sb.lastIndexOf(sep);
+            if (idx >= 0 && idx + sep.length() == sb.length())
+                sb.delete(idx, sb.length());
+            sb.append("]");
+            System.out.println(sb.toString());
+        } else
+        {
+            System.out.print("[");
+            for (int i = 0; i < A.length - 1; i++)
+            {
+                System.out.print(A[i]);
+                System.out.print(sep);
+            }
+            System.out.print(A[A.length - 1]);
+            System.out.println("]");
+        }
+    }
+    
     public static <E> void print(E[] A, boolean buffered)
     {
         final String sep = ", ";
