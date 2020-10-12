@@ -4,7 +4,7 @@
 
 TODO code
 
-* [ ] radix integer sort
+* [x] radix integer sort
 * [x] inplace MSD
 * [ ] ★suffix arrays sorting
   * [ ] keyword-in-context search
