@@ -1,46 +1,26 @@
 # Learning Algs4
 
-Data structures and algorithms implementations in java while learning the course algs4
+学习[普林斯顿大学《算法》课程](https://www.coursera.org/learn/algorithms-part1)期间写的一些经典数据结构和算法实现，部分代码参考自 [algs4 官方仓库](https://github.com/kevin-wayne/algs4) 。
 
-## 1.Algs4 Course Resources
+## 1. Algs4 课程简介
 
-* Coursera Courses
-  * [Algs4 Part 1](https://www.coursera.org/learn/algorithms-part1/)
-  * [Algs4 Part 2 ](https://www.coursera.org/learn/algorithms-part2/)
-* [Algs4 Home](https://algs4.cs.princeton.edu/home)
-* algs4.jar
-  * [Java Algorithms and Clients](https://algs4.cs.princeton.edu/code/ )
-  * [Github repository](https://github.com/kevin-wayne/algs4)
-* [Test Data](https://algs4.cs.princeton.edu/code/algs4-data.zip)
 
-## 2.What's in This Repo?
+* 针对本科《数据结构和算法》课程更进一步的“广度”层面上的学习：
 
-This repo cultivates a small range of **elementary data structures and algorithms implementations in java** while learning algs4. **Notice that the repo contains nothing about the course assignments.**  Here are just java algorithms and their tests.
+  * 数据结构：并查集、Kd树、前缀树等
+  * 算法：图论算法、字符串算法（排序、搜索）、压缩算法等
+* 代码实现强调API设计、注重算法效率、编程作业中常有大量严格的单元测试
 
-> Do *not* post solutions or partial solutions to programming assignments (including in the Discussion Forums or public code repositories such as GitHub). -- "Honor code" stated by the course algs4.
+## 2. 本仓库实现的数据结构和算法
 
-| Finished | Package | Doc                        | Brief Description                                            |
-| -------- | ------- | -------------------------- | ------------------------------------------------------------ |
-| ✓        | list    | [list.md](./doc/list.md)   | list-based data structures such as list, stack && queue      |
-| ✓        | sort    | [sort.md](./doc/sort.md)   | elementary sorting & radix string sorting algorithms         |
-|          | tree    | ——                         | tree-based data structures such as priority queue, indexed priority queue... |
-|          | set     | ——                         | set implementations                                          |
-|          | st      | ——                         | symbol tables, which are refered to `Map<K,V>` in Java and `HashTable` in general |
-|          | graph   | [graph.md](./doc/graph.md) | graph data structures & classic algorithms                   |
+> 代码位于 [src/main/java/com/green/learning/algs4](./src/main/java/com/green/learning/algs4) 路径下
 
-## 3.Getting Started
-
-1. Clone the repo and import it as a maven project in your favorite IDE.
-
-2. Download [algs4.jar](https://algs4.cs.princeton.edu/code/algs4.jar) and import it into the project classpath.
-
-3. Download test data and place the files under the `resources` folder.
-
-   > This step is required to be fixed.
-
-4. Run the tests and check the code, enjoy yourself : )
-
-## 4.Thanks
-
-Special thanks to [Robert Sedgewick](http://www.cs.princeton.edu/~rs/) and [Kevin Wayne](https://www.cs.princeton.edu/~wayne/contact/) who bring us such a fascinating and enjoyable course as well as computer scientists who designed those great algorithms.
+| package  | Description                                                  |
+| -------- | ------------------------------------------------------------ |
+| list     | 数组和链表两种实现：线性表、栈、队列                         |
+| sort     | 通用排序算法：快排（二路划分、三路划分）、归并排序、堆排序、插入排序； |
+| tree     | 优先队列、索引优先队列（Indexed Priority Queue）             |
+| set / st | 集合和符号表（字典）：哈希表（拉链法、线性探测法）、二叉搜索树 |
+| string   | 字符串排序：三路快排、基数排序（LSD Radix Sort、MSD Radix Sort）<br/>字符串搜索：KMP、Boyer Moore、Rabin Karp<br/>前缀树：Trie、Ternary Search Trie |
+| graph    | 图遍历：DFS、BFS、拓扑排序<br/>查找连通分量：并查集、弱连通分量、强连通分量<br/>最小生成树：Prim、Kruskal<br/>最短路径：Dijkstra、Floyd、Bellman-Ford |
 
