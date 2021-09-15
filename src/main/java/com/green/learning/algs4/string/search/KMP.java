@@ -28,7 +28,7 @@ public class KMP
     /**
      * Calculate the next table
      */
-    private void initNext()
+    public void initNext()
     {
         next[0] = -1;
         int j = 1, b = 0;
