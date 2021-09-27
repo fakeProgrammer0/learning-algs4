@@ -1,6 +1,6 @@
 # Learning Algs4
 
-学习[普林斯顿大学《算法》课程](https://www.coursera.org/learn/algorithms-part1)期间写的一些经典数据结构和算法实现，部分代码参考自 [algs4 官方仓库](https://github.com/kevin-wayne/algs4) 。
+学习[普林斯顿大学《算法》课程](https://www.coursera.org/learn/algorithms-part1)期间写的一些经典数据结构和算法实现，部分代码参考自 [algs4 官方仓库](https://github.com/kevin-wayne/algs4) 。
 
 ## 1. Algs4 课程简介
 
@@ -13,7 +13,7 @@
 
 ## 2. 本仓库实现的数据结构和算法
 
-> 代码位于 [src/main/java/com/green/learning/algs4](./src/main/java/com/green/learning/algs4) 路径下
+> 代码位于 [src/main/java/com/green/learning/algs4](https://github.com/fakeProgrammer0/learning-algs4/blob/master/src/main/java/com/green/learning/algs4) 路径下
 
 | package  | Description                                                  |
 | -------- | ------------------------------------------------------------ |
