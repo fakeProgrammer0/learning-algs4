@@ -18,9 +18,9 @@
 | package  | Description                                                  |
 | -------- | ------------------------------------------------------------ |
 | list     | 数组和链表两种实现：线性表、栈、队列                         |
-| sort     | 通用排序算法：快排（二路划分、三路划分）、归并排序、堆排序、插入排序； |
+| sort     | 快排（二路划分、三路划分）、归并排序、堆排序、插入排序       |
 | tree     | 优先队列、索引优先队列（Indexed Priority Queue）             |
-| set / st | 集合和符号表（字典）：哈希表（拉链法、线性探测法）、二叉搜索树 |
+| set / st | 集合和字典：哈希表（拉链法、线性探测法）、二叉搜索树         |
 | string   | 字符串排序：三路快排、基数排序（LSD Radix Sort、MSD Radix Sort）<br/>字符串搜索：KMP、Boyer Moore、Rabin Karp<br/>前缀树：Trie、Ternary Search Trie |
 | graph    | 图遍历：DFS、BFS、拓扑排序<br/>查找连通分量：并查集、弱连通分量、强连通分量<br/>最小生成树：Prim、Kruskal<br/>最短路径：Dijkstra、Floyd、Bellman-Ford |
 
